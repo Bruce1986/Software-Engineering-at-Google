@@ -266,6 +266,7 @@ We all know that code comments are essential to a well-documented API. But what 
 我們都知道，程式碼註釋對於一個良好的文件化的API來說是必不可少的。但是什麼才是 "好的 "註釋呢？在本章的前面，我們確定了參考文件的兩個主要受眾：尋求者和瀏覽者。尋求者知道他們想要什麼，而瀏覽者不知道。尋求者的關鍵點是一個一致的註釋程式碼庫，這樣他們就可以快速掃描API並找到他們正在尋找的東西。對於瀏覽者來說，關鍵的勝利是明確識別API的用途，通常是在檔案頭的頂部。我們將在下面的小節中介紹一些程式碼註釋。下面的程式碼註釋指南適用於C++，但在谷歌，其他語言也有類似的規則。
 
 **File comments 檔案註釋**
+
 Almost all code files at Google must contain a file comment. (Some header files that contain only one utility function, etc., might deviate from this standard.) File comments should begin with a header of the following form:
 
 在谷歌，幾乎所有的程式碼檔案都必須包含一個檔案註釋。(一些只包含一個實用函式的標頭檔案等，可能會偏離這個標準)。檔案註釋應該以下列形式的標頭檔案開始：
