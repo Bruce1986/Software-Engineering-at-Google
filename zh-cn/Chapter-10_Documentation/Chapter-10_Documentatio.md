@@ -520,6 +520,7 @@ Importantly, if documentation is tied into the engineering workflow, it will oft
 
 ---
 **Case Study: The Developer Guide Library 案例研究：開發者指南庫**
+
 As mentioned earlier, there were problems associated with having most (almost all) engineering documentation contained within a shared wiki: little ownership of important documentation, competing documentation, obsolete information, and difficulty in filing bugs or issues with documentation. But this problem was not seen in some documents: the Google C++ style guide was owned by a select group of senior engineers (style arbiters) who managed it. The document was kept in good shape because certain people cared about it. They implicitly owned that document. The document was also canonical: there was only one C++ style guide.
 
 如前所述，大多數（幾乎所有）工程檔案都包含在一個共享的維基中，這其中存在一些問題：重要的文件沒有所有者、重複的文件、過時資訊，以及難以歸檔的錯誤或檔案問題。但是，這個問題在一些文件中並沒有出現：谷歌C++風格指南是由一組精選的高階工程師（風格仲裁者）管理的。該文件被保持良好的狀態，因為有人關心它。他們隱含地擁有該文件。該文件也是規範的：只有一個C++風格指南。
