@@ -1,7 +1,7 @@
 # 後記
 Software engineering at Google has been an extraordinary experiment in how to develop and maintain a large and evolving codebase. I’ve seen engineering teams break ground on this front during my time here, moving Google forward both as a company that touches billions of users and as a leader in the tech industry. This wouldn’t have been possible without the principles outlined in this book, so I’m very excited to see these pages come to life.
 
-谷歌的軟體工程一直是如何開發和維護一個龐大且不斷髮展的程式碼庫的一個非凡的實驗。在我任職期間，我看到工程團隊在這方面取得突破，推動谷歌作為一家連線數十億使用者的公司，又成為科技行業的領導者。如果沒有這本書中概述的原則，這是不可能的，所以我很高興看到這些書頁變成了現實。
+谷歌的軟體工程一直是如何開發和維護一個龐大且不斷發展的程式碼庫的一個非凡的實驗。在我任職期間，我看到工程團隊在這方面取得突破，推動谷歌作為一家連線數十億使用者的公司，又成為科技行業的領導者。如果沒有這本書中概述的原則，這是不可能的，所以我很高興看到這些書頁變成了現實。
 
 If the past 50 years (or the preceding pages here) have proven anything, it’s that soft‐ ware engineering is far from stagnant. In an environment in which technology is steadily changing, the software engineering function holds a particularly important role within a given organization. Today, software engineering principles aren’t simply about how to effectively run an organization; they’re about how to be a more respon‐ sible company for users and the world at large.
 
@@ -21,7 +21,7 @@ We certainly can’t prove that the ways we’ve found to attain sustainability 
 
 This book outlines some of our key guiding principles as they relate to software engi‐ neering. At a high level, it also illuminates the influence of technology on society. As software engineers, it’s our responsibility to ensure that our code is designed with inclusion, equity, and accessibility for everyone. Building for the sole purpose of innovation is no longer acceptable; technology that helps only a set of users isn’t innovative at all.
 
-本書概述了我們與軟體工程相關的一些關鍵指導原則。在高維度上，它還闡明瞭技術對社會的影響。作為軟體工程師，我們的責任是確保我們的程式碼設計具有包容性、公平性和可及性。以創新為唯一目的的架構不再被接受；只幫助一個群體的技術根本就不是創新。
+本書概述了我們與軟體工程相關的一些關鍵指導原則。在高維度上，它還闡明瞭技術對社會的影響。作為軟體工程師，我們的責任是確保我們的程式碼設計具有包容性、公平性和無障礙。以創新為唯一目的的架構不再被接受；只幫助一個群體的技術根本就不是創新。
 
 Our responsibility at Google has always been to provide developers, internally and externally, with a well-lit path. With the rise of new technologies like artificial intelli‐ gence, quantum computing, and ambient computing, there’s still plenty for us to learn as a company. I’m particularly excited to see where the industry takes software engi‐ neering in the coming years, and I’m confident that this book will help shape that path.
 
