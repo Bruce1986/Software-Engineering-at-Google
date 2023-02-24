@@ -5,9 +5,9 @@
 
 # 第九章 程式碼審查
 
-**Written by Tom Manshreck**
+**Written by Tom Manshreck, Caitlin Sadowski**
 
-**Caitlin Sadowski Edited by Lisa Carey**
+**Edited by Lisa Carey**
 
 Code review is a process in which code is reviewed by someone other than the author, often before the introduction of that code into a codebase. Although that is a simple definition, implementations of the process of code review vary widely throughout the software industry. Some organizations have a select group of “gatekeepers” across the codebase that review changes. Others delegate code review processes to smaller teams, allowing different teams to require different levels of code review. At Google, essentially every change is reviewed before being committed, and every engineer is responsible for initiating reviews and reviewing changes.
 
