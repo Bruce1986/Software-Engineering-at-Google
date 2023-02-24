@@ -57,7 +57,7 @@ The use of test doubles introduces a few complications to software development t
 
 At Google, we’ve seen countless examples of the benefits to productivity and software quality that test doubles can bring to a codebase, as well as the negative impact they can cause when used improperly. The practices we follow at Google have evolved over time based on these experiences. Historically, we had few guidelines on how to effectively use test doubles, but best practices evolved as we saw common patterns and antipatterns arise in many teams’ codebases.
 
-在谷歌，我們已經看到了無數的例子，證明測試替代可以為程式碼庫提升生產力和軟體品質方面的好處，以及在使用不當時可能造成的負面影響。我們在谷歌遵循的做法是基於這些經驗隨著時間的推移而演變的。從歷史上看，我們很少有關於如何有效地使用測試替代，但最佳實踐隨著我們看到許多團隊的程式碼庫中出現了常見模式和反模式而不斷髮展。
+在谷歌，我們已經看到了無數的例子，證明測試替代可以為程式碼庫提升生產力和軟體品質方面的好處，以及在使用不當時可能造成的負面影響。我們在谷歌遵循的做法是基於這些經驗隨著時間的推移而演變的。從歷史上看，我們很少有關於如何有效地使用測試替代，但最佳實踐隨著我們看到許多團隊的程式碼庫中出現了常見模式和反模式而不斷發展。
 
 One lesson we learned the hard way is the danger of overusing mocking frameworks, which allow you to easily create test doubles (we will discuss mocking frameworks in more detail later in this chapter). When mocking frameworks first came into use at Google, they seemed like a hammer fit for every nail—they made it very easy to write highly focused tests against isolated pieces of code without having to worry about how to construct the dependencies of that code. It wasn’t until several years and countless tests later that we began to realize the cost of such tests: though these tests were easy to write, we suffered greatly given that they required constant effort to maintain while rarely finding bugs. The pendulum at Google has now begun swinging in the other direction, with many engineers avoiding mocking frameworks in favor of writing more realistic tests.
 
