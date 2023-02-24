@@ -240,7 +240,10 @@ Therefore, it becomes critical to implement larger tests in ways that work well 
 
 ------
 
-Tip:"The Smallest Possible Test" 提示："儘可能小的測試"
+Tip:"The Smallest Possible Test" 
+
+提示："儘可能小的測試"
+
 Even for integration tests,smaller is better-a handful of large tests is preferable to anenormous one.And,because the scope of a test is often coupled to the scope of theSUT,finding ways to make the SUT smaller help make the test smaller.
 
 即便是整合測試，也是越小越好——少數大型測試比一個超大測試要好。而且，因為測試的範圍經常與SUT的範圍相聯絡，找到使SUT變小的方法有助於使測試變小。
