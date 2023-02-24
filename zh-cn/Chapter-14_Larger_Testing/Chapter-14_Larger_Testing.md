@@ -630,7 +630,7 @@ Exploratory testing is useful for both new and launched systems to uncover unant
 
 Manual testing does not scale sublinearly; that is, it requires human time to perform the manual tests. Any defects found by exploratory tests should be replicated with an automated test that can run much more frequently.
 
-手動測試無法進行亞線性擴充；也就是說，執行手動測試需要人工時間。透過探索性測試發現的任何缺陷都應該透過能夠更頻繁地執行的自動化測試進行復制。
+手動測試無法進行次線性擴充；也就是說，執行手動測試需要人工時間。透過探索性測試發現的任何缺陷都應該透過能夠更頻繁地執行的自動化測試進行複製。
 
 #### Bug bashes 掃除bug
 
