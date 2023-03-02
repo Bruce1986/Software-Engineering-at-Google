@@ -167,7 +167,7 @@ Most programmers know that hash tables are non-obviously ordered. Few know the s
 - Potential efficiency gains from research into improved hash algorithms or hash containers require changes to hash iteration order.
 - Per Hyrum’s Law, programmers will write programs that depend on the order in which a hash table is traversed, if they have the ability to do so.
 
-大多數程式設計師都知道雜湊表是無序的。很少有人知道他們使用的特定雜湊表是否打算永遠提供特定的排序。這似乎不起眼，但在過去的一二十年中，計算行業使用這類型別的經驗不斷髮展：
+大多數程式設計師都知道雜湊表是無序的。很少有人知道他們使用的特定雜湊表是否打算永遠提供特定的排序。這似乎不起眼，但在過去的一二十年中，計算行業使用這類型別的經驗不斷發展：
 
 - 雜湊洪水攻擊增加了非確定性雜湊迭代的動力。
 - 研究改進的雜湊演算法或雜湊容器的潛在效率收益需要更改雜湊迭代順序。
@@ -488,11 +488,6 @@ Occasionally time and scale come into conflict, and nowhere so clearly as in the
 This question can arise at many levels of the software stack because it is regularly the case that a bespoke solution customized for your narrow problem space may outperform the general utility solution that needs to handle all possibilities. By forking or reimplementing utility code and customizing it for your narrow domain, you can add new features with greater ease, or optimize with greater certainty, regardless of whether we are talking about a microservice, an in-memory cache, a compression routine, or anything else in our software ecosystem. Perhaps more important, the control you gain from such a fork isolates you from changes in your underlying dependencies: those changes aren’t dictated by another team or third-party provider. You are in control of how and when to react to the passage of time and necessity to change.
 
 這個問題可能出現在軟體棧（解決方案棧）各個層面，通常情況下，為特定問題客製解決方案優於需要處理所有問題的通用解決方案。透過分支或重新實現程式程式碼，併為特定問題客製它，你可以更便捷地新增新功能，或更確定地進行最佳化，無論我們談論的是微服務、記憶體快取、壓縮程式還是軟體生態系統中的其他內容。更重要的是，你從這樣一個分支中獲得的控制將你與基礎依賴項中的變更隔離開：這些變化並不是由另一個團隊或第三方供應商所決定的。你隨時決定如何對時間的推移和變化的作出必要地反應。
-
-```txt
-[一條微博引發的思考——再談“Software Stack”之“軟體棧”譯法！](https://www.ituring.com.cn/article/1144)
-軟體棧（Software Stack），是指為了實現某種完整功能解決方案（例如某款產品或服務）所需的一套軟體子系統或元件。
-```
 
 On the other hand, if every developer forks everything used in their software project instead of reusing what exists, scalability suffers alongside sustainability. Reacting to a security issue in an underlying library is no longer a matter of updating a single dependency and its users: it is now a matter of identifying every vulnerable fork of that dependency and the users of those forks.
 
