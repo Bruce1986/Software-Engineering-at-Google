@@ -127,7 +127,7 @@ If you are maintaining a project that is used by other engineers, the most impor
 
 如果你正在維護一個由其他工程師使用的專案，那麼關於“有效”與“可維護”最重要的一課就是我們所說的海勒姆定律：
 
-    *當一個 API 有足夠多的使用者的時候，在約定中你承諾的什麼都無所謂，所有在你係統裡面被觀察到的行為都會被一些使用者直接依賴。*
+    *當一個 API 有足夠多的使用者的時候，在約定中你承諾的什麼都無所謂，所有在你系統裡面被觀察到的行為都會被一些使用者直接依賴。*
 
 In our experience, this axiom is a dominant factor in any discussion of changing software over time. It is conceptually akin to entropy: discussions of change and maintenance over time must be aware of Hyrum’s Law[^8] just as discussions of efficiency or thermodynamics must be mindful of entropy. Just because entropy never decreases doesn’t mean we shouldn’t try to be efficient. Just because Hyrum’s Law will apply when maintaining software doesn’t mean we can’t plan for it or try to better understand it. We can mitigate it, but we know that it can never be eradicated.
 
