@@ -422,7 +422,7 @@ The other important property, isolation, means that problems in production shoul
 
 Hermetic test success should not depend on the user running the test. This allows people to reproduce tests run by the CI system and allows people (e.g., library developers) to run tests owned by other teams.
 
-封閉測試的成功不應取決於執行測試的使用者。這允許人們複製CI系統執行的測試，並允許人們（例如，庫的開發者）執行其他團隊擁有的測試。
+封閉測試的成功不應取決於執行測試的使用者。這允許人們複製CI系統執行的測試，並允許人們（例如，程式碼庫的開發者）執行其他團隊擁有的測試。
 
 One type of hermetic backend is a fake. As discussed in Chapter 13, these can be cheaper than running a real backend, but they take work to maintain and have limited fidelity.
 
