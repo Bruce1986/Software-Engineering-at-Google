@@ -698,9 +698,9 @@ When bug tags from disabled tests began to accumulate and were not updated, the 
 
 當被禁用的測試的bug標籤開始積累並且不被更新時，該團隊將其清理自動化。測試現在會透過查詢我們的錯誤系統的API來檢查一個錯誤是否被關閉。如果一個被標記為失敗的測試實際通過了，並且透過的時間超過了配置的時間限制，測試就會提示清理標籤（如果還沒有被修復的話，就標記為bug修復）。這個策略有一個例外：不穩定的測試。對於這些，團隊將允許測試被標記為不穩定，如果測試通過了，系統不會提示清理標記的 "不穩定 "故障。
 
-These changes made a mostly self-maintaining test suite, as illustrated in [Figure 23-5](#_bookmark2093).‘
+These changes made a mostly self-maintaining test suite, as illustrated in [Figure 23-5](#_bookmark2093).
 
-’這些變化使得測試套件大多是自我維護的，如圖23-5所示。
+這些變化使得測試套件大多是自我維護的，如圖23-5所示。
 
 ![Figure 23-5](./images/Figure%2023-5.png)
 
