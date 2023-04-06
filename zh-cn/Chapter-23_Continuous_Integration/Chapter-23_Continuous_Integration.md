@@ -590,7 +590,7 @@ Google Takeout started out as a data backup and download product in 2011. Its fo
 
 **Problem:** As Takeout gained a reputation as a powerful Google-wide data fetching, archiving, and download tool, other teams at the company began to turn to it, requesting APIs so that their own applications could provide backup and download functionality, too, including Google Drive (folder downloads are served by Takeout) and Gmail (for ZIP file previews). All in all, Takeout grew from being the backend for just the original Google Takeout product, to providing APIs for at least 10 other Google products, offering a wide range of functionality.
 
-**問題:**隨著Takeout作為功能強大的Google範圍內的資料獲取、歸檔和下載工具而聲名鵲起，該公司的其他團隊開始轉向它，請求API以便他們自己的應用程式也可以提供備份和下載功能，包括Google Drive（資料夾下載由Takeout提供）和Gmail（用於ZIP檔案預覽）. 總之，Takeout從最初的Google Takeout產品的後端發展到為至少10種其他Google產品提供API，提供廣泛的功能。
+**問題:** 隨著Takeout作為功能強大的Google範圍內的資料獲取、歸檔和下載工具而聲名鵲起，該公司的其他團隊開始轉向它，請求API以便他們自己的應用程式也可以提供備份和下載功能，包括Google Drive（資料夾下載由Takeout提供）和Gmail（用於ZIP檔案預覽）. 總之，Takeout從最初的Google Takeout產品的後端發展到為至少10種其他Google產品提供API，提供廣泛的功能。
 
 The team decided to deploy each of the new APIs as a customized instance, using the same original Takeout binaries but configuring them to work a little differently. For example, the environment for Drive bulk downloads has the largest fleet, the most quota reserved for fetching files from the Drive API, and some custom authentication logic to allow non-signed-in users to download public folders.
 
