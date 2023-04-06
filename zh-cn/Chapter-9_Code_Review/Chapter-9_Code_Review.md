@@ -145,7 +145,7 @@ This distributed ownership structure enables many of the other practices we’ve
 
 This ownership mechanism is simple, yet powerful, and has scaled well over the past two decades. It is one of the ways that Google ensures that tens of thousands of engineers can operate efficiently on billions of lines of code in a single repository.
 
-這種所有權機制簡單而強大，在過去的20年裡得到了良好的擴充。這是谷歌確保數以萬計的工程師能夠在單一資源庫中有效運算元十億行程式碼的方法之一。
+這種所有權機制簡單而強大，在過去的20年裡得到了良好的擴充。這是谷歌確保數以萬計的工程師能夠在單一程式碼庫中有效操作十億行程式碼的方法之一。
 
 -----
 
