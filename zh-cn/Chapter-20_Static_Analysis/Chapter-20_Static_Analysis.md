@@ -118,7 +118,7 @@ Tricorder, our static analysis platform, is a core part of static analysis at Go
 
 To scale, Tricorder uses a microservices architecture. The Tricorder system sends analyze requests to analysis servers along with metadata about a code change. These servers can use that metadata to read the versions of the source code files in the change via a FUSE-based filesystem and can access cached build inputs and outputs. The analysis server then starts running each individual analyzer and writes the output to a storage layer; the most recent results for each category are then displayed in Critique. Because analyses sometimes take a few minutes to run, analysis servers also post status updates to let change authors and reviewers know that analyzers are running and post a completed status when they have finished. Tricorder analyzes more than 50,000 code review changes per day and is often running several analyses per second.
 
-為了方便擴充，Tricorder使用微服務架構。 Tricorder系統將分析請求連同有關程式碼更改的元資料傳送到分析伺服器。這些伺服器可以使用該元資料透過基於FUSE的檔案系統讀取更改中原始碼檔案的版本，並且可以存取快取的建構輸入和輸出。然後分析伺服器開始執行每個單獨的分析器並將輸出寫入儲存層。每個類別的最新結果隨後會顯示在Critique中。因為分析有時需要等幾分鐘，分析伺服器也會發布狀態更新，讓程式碼作者和審查員知道分析器正在執行，並在完成後釋出完成狀態。Tricorder每天分析超過50,000次程式碼審查更改，並且通常每秒執行多次分析。整個Google的開發人員編寫Tricorder分析（稱為“分析器”）或為現有分析貢獻單獨的“檢查”。
+為了方便擴充，Tricorder使用微服務架構。 Tricorder系統將分析請求連同有關程式碼更改的元資料傳送到分析伺服器。這些伺服器可以使用該元資料透過基於FUSE的檔案系統讀取更改中原始碼檔案的版本，並且可以存取快取的建構輸入和輸出。然後分析伺服器開始執行每個單獨的分析器並將輸出寫入儲存層。每個類別的最新結果隨後會顯示在Critique中。因為分析有時需要等幾分鐘，分析伺服器也會發布狀態更新，讓程式碼作者和審查員知道分析器正在執行，並在完成後釋出完成狀態。Tricorder每天分析超過50,000次程式碼審查更改，並且通常每秒執行多次分析。
 
 Developers throughout Google write Tricorder analyses (called “analyzers”) or contribute individual “checks” to existing analyses. There are four criteria for new Tricorder checks:
 
@@ -131,7 +131,7 @@ Developers throughout Google write Tricorder analyses (called “analyzers”) o
 - *Have* *the potential for significant impact on code quality*  
     The issues might not affect correctness, but developers should take them seriously and deliberately choose to fix them.
 
-Tricorder 檢查有四個標準：
+整個Google的開發人員編寫Tricorder分析（稱為“分析器”）或為現有分析貢獻單獨的“檢查”。Tricorder 檢查有四個標準：
 
 - *易於理解*  
 ​    任何工程師都可以輕鬆理解輸出結果。
