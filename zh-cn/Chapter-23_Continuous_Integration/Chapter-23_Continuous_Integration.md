@@ -606,7 +606,7 @@ Some efforts were made to detangle and modularize configuration, but the bigger 
 
 **What the team did.** The team created temporary, sandboxed mini-environments for each of these instances that ran on presubmit and tested that all servers were healthy on startup. Running the temporary environments on presubmit prevented 95% of broken servers from bad configuration and reduced nightly deployment failures by 50%.
 
-**團隊所做的**。**團隊為每個例項建立了臨時的、沙盒式的迷你環境，在預提交時執行，並測試所有伺服器在啟動時是否健康。在提交前執行臨時環境可以防止95%的伺服器因配置不當而損壞，並將夜間部署失敗率降低了50%。
+**團隊所做的** 。團隊為每個例項建立了臨時的、沙盒式的迷你環境，在預提交時執行，並測試所有伺服器在啟動時是否健康。在提交前執行臨時環境可以防止95%的伺服器因配置不當而損壞，並將夜間部署失敗率降低了50%。
 
 Although these new sandboxed presubmit tests dramatically reduced deployment failures, they didn’t remove them entirely. In particular, Takeout’s end-to-end tests would still frequently break the deploy, and these tests were difficult to run on presubmit (because they use test accounts, which still behave like real accounts in some respects and are subject to the same security and privacy safeguards). Redesigning them to be presubmit friendly would have been too big an undertaking.
 
