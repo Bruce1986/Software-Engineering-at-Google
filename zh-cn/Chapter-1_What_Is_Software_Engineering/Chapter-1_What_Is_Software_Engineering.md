@@ -83,6 +83,7 @@ On the other end of the spectrum, some successful projects have an effectively u
 
 Consider Figure 1-1, which demonstrates two software projects on opposite ends of this “expected life span” spectrum. For a programmer working on a task with an expected life span of hours, what types of maintenance are reasonable to expect? That is, if a new version of your OS comes out while you’re working on a Python script that will be executed one time, should you drop what you’re doing and upgrade? Of course not: the upgrade is not critical. But on the opposite end of the spectrum, Google Search being stuck on a version of our OS from the 1990s would be a clear problem.
 
+考慮圖1-1，它示範了兩個軟體專案的“預期生命週期”的範圍。對於從事預期生命週期為小時的任務的程式來說，什麼型別的維護是合理的？也就是說，如果你正在編寫一個只需執行一次的 Python 指令碼，這時作業系統推出了新版本，你應該放下手頭的工作去升級系統嗎？當然不是：升級並不重要。但與之相反，如果谷歌搜尋停留在20世紀90年代的作業系統版本上顯然是一個問題。
 考慮圖1-1，它示範了兩個軟體專案的“預期生命週期”的範圍。對於從事預期生命週期為小時的任務的程式來說，什麼型別的維護是合理的？也就是說，如果在編寫一個Python指令碼時出現了一個新版本的作業系統，該指令碼將執行一次，你應該放棄你正在做的事情並升級嗎？當然不是：升級並不重要。但與此相反，谷歌搜尋停留在20世紀90年代的作業系統版本上顯然是一個問題。
 
 > [^6]: Appcelerator, “[Nothing is Certain Except Death, Taxes and a Short Mobile App Lifespan](https://oreil.ly/pnT2_),” Axway Developer blog, December 6, 2012.
@@ -347,12 +348,13 @@ The underlying lesson is not about the frequency or difficulty of compiler upgra
 >
 > [^16]: In our experience, an average software engineer (SWE) produces a pretty constant number of lines of code per unit time. For a fixed SWE population, a codebase grows linearly—proportional to the count of SWE- months over time. If your tasks require effort that scales with lines of code, that’s concerning.
 >
-> 根據我們的經驗，平均軟體工程師（SWE）每單位時間產生相當恆定的程式碼行數。對於固定的SWE總體，隨著時間的推移，程式碼庫的增長與SWE月數成線性比例。如果你的任務需要與程式碼行數成比例的工作，這是值得關注的。
+> 根據我們的經驗，平均軟體工程師（SWE）每單位時間產生相當恆定的程式碼行數。對於固定的SWE總體，隨著時間的推移，程式碼庫的增長與SWE月數成線性比例。如果您的任務所需的工作量與程式碼行數成正比，那就令人擔憂了。
 
 ### Shifting Left  左移
 
 One of the broad truths we’ve seen to be true is the idea that finding problems earlier in the developer workflow usually reduces costs. Consider a timeline of the developer workflow for a feature that progresses from left to right, starting from conception and design, progressing through implementation, review, testing, commit, canary, and eventual production deployment. Shifting problem detection to the “left” earlier on this timeline makes it cheaper to fix than waiting longer, as shown in Figure 1-2.
 
+我們發現，在開發人員工作流程的早期發現問題通常可以降低成本，這是一個普遍的真理。考慮一下開發人員工作流程的時間軸，該時間軸從左到右依次為：從構思和設計開始，經過實施、稽核、測試、提交、金絲雀和最終的生產部署。如圖 1-2 所示，在此時間軸上將問題檢測提前到 "左側"，解決問題的成本會比等待時間更長。
 我們看到的一個普遍真理是，在開發人員的工作流程中發現的問題，通常可以降低成本。考慮開發人員工作流程的時間表，從左到右，從概念和設計開始，透過實施、評審、測試、提交、金絲雀和最終的生產部署來進行。在此時間線之前，將問題發現轉移到“左側”會使修問題解決成本更低，如圖1-2所示。
 
 This term seems to have originated from arguments that security mustn’t be deferred until the end of the development process, with requisite calls to “shift left on security.” The argument in this case is relatively simple: if a security problem is discovered only after your product has gone to production, you have a very expensive problem. If it is caught before deploying to production, it may still take a lot of work to identify and remedy the problem, but it’s cheaper. If you can catch it before the original developer commits the flaw to version control, it’s even cheaper: they already have an understanding of the feature; revising according to new security constraints is cheaper than committing and forcing someone else to triage it and fix it.
@@ -397,15 +399,17 @@ In addition to the aforementioned costs (or our estimate of them), there are bia
 
 除了上述的成本（或我們對其的估計），還有一些偏差：維持現狀偏差（個體在決策時，傾向於不作為、維持當前的或者以前的決策的一種現象。這一定義揭示個體在決策時偏好事件當前的狀態，而且不願意採取行動來改變這一狀態，當面對一系列決策選項時，傾向於選擇現狀選項），損失厭惡偏差（人們面對同樣的損失和收益時感到損失對情緒影響更大）等。當我們評估成本時，我們需要牢記之前列出的所有成本：一個組織的健康不僅僅是銀行裡是否有錢，還包括其成員是否感到有價值和有成就感。在軟體等高度創新和利潤豐厚的領域在工程設計中，財務成本通常不是限制因素，而人力資源是。保持工程師的快樂、專注和參與所帶來的效率提升會成為主導因素，僅僅是因為專注力和生產力變化大，會有10-20%的差異很容易想象。
 
-### Example: Markers 範例：標記
+### Example: Markers 範例：記號筆
 
 In many organizations, whiteboard markers are treated as precious goods. They are tightly controlled and always in short supply. Invariably, half of the markers at any given whiteboard are dry and unusable. How often have you been in a meeting that was disrupted by lack of a working marker? How often have you had your train of thought derailed by a marker running out? How often have all the markers just gone missing, presumably because some other team ran out of markers and had to abscond with yours? All for a product that costs less than a dollar.
 
+在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理序？多少次因為記號筆水用完而導致思路中斷？又有多少次，所有的記號筆都不翼而飛，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
 在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理序？多少次因為記號筆水用完而打斷思考？多少次所有的記號筆都不見了，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
 
 Google tends to have unlocked closets full of office supplies, including whiteboard markers, in most work areas. With a moment’s notice it is easy to grab dozens of markers in a variety of colors. Somewhere along the line we made an explicit trade- off: it is far more important to optimize for obstacle-free brainstorming than to protect against someone wandering off with a bunch of markers.
 
-谷歌往往在大多數工作區域都有未上鎖的櫃子，裡面裝滿了辦公用品，包括記號筆。只要稍加註意，就可以很容易地拿到各種顏色的幾十支記號筆。在某種程度上，我們做了一個明確的權衡：最佳化無障礙的頭腦風暴遠比防止有人拿著一堆記號筆亂跑要重要得多。
+谷歌往往在大多數工作區域都有未上鎖的櫃子，裡面裝滿了辦公用品，包括記號筆。只要稍加注意，就可以很容易地拿到各種顏色的幾十支記號筆。在某種程度上，我們做了一個明確的權衡：最佳化無障礙頭腦風暴要比防止有人拿著一堆記號筆走神重要得多。
+谷歌往往在大多數工作區域都有未上鎖的櫃子，裡面裝滿了辦公用品，包括記號筆。只要稍加注意，就可以很容易地拿到各種顏色的幾十支記號筆。在某種程度上，我們做了一個明確的權衡：最佳化無障礙的頭腦風暴遠比防止有人拿著一堆記號筆亂跑要重要得多。
 
 We aim to have the same level of eyes-open and explicit weighing of the cost/benefit trade-offs involved for everything we do, from office supplies and employee perks through day-to-day experience for developers to how to provision and run global- scale services. We often say, “Google is a data-driven culture.” In fact, that’s a simplification: even when there isn’t *data*, there might still be *evidence*, *precedent*, and *argument*. Making good engineering decisions is all about weighing all of the available inputs and making informed decisions about the trade-offs. Sometimes, those decisions are based on instinct or accepted best practice, but only after we have exhausted approaches that try to measure or estimate the true underlying costs.
 
@@ -451,6 +455,7 @@ With an agreed-upon conversion table in hand, every engineer can do their own an
 
 For the second type of decision, there is no easy answer. We rely on experience, leadership, and precedent to negotiate these issues. We’re investing in research to help us quantify the hard-to-quantify (see Chapter 7). However, the best broad suggestion that we have is to be aware that not everything is measurable or predictable and to attempt to treat such decisions with the same priority and greater care. They are often just as important, but more difficult to manage.
 
+對於第二類決策，沒有簡單的答案。我們依靠經驗、領導作風和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）不過，我們所能提供的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先順序和更謹慎得對待此類決策。它們往往同樣重要，但更難管理。
 對於第二類決策，沒有簡單的答案。我們依靠經驗、領導和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）然而，我們所擁有的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先權和更大的謹慎對待此類決策。它們往往同樣重要，但更難管理。
 
 ### Example: Distributed Builds 範例：分散式建構
@@ -469,6 +474,7 @@ Eventually, Google developed its own distributed build system. Development of th
 
 So, we built a new system, deployed it to production, and sped up everyone’s build. Is that the happy ending to the story? Not quite: providing a distributed build system made massive improvements to engineer productivity, but as time went on, the distributed builds themselves became bloated. What was constrained in the previous case by individual engineers (because they had a vested interest in keeping their local builds as fast as possible) was unconstrained within a distributed build system. Bloated or unnecessary dependencies in the build graph became all too common. When everyone directly felt the pain of a nonoptimal build and was incentivized to be vigilant, incentives were better aligned. By removing those incentives and hiding bloated dependencies in a parallel distributed build, we created a situation in which consumption could run rampant, and almost nobody was incentivized to keep an eye on build bloat. This is reminiscent of Jevons Paradox: consumption of a resource may increase as a response to greater efficiency in its use.
 
+因此，我們建構了一個新系統，將其部署到生產環境中，並加快了每個人的建構速度。這就是故事的圓滿結局嗎？不完全是這樣：提供分散式建構系統極大地提高了工程師的工作效率，但隨著時間的推移，分散式建構本身變得臃腫起來。在以前的情況下，單個工程師受到的限制（因為他們盡最大可能保持本地建構的速度）在分散式建構系統中是不受限制的。建構圖中的臃腫或不必要的依賴關係變得非常普遍。當每個人都直接感受到非最佳建構的痛苦，並被要求去保持警惕時，激勵機制會更好地協調一致。透過取消這些激勵措施，並將臃腫的依賴關係隱藏在並行的分散式建構中，我們創造了一種情況，在這種情況下，消耗可能猖獗，而且幾乎沒有人被要求去關注建構的臃腫。這讓人想起傑文斯悖論（Jevons Paradox）：一種資源的消耗可能會隨著使用效率的提高而增加。
 因此，我們建構了一個新系統，將其部署到生產環境中，並加快了每個人的建構速度。這就是故事的圓滿結局嗎？不完全是這樣：提供分散式建構系統極大地提高了工程師的工作效率，但隨著時間的推移，分散式建構本身變得臃腫起來。在以前的情況下，單個工程師受到的限制（因為他們盡最大可能保持本地建構的速度）在分散式建構系統中是不受限制的。建構圖中的臃腫或不必要的依賴關係變得非常普遍。當每個人都直接感受到非最佳建構的痛苦，並被要求去保持警惕時，激勵措施會更好地協調一致。透過取消這些激勵措施，並將臃腫的依賴關係隱藏在並行的分散式建構中，我們創造了一種情況，在這種情況下，消耗可能猖獗，而且幾乎沒有人被要求去關注建構的臃腫。這讓人想起傑文斯悖論（Jevons Paradox）：一種資源的消耗可能會隨著使用效率的提高而增加。
 
 Overall, the saved costs associated with adding a distributed build system far, far outweighed the negative costs associated with its construction and maintenance. But, as we saw with increased consumption, we did not foresee all of these costs. Having blazed ahead, we found ourselves in a situation in which we needed to reconceptualize the goals and constraints of the system and our usage, identify best practices (small dependencies, machine-management of dependencies), and fund the tooling and maintenance for the new ecosystem. Even a relatively simple trade-off of the form “We’ll spend $$$s for compute resources to recoup engineer time” had unforeseen downstream effects.
@@ -489,6 +495,11 @@ This question can arise at many levels of the software stack because it is regul
 
 這個問題可能出現在軟體棧（解決方案棧）各個層面，通常情況下，為特定問題客製解決方案優於需要處理所有問題的通用解決方案。透過分支或重新實現程式程式碼，併為特定問題客製它，你可以更便捷地新增新功能，或更確定地進行最佳化，無論我們談論的是微服務、記憶體快取、壓縮程式還是軟體生態系統中的其他內容。更重要的是，你從這樣一個分支中獲得的控制將你與基礎依賴項中的變更隔離開：這些變化並不是由另一個團隊或第三方供應商所決定的。你隨時決定如何對時間的推移和變化的作出必要地反應。
 
+```txt
+[一條微博引發的思考——再談“Software Stack”之“軟體棧”譯法！](https://www.ituring.com.cn/article/1144)
+軟體棧（Software Stack），是指為了實現某種完整功能解決方案（例如某款產品或服務）所需的一套軟體子系統或元件。
+```
+
 On the other hand, if every developer forks everything used in their software project instead of reusing what exists, scalability suffers alongside sustainability. Reacting to a security issue in an underlying library is no longer a matter of updating a single dependency and its users: it is now a matter of identifying every vulnerable fork of that dependency and the users of those forks.
 
 另一方面，如果每個開發人員都將他們的軟體專案中使用的元件是多樣化，而不是複用現有的元件，那麼可擴充性和可持續性都會受到影響。對底層庫中的安全問題作出反應不再是更新單個依賴項及其使用者的問題：現在要做的是識別該依賴關係的每一個易受攻擊的分支以及使用這個分支的使用者。
@@ -505,6 +516,7 @@ One of the unsung benefits of committing to a data-driven culture is the combine
 
 We believe strongly in data informing decisions, but we recognize that the data will change over time, and new data may present itself. This means, inherently, that decisions will need to be revisited from time to time over the life span of the system in question. For long-lived projects, it’s often critical to have the ability to change directions after an initial decision is made. And, importantly, it means that the deciders need to have the right to admit mistakes. Contrary to some people’s instincts, leaders who admit mistakes are more respected, not less.
 
+我們堅信資料能為決策提供資訊，但我們也認識到資料會隨著時間的推移而變化，新資料可能會出現。這意味著，本質上，在相關係統的生命週期內，需要不時地重新審視決策。對於長期專案而言，在做出初始決策後，有能力改變方向通常是至關重要的。更重要的是，這意味著決策者需要勇氣承認錯誤。與人的直覺相反，勇於承認錯誤的領導人受更多的尊重。
 我們堅信資料能為決策提供資訊，但我們也認識到資料會隨著時間的推移而變化，新資料可能會出現。這意味著，本質上，在相關係統的生命週期內，需要不時地重新審視決策。對於長期專案而言，在做出初始決策後，有能力改變方向通常是至關重要的。更重要的是，這意味著決策者需要勇氣承認錯誤。與人的本能相反，勇於承認錯誤的領導人受更多的尊重。
 
 Be evidence driven, but also realize that things that can’t be measured may still have value. If you’re a leader, that’s what you’ve been asked to do: exercise judgement, assert that things are important. We’ll speak more on leadership in Chapters 5 and 6.

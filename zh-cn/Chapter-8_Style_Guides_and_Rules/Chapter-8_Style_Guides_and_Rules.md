@@ -31,6 +31,7 @@ The wide variance among even our own style guides makes it difficult to pin down
 
 > [^1]: Many of our style guides have external versions, which you can find at https://google.github.io/styleguide. We cite numerous examples from these guides within this chapter.
 >
+> 1 我們的許多風格指南都有外部版本，你可以在https://google.github.io/styleguide。我們在本章中參考了這些指南中的許多例子。
 > 1 我們的許多風格指南都有外部版本，你可以在 https://google.github.io/styleguide 。我們在本章中參考了這些指南中的許多例子。
 
 ## Why Have Rules?  為什麼需要規則？

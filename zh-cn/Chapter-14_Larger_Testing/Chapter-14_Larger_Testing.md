@@ -220,6 +220,7 @@ In a system composed of microservices or separate servers, the pattern of interc
 
 [Figure 14-3 ](#_bookmark1226)depicts an imagined SUT: this system consists of a social network with users, a social graph, a stream of posts, and some ads mixed in. The ads are created by advertisers and served in the context of the social stream. This SUT alone consists of two groups of users, two UIs, three databases, an indexing pipeline, and six servers. There are 14 edges enumerated in the graph. Testing all of the end-to-end possibilities is already difficult. Imagine if we add more services, pipelines, and databases to this mix: photos and images, machine learning photo analysis, and so on?
 
+圖14-3描繪了一個想象中的SUT：這個系統由一個有使用者的社交網路、一個社交圖、一個feed流和一些混合廣告組成。廣告由廣告商建立，並在社交流的背景下提供服務。這個SUT單獨由兩組使用者、兩個UI、三個資料庫、一個索引管道和六個伺服器組成。圖中列舉了14條邊。測試所有端到端的可能性已經很困難了。想象一下，如果我們在這個組合中新增更多的服務、管道和資料庫：照片和圖像、機器學習照片分析等等？
 圖14-3描繪了一個想象中的SUT：這個系統由一個有使用者的社交網路、一個社交圖、一個feed流和一些混合廣告組成。廣告由廣告商建立，並在社交流的背景下提供服務。這個SUT單獨由兩組使用者、兩個UI、三個資料庫、一個索引管道和六個伺服器組成。圖中列舉了14條邊。測試所有端到端的可能性已經很困難了。想象一下，如果我們在這個組合中新增更多的服務、管道和資料庫：照片和影象、機器學習照片分析等等？
 
 ![Figure 14-3](./images/Figure%2014-3.png)

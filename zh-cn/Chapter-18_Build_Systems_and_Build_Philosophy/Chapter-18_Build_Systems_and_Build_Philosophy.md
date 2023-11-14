@@ -406,6 +406,7 @@ If the artifact we download has a different hash than the one declared in the ma
 
 Of course, it can still be a problem if a remote server becomes unavailable or starts serving corrupt data—this can cause all of your builds to begin failing if you don’t have another copy of that dependency available. To avoid this problem, we recommend that, for any nontrivial project, you mirror all of its dependencies onto servers or services that you trust and control. Otherwise you will always be at the mercy of a third party for your build system’s availability, even if the checked-in hashes guarantee its security.
 
+當然，如果一個遠端伺服器變得不可用或開始提供損壞的資料，這仍然是一個問題--如果沒有該依賴項的另一個副本可用，這可能會導致所有建構開始失敗。為了避免這個問題，我們建議，對於任何不重要的專案，你應該把所有的依賴關係鏡像到你信任和控制的伺服器或服務上。否否則，建構系統的可用性將始終取決於第三方，即使簽入雜湊保證了其安全性。
 當然，如果一個遠端伺服器變得不可用或開始提供損壞的資料，這仍然是一個問題--如果沒有該依賴項的另一個副本可用，這可能會導致所有建構開始失敗。為了避免這個問題，我們建議，對於任何不重要的專案，你應該把所有的依賴關係映象到你信任和控制的伺服器或服務上。否否則，建構系統的可用性將始終取決於第三方，即使簽入雜湊保證了其安全性。
 
 ### Distributed Builds 分散式建構
@@ -634,6 +635,7 @@ A better way to solve the problem of artifacts taking a long time to build is to
 
 Both problems can be mitigated by mirroring any artifacts you depend on onto servers you control and blocking your build system from accessing third-party artifact repositories like Maven Central. The trade-off is that these mirrors take effort and resources to maintain, so the choice of whether to use them often depends on the scale of the project. The security issue can also be completely prevented with little overhead by requiring the hash of each third-party artifact to be specified in the source repository, causing the build to fail if the artifact is tampered with.
 
+這兩個問題都可以透過將你依賴的構件鏡像到你控制的伺服器上，並阻止你的建構系統存取第三方構件庫（如Maven Central）來緩解。權衡之下，這些鏡像需要花費精力和資源來維護，所以是否使用這些鏡像往往取決於專案的規模。安全問題也可以透過要求在原始碼庫中指定每個第三方構件的雜湊值來完全避免，如果構件被篡改，則會導致建構失敗。
 這兩個問題都可以透過將你依賴的構件映象到你控制的伺服器上，並阻止你的建構系統存取第三方構件庫（如Maven Central）來緩解。權衡之下，這些映象需要花費精力和資源來維護，所以是否使用這些映象往往取決於專案的規模。安全問題也可以透過要求在原始碼庫中指定每個第三方構件的雜湊值來完全避免，如果構件被篡改，則會導致建構失敗。
 
 Another alternative that completely sidesteps the issue is to *vendor* your project’s dependencies. When a project vendors its dependencies, it checks them into source control alongside the project’s source code, either as source or as binaries. This effectively means that all of the project’s external dependencies are converted to internal dependencies. Google uses this approach internally, checking every third-party library referenced throughout Google into a *third_party* directory at the root of Google’s source tree. However, this works at Google only because Google’s source control system is custom built to handle an extremely large monorepo, so vendoring might not be an option for other organizations.

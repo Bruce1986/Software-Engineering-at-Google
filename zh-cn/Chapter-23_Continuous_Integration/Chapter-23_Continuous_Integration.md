@@ -171,6 +171,7 @@ Note that we include configuration in release candidates—this is extremely imp
 
 Rather, we are saying that any static configuration you *do* have should be promoted as part of the release candidate so that it can undergo testing along with its corresponding code. Remember, a large percentage of production bugs are caused by “silly” configuration problems, so it’s just as important to test your configuration as it is your code (and to test it along *with* the same code that will use it). Version skew is often caught in this release-candidate-promotion process. This assumes, of course, that your static configuration is in version control—at Google, static configuration is in version control along with the code, and hence goes through the same code review process.
 
+相反，我們的意思是，你所擁有的任何靜態配置都應該作為候選版本的一部分進行升級，以便它可以與其對應的程式碼一起接受測試。記住，很大比例的生產錯誤是由 "愚蠢的" 配置問題引起的，所以測試你的配置和測試你的程式碼一樣重要（而且要和將要使用它的相同程式碼一起測試）。在這個釋出--候選--推廣的過程中，經常會出現版本傾斜。當然，這是假設你的靜態配置是在版本控制中的--在谷歌，靜態配置是和程式碼一起在版本控制中的，因此要經過同樣的程式碼審查過程。
 相反，我們的意思是，你所擁有的任何靜態配置都應該作為候選版本的一部分進行升級，以便它可以與其對應的程式碼一起接受測試。記住，很大比例的生產錯誤是由 "愚蠢的 "配置問題引起的，所以測試你的配置和測試你的程式碼一樣重要（而且要和將要使用它的相同程式碼一起測試）。在這個釋出--候選--推廣的過程中，經常會出現版本傾斜。當然，這是假設你的靜態配置是在版本控制中的--在谷歌，靜態配置是和程式碼一起在版本控制中的，因此要經過同樣的程式碼審查過程。
 
 We then define CD as follows:
@@ -235,6 +236,7 @@ The main reason is that it’s too expensive. Engineer productivity is extremely
 
 Similarly, it’s expensive for engineers to be blocked on presubmit by failures arising from instability or flakiness that has nothing to do with their code change.
 
+同樣，如果工程師在提交前被與他們的程式碼修改無關的不穩定或鬆散性引起的故障所阻擋，代價也很高。
 同樣，如果工程師在提交前被與他們的程式碼修改無關的不穩定或軟弱性引起的故障所阻擋，代價也很高。
 
 Another reason is that during the time we run presubmit tests to confirm that a change is safe, the underlying repository might have changed in a manner that is incompatible with the changes being tested. That is, it is possible for two changes that touch completely different files to cause a test to fail. We call this a mid-air collision,and though generally rare, it happens most days at our scale. CI systems for smaller repositories or projects can avoid this problem by serializing submits so that there is no difference between what is about to enter and what just did.
@@ -253,6 +255,7 @@ We don’t want to waste valuable engineer productivity by waiting too long for 
 
 Most teams at Google run their small tests (like unit tests) on presubmit[^8]—these are the obvious ones to run as they tend to be the fastest and most reliable. Whether and how to run larger-scoped tests on presubmit is the more interesting question, and this varies by team. For teams that do want to run them, hermetic testing is a proven approach to reducing their inherent instability. Another option is to allow large- scoped tests to be unreliable on presubmit but disable them aggressively when they start failing.
 
+谷歌的大多數團隊都在預提交上執行他們的小型測試（如單元測試）-- 這些是明顯要執行的，因為它們往往是最快和最可靠的。是否以及如何在提交前執行更大範圍的測試是個更有趣的問題，這因團隊而異。對於想要執行這些測試的團隊來說，封閉測試是一種行之有效的方法來減少其固有的不穩定性。另一個選擇是允許大範圍的測試在預提交時不可靠，但當它們開始失敗時，要主動禁用它們。
 谷歌的大多數團隊都在預提交上執行他們的小型測試（如單元測試）--這些是明顯要執行的，因為它們往往是最快和最可靠的。是否以及如何在提交前執行更大範圍的測試是個更有趣的問題，這因團隊而異。對於想要執行這些測試的團隊來說，封閉測試是一種行之有效的方法來減少其固有的不穩定性。另一個選擇是允許大範圍的測試在預提交時不可靠，但當它們開始失敗時，要主動禁用它們。
 
 > [^8]: Each team at Google configures a subset of its project’s tests to run on presubmit (versus post-submit). In reality, our continuous build actually optimizes some presubmit tests to be saved for post-submit, behind the scenes. We’ll further discuss this later on in this chapter.
@@ -306,6 +309,7 @@ Our continuous, automated testing process goes all the way to the final deployed
 Continuous testing at each step of the application’s progression, each with its own trade-offs, serves as a reminder of the value in a “defense in depth” approach to catching bugs—it isn’t just one bit of technology or policy that we rely upon for quality and stability, it’s many testing approaches combined.
 
 在應用程式進展的每一步進行持續測試，每一步都有其自身的權衡，這提醒了 "深度防禦 "方法在捕捉錯誤方面的價值--我們依靠的不僅僅是一種技術或策略來保證品質和穩定性，還有多種測試方法的結合。
+在應用程式進展的每一步進行持續測試，每一步都有其自身的權衡，這提醒了 "深度防禦 "方法在捕捉錯誤方面的價值--我們依靠的不僅僅是一種技術或策略來保證品質和穩定性，還有多種測試方法的結合。
 
 -----
 
@@ -314,26 +318,32 @@ CI警告
 
 As with responsibly running production systems, sustainably maintaining software systems also requires continual automated monitoring. Just as we use a monitoring and alerting system to understand how production systems respond to change, CI reveals how our software is responding to changes in its environment. Whereas production monitoring relies on passive alerts and active probers of running systems, CI uses unit and integration tests to detect changes to the software before it is deployed. Drawing comparisons between these two domains lets us apply knowledge from one to the other.
 
+與負責任地執行生產系統一樣，可持續地維護軟體系統也需要持續的自動監控。正如我們使用監控和告警系統來了解生產系統對變化的反應一樣，CI揭示了我們的軟體是如何對其環境的變化做出反應的。生產監控依賴於執行系統的被動告警和主動探測，而CI則使用單元和整合測試來檢測軟體在部署前的變化。在這兩個領域之間進行比較，可以讓我們把一個領域的知識應用到另一個領域。
 與負責任地執行生產系統一樣，可持續地維護軟體系統也需要持續的自動監控。正如我們使用監控和警告系統來了解生產系統對變化的反應一樣，CI揭示了我們的軟體是如何對其環境的變化做出反應的。生產監控依賴於執行系統的被動警告和主動探測，而CI則使用單元和整合測試來檢測軟體在部署前的變化。在這兩個領域之間進行比較，可以讓我們把一個領域的知識應用到另一個領域。
 
 Both CI and alerting serve the same overall purpose in the developer workflow—to identify problems as quickly as reasonably possible. CI emphasizes the early side of the developer workflow, and catches problems by surfacing test failures. Alerting focuses on the late end of the same workflow and catches problems by monitoring metrics and reporting when they exceed some threshold. Both are forms of “identify problems automatically, as soon as possible.”
 
+CI和告警在開發者工作流程中的總體目的是一樣的--儘可能快地發現問題。CI強調開發者工作流程的早期階段，並透過顯示測試失敗來捕獲問題。告警側重於同一工作流程的後期，透過監測指標並在指標超過某個閾值時報告來捕捉問題。兩者都是 "自動、儘快地識別問題"的形式。
 CI和警告在開發者工作流程中的總體目的是一樣的--儘可能快地發現問題。CI強調開發者工作流程的早期階段，並透過顯示測試失敗來捕獲問題。警告側重於同一工作流程的後期，透過監測指標並在指標超過某個閾值時報告來捕捉問題。兩者都是 "自動、儘快地識別問題"的形式。
 
 A well-managed alerting system helps to ensure that your Service-Level Objectives (SLOs) are being met. A good CI system helps to ensure that your build is in good shape—the code compiles, tests pass, and you could deploy a new release if you needed to. Best-practice policies in both spaces focus a lot on ideas of fidelity and actionable alerting: tests should fail only when the important underlying invariant is violated, rather than because the test is brittle or flaky. A flaky test that fails every few CI runs is just as much of a problem as a spurious alert going off every few minutes and generating a page for the on-call. If it isn’t actionable, it shouldn’t be alerting. If it isn’t actually violating the invariants of the SUT, it shouldn’t be a test failure.
 
+一個管理良好的告警系統有助於確保你的服務水平目標（SLO）得到滿足。一個高效的CI系統有助於確保你的建構處於良好狀態--程式碼編譯，測試透過，如果需要的話，你可以部署一個新版本。這兩個領域的最佳實踐策略都非常注重模擬度和可操作的告警機制：測試應該只在重要的基礎不變因素被違反時才失敗，而不是因為測試很脆弱或不穩定。就像一個虛假的警報每隔幾分鐘就會響起，併為值班人員產生一個頁面一樣，一個脆弱的測試每次執行CI都會失敗，這是一個問題。如果它不具有可操作性，就不應該發出警報。如果它實際上沒有違反SUT的不變性，就不應該是測試失敗。
 一個管理良好的警告系統有助於確保你的服務水平目標（SLO）得到滿足。一個好的CI系統有助於確保你的建構處於良好狀態--程式碼編譯，測試透過，如果需要的話，你可以部署一個新版本。這兩個領域的最佳實踐策略都非常注重模擬度和可操作的警告：測試應該只在重要的基礎不變因素被違反時才失敗，而不是因為測試很脆弱或不穩定。一個脆弱的測試，每執行幾次CI就會失敗，就像一個虛假的警報每隔幾分鐘就會響起，併為值班人員產生一個頁面一樣，是一個問題。如果它不具有可操作性，就不應該發出警報。如果它實際上沒有違反SUT的不變性，就不應該是測試失敗。
 
 CI and alerting share an underlying conceptual framework. For instance, there’s a similar relationship between localized signals (unit tests, monitoring of isolated statistics/cause-based alerting) and cross-dependency signals (integration and release tests, black-box probing). The highest fidelity indicators of whether an aggregate system is working are the end-to-end signals, but we pay for that fidelity in flakiness, increasing resource costs, and difficulty in debugging root causes.
 
+CI和告警共享一個基本的概念框架。例如，在區域性訊號（單元測試、獨立統計監測/基於原因的警報）和交叉依賴訊號（整合和釋出測試、黑盒探測）之間存在類似的關係。雖然端到端的訊號是衡量整個系統是否正常工作的最高模擬度指標，但我們要為這種模擬度付出代價，如鬆散性、不斷增加的資源成本和除錯根源的難度。。
 CI和警告共享一個基本的概念框架。例如，在區域性訊號（單元測試、獨立統計監測/基於原因的警報）和交叉依賴訊號（整合和釋出測試、黑盒探測）之間存在類似的關係。衡量一個整體系統是否工作的最高模擬度指標是端到端的訊號，但我們要為這種模擬度付出代價，即鬆散性、不斷增加的資源成本和除錯根源的難度。
 
 Similarly, we see an underlying connection in the failure modes for both domains. Brittle cause-based alerts fire based on crossing an arbitrary threshold (say, retries in the past hour), without there necessarily being a fundamental connection between that threshold and system health as seen by an end user. Brittle tests fail when an arbitrary test requirement or invariant is violated, without there necessarily being a fundamental connection between that invariant and the correctness of the software being tested. In most cases these are easy to write, and potentially helpful in debugging a larger issue. In both cases they are rough proxies for overall health/correctness, failing to capture the holistic behavior. If you don’t have an easy end-to-end probe, but you do make it easy to collect some aggregate statistics, teams will write threshold alerts based on arbitrary statistics. If you don’t have a high-level way to say, “Fail the test if the decoded image isn’t roughly the same as this decoded image,” teams will instead build tests that assert that the byte streams are identical.
 
+同樣，我們在這兩個領域的故障模式中看到了一種潛在的聯絡。脆弱的基於原因的告警基於超過任意閾值（例如，過去一小時內的重試）而啟動，而該閾值與終端使用者看到的系統健康狀況之間不一定有根本聯絡。當一個任意的測試要求或不變數被違反時，脆性測試就會失敗，而不一定在該變數和被測軟體的正確性之間有根本的聯絡。在大多數情況下，這些測試很容易寫，並有可能有助於除錯更大的問題。在這兩種情況下，它們都是整體健康/正確性的粗略代理，無法捕獲整體行為。如果你沒有一個簡單的端到端探針，但你確實可以輕鬆地收集一些聚合統計資訊，那麼團隊將基於任意統計資訊編寫閾值警報。如果你沒有一個高層次的方法判斷："如果解碼後的圖像與這個原圖像不大致相同，則測試失敗"，團隊就會建立測試，斷言位元組流是相同的。
 同樣，我們在這兩個領域的故障模式中看到了一種潛在的聯絡。脆弱的基於原因的警告基於超過任意閾值（例如，過去一小時內的重試）而啟動，而該閾值與終端使用者看到的系統健康狀況之間不一定有根本聯絡。當一個任意的測試要求或不變數被違反時，脆性測試就會失敗，而不一定在該不變數和被測軟體的正確性之間有根本的聯絡。在大多數情況下，這些測試很容易寫，並有可能有助於除錯更大的問題。在這兩種情況下，它們都是整體健康/正確性的粗略代理，無法捕獲整體行為。如果你沒有一個簡單的端到端探針，但你確實可以輕鬆地收集一些聚合統計資訊，那麼團隊將基於任意統計資訊編寫閾值警報。如果你沒有一個高層次的方法說："如果解碼後的影象與這個解碼後的影象不大致相同，則測試失敗"，團隊就會建立測試，斷言位元組流是相同的。
 
 Cause-based alerts and brittle tests can still have value; they just aren’t the ideal way to identify potential problems in an alerting scenario. In the event of an actual failure, having more debug detail available can be useful. When SREs are debugging an outage, it can be useful to have information of the form, “An hour ago users, started experiencing more failed requests. Around the same, time the number of retries started ticking up. Let’s start investigating there.” Similarly, brittle tests can still provide extra debugging information: “The image rendering pipeline started spitting out garbage. One of the unit tests suggests that we’re getting different bytes back from the JPEG compressor. Let’s start investigating there.”
 
+基於原因的告警和脆性測試仍然有價值；它們只是在告警場景中不是識別潛在問題的理想方式。在實際發生故障的情況下，有更多的除錯細節可以使用。當SRE正在除錯故障時，有這樣的資訊是很有用的："一小時前，使用者開始遇到更多的失敗請求。大約在同一時間，重試的數量開始上升。讓我們開始調查。" 同樣地，脆弱的測試仍然可以提供額外的除錯資訊。"圖像渲染管道開始吐出亂資料。其中一個單元測試表明，我們從JPEG壓縮器那裡得到了不同的位元組。讓我們開始調查吧。"
 基於原因的警告和脆性測試仍然有價值；它們只是在警告場景中不是識別潛在問題的理想方式。在實際發生故障的情況下，有更多的除錯細節可以使用。當SRE正在除錯一個故障時，有這樣的資訊是很有用的："一小時前，使用者開始遇到更多的失敗請求。大約在同一時間，重試的數量開始上升。讓我們開始調查。" 同樣地，脆弱的測試仍然可以提供額外的除錯資訊。"影象渲染管道開始吐出垃圾。其中一個單元測試表明，我們從JPEG壓縮器那裡得到了不同的位元組。讓我們開始調查吧。"
 
 Although monitoring and alerting are considered a part of the SRE/production management domain, where the insight of “Error Budgets” is well understood,[^9] CI comes from a perspective that still tends to be focused on absolutes. Framing CI as the “left shift” of alerting starts to suggest ways to reason about those policies and propose better best practices:
@@ -342,14 +352,19 @@ Although monitoring and alerting are considered a part of the SRE/production man
 - Treating every alert as an equal cause for alarm is not generally the correct approach. If an alert fires in production but the service isn’t actually impacted, silencing the alert is the correct choice. The same is true for test failures: until our CI systems learn how to say, “This test is known to be failing for irrelevant reasons,” we should probably be more liberal in accepting changes that disable a failed test. Not all test failures are indicative of upcoming production issues.
 - Policies that say, “Nobody can commit if our latest CI results aren’t green” are probably misguided. If CI reports an issue, such failures should definitely be *investigated* before letting people commit or compound the issue. But if the root cause is well understood and clearly would not affect production, blocking commits is unreasonable.
 
+儘管監控和告警被認為是SRE/生產管理領域的一部分，其中 "錯誤成本 "的洞察力被很好地理解，CI來自一個仍然傾向於關注絕對性的視角。將CI定義為告警的 "左移"，開始建議如何推理這些策略並提出更好的最佳實踐：
 儘管監控和警告被認為是SRE/生產管理領域的一部分，其中 "錯誤成本 "的洞察力被很好地理解，CI來自一個仍然傾向於關注絕對性的視角。將CI定義為警告的 "左移"，開始建議如何推理這些策略並提出更好的最佳實踐：
 
+- 在CI上實現100%的綠色率，就像在生產服務中實現100%的正常執行時間一樣，是非常昂貴的。如果這確實是你的目標，那麼最大的問題之一就是測試和提交之間的競爭條件。
+- 把每個告警都當作一個相同原因來處理，一般來說不是正確的方法。如果一個告警在生產中被觸發，但服務實際上並沒有受到影響，讓告警沉默是正確的選擇。對於測試失敗也是如此：在我們的CI系統學會如何說“已知此測試因無關原因而失敗”之前，我們可能應該更自由地接受禁用失敗測試的更改。並非所有測試失敗都表明即將出現生產問題。
+- 那些說 "如果我們最新的CI結果不是綠色的，任何人都不能提交 "的策略可能是錯誤的。如果 CI 報告了一個問題，在讓人們提交或使問題複雜化之前，肯定要對這種失敗進行調查。但如果根本原因已被充分理解，並且顯然不會影響生產，那麼阻止提交是不合理的。
 - 在CI上實現100%的綠色率，就像在生產服務中實現100%的正常執行時間一樣，是非常昂貴的。如果這確實是你的目標，那麼最大的問題之一就是測試和提交之間的競爭條件。
 - 把每一個警告都當作一個相同原因來處理，一般來說不是正確的方法。如果一個警告在生產中被觸發，但服務實際上並沒有受到影響，讓警告沉默是正確的選擇。對於測試失敗也是如此：在我們的CI系統學會如何說“已知此測試因無關原因而失敗”之前，我們可能應該更自由地接受禁用失敗測試的更改。並非所有測試失敗都表明即將出現生產問題。
 - 那些說 "如果我們最新的CI結果不是綠色的，任何人都不能提交 "的策略可能是錯誤的。如果 CI 報告了一個問題，在讓人們提交或使問題複雜化之前，肯定要對這種失敗進行調查。但如果根本原因已被充分理解，並且顯然不會影響生產，那麼阻止提交是不合理的。
 
 This “CI is alerting” insight is new, and we’re still figuring out how to fully draw parallels. Given the higher stakes involved, it’s unsurprising that SRE has put a lot of thought into best practices surrounding monitoring and alerting, whereas CI has been viewed as more of a luxury feature.[^10] For the next few years, the task in software engineering will be to see where existing SRE practice can be reconceptualized in a CI context to help reformulate the testing and CI landscape—and perhaps where best practices in testing can help clarify goals and policies on monitoring and alerting.
 
+這種 "CI就是警報"的見解是新穎的，我們仍在摸索如何充分地得出相似之處。鑑於所涉及的風險較高，SRE對圍繞監控和警報的最佳實踐進行了大量的思考，而CI則被視為一種奢侈的功能，這一點並不奇怪。在未來幾年，軟體工程的任務將是看看現有的SRE實踐可以在CI背景下重新概念化，以幫助重新制定測試和CI景觀，也許測試的最佳實踐可以幫助澄清監控和警報的目標和策略。
 這種 "CI就是警報 "的見解是新的，我們仍在摸索如何充分地得出相似之處。鑑於所涉及的風險較高，SRE對圍繞監控和警報的最佳實踐進行了大量的思考，而CI則被視為一種奢侈的功能，這一點並不奇怪。在未來幾年，軟體工程的任務將是看看現有的SRE實踐可以在CI背景下重新概念化，以幫助重新制定測試和CI景觀，也許測試的最佳實踐可以幫助澄清監控和警報的目標和策略。
 
 ----
@@ -380,6 +395,8 @@ We’ve discussed some of the established best practices in CI and have introduc
 - *提交前最佳化*  
     包括考慮到我們已經描述過的潛在問題，在提交前執行哪些測試，以及如何執行它們。
 
+- *找出罪魁禍首*和*故障隔離*  
+    哪段程式碼或其他變化導致了問題，它發生在哪個系統中？"整合上游微服務 "是分散式架構中故障隔離的一種方法，當你想弄清楚問題是源於你自己的伺服器還是後端。在這種方法中，你把你的穩定伺服器與上游微服務的新伺服器組合在一起。（因此，你將微服務的最新變化整合到你的測試中）。由於版本偏差，這種方法可能特別具有挑戰性：不僅這些環境經常不相容，而且你還可能遇到假陽性--在某個特定的階段性組合中出現的問題，實際上在生產中不會被發現。
 - *找出罪魁禍首*和*故障隔離*  
     哪段程式碼或其他變化導致了問題，它發生在哪個系統中？"整合上游微服務 "是分散式架構中故障隔離的一種方法，當你想弄清楚問題是源於你自己的伺服器還是後端。在這種方法中，你把你的穩定伺服器與上游微服務的新伺服器組合在一起。(因此，你將微服務的最新變化整合到你的測試中）。由於版本偏差，這種方法可能特別具有挑戰性：不僅這些環境經常不相容，而且你還可能遇到假陽性--在某個特定的階段性組合中出現的問題，實際上在生產中不會被發現。
 
@@ -418,17 +435,19 @@ Hermetic tests have two important properties: greater determinism (i.e., stabili
 
 The other important property, isolation, means that problems in production should not affect these tests. We generally run these tests all on the same machine as well, so we don’t have to worry about network connectivity issues. The reverse also holds: problems caused by running hermetic tests should not affect production.
 
+另一個重要特性，隔離性，意味著生產環境中的問題不應該影響這些測試。我們通常也在同一臺機器上執行這些測試，因此我們不必擔心網路連線問題。反之亦然：執行封閉測試引起的問題不應影響生產環境。
 另一個重要特性，隔離，意味著生產環境中的問題不應該影響這些測試。我們通常也在同一臺機器上執行這些測試，因此我們不必擔心網路連線問題。反之亦然：執行封閉測試引起的問題不應影響生產環境。
 
 Hermetic test success should not depend on the user running the test. This allows people to reproduce tests run by the CI system and allows people (e.g., library developers) to run tests owned by other teams.
 
+封閉測試的成功不應取決於執行測試的使用者。這允許人們複製CI系統執行的測試，並允許人們（例如，庫的開發者）執行其他團隊擁有的測試。
 封閉測試的成功不應取決於執行測試的使用者。這允許人們複製CI系統執行的測試，並允許人們（例如，程式碼庫的開發者）執行其他團隊擁有的測試。
 
 One type of hermetic backend is a fake. As discussed in Chapter 13, these can be cheaper than running a real backend, but they take work to maintain and have limited fidelity.
 
 一種封閉式的後端是模擬的。正如在第13章中所討論的，這些可能比執行一個真正的後端更廉價，但它們需要花費精力去維護，而且模擬度有限。
 
-The cleanest option to achieve a presubmit-worthy integration test is with a fully hermetic setup—that is, starting up the entire stack sandboxed[^11]—and Google provides out-of-the-box sandbox configurations for popular components, like databases, to make it easier. This is more feasible for smaller applications with fewer components, but there are exceptions at Google, even one (by DisplayAds) that starts about four hundred servers from scratch on every presubmit as well as continuously on post- submit. Since the time that system was created, though, record/replay has emerged as a more popular paradigm for larger systems and tends to be cheaper than starting up a large sandboxed stack.
+The cleanest option to achieve a presubmit-worthy integration test is with a fully hermetic setup—that is, starting up the entire stack sandboxed[^11]—and Google provides out-of-the-box sandbox configurations for popular components, like databases, to make it easier. This is more feasible for smaller applications with fewer components, but there are exceptions at Google, even one (by DisplayAds) that starts about four hundred servers from scratch on every presubmit as well as continuously on postsubmit. Since the time that system was created, though, record/replay has emerged as a more popular paradigm for larger systems and tends to be cheaper than starting up a large sandboxed stack.
 
 實現具有預提交價值的整合測試的最乾淨的選擇是使用一個完全精細的設定--即啟動整個堆疊沙盒--谷歌為流行元件（如資料庫）提供開箱即用的沙盒配置，以使其更簡單。這對於元件較少的小型應用程式更為可行，但谷歌也有例外，即使是一個（由DisplayAds提供）在每次提交前以及提交後從零開始啟動大約400台伺服器的應用程式。但是，自建立該系統以來，錄製/重播已成為大型系統的一種更受歡迎的範例，並且往往比啟動大型沙盒堆疊更便宜。
 
@@ -448,7 +467,7 @@ Record/replay (see Chapter 14) systems record live backend responses, cache them
 *錯誤的否定*
 ​   測試在不應該透過的情況下失敗了，因為我們對緩衝區的命中太少。這需要更新響應，這可能需要很長時間，並導致必須修復的測試失敗，其中許多可能不是實際問題。這個過程通常是提交阻塞，這並不理想。
 
-Ideally, a record/replay system should detect only problematic changes and cache- miss only when a request has changed in a meaningful way. In the event that that change causes a problem, the code change author would rerun the test with an updated response, see that the test is still failing, and thereby be alerted to the problem. In practice, knowing when a request has changed in a meaningful way can be incredibly difficult in a large and ever-changing system.
+Ideally, a record/replay system should detect only problematic changes and cachemiss only when a request has changed in a meaningful way. In the event that that change causes a problem, the code change author would rerun the test with an updated response, see that the test is still failing, and thereby be alerted to the problem. In practice, knowing when a request has changed in a meaningful way can be incredibly difficult in a large and ever-changing system.
 
 理想情況下，記錄/重放系統應該只檢測有問題的更改，並且只有在請求以有意義的方式更改時才檢測快取未命中。如果該更改導致問題，程式碼修改者會用更新的響應重新執行測試，檢視測試是否仍然失敗，並因此收到問題警報。在實踐中，在一個大型且不斷變化的系統中，知道請求何時以有意義的方式發生了更改可能非常困難。
 
@@ -466,6 +485,7 @@ Google Assistant provides a framework for engineers to run end-to-end tests, inc
 
 One of its greatest success stories was making its test suite fully hermetic on presubmit. When the team previously used to run nonhermetic tests on presubmit, the tests would routinely fail. In some days, the team would see more than 50 code changes bypass and ignore the test results. In moving presubmit to hermetic, the team cut the runtime by a factor of 14, with virtually no flakiness. It still sees failures, but those failures tend to be fairly easy to find and roll back.
 
+其最大的成功故事之一是使其測試套件在提交前完全密封。當該團隊以前在提交前執行非封閉測試時，測試經常會失敗。在某些時間裡，團隊會看到超過50個程式碼更改繞過並忽略測試結果。在將預提交轉為封閉的過程中，該團隊將執行時間縮短了14倍，而且幾乎沒有任何閃失。它仍然會出現故障，但這些故障往往是相當容易發現和回滾的。
 其最大的成功故事之一是使其測試套件在提交前完全密封。當該團隊以前在提交前執行非封閉測試時，測試經常會失敗。在某些日子裡，團隊會看到超過50個程式碼更改繞過並忽略測試結果。在將預提交轉為封閉的過程中，該團隊將執行時間縮短了14倍，而且幾乎沒有任何閃失。它仍然會出現故障，但這些故障往往是相當容易發現和回滾的。
 
 Now that nonhermetic tests have been pushed to post-submit, it results in failures accumulating there instead. Debugging failing end-to-end tests is still difficult, and some teams don’t have time to even try, so they just disable them. That’s better than having it stop all development for everyone, but it can result in production failures.
@@ -480,13 +500,14 @@ Another is how to do presubmit testing for the decentralized Assistant given tha
 
 另一個問題是，鑑於元件正在轉移到自己的微服務中，如何為分散的助手做預提交測試。因為助手有一個龐大而複雜的堆疊，在預提交上執行一個封閉的堆疊，在工程工作、協調和資源方面的成本會非常高。
 
-Finally, the team is taking advantage of this decentralization in a clever new post- submit failure-isolation strategy. For each of the *N* microservices within the Assistant, the team will run a post-submit environment containing the microservice built at head, along with production (or close to it) versions of the other *N* – 1 services, to isolate problems to the newly built server. This setup would normally be *O*(*N*2) cost to facilitate, but the team leverages a cool feature called *hotswapping* to cut this cost to *O*(*N*). Essentially, hotswapping allows a request to instruct a server to “swap” in the address of a backend to call instead of the usual one. So only *N* servers need to be run, one for each of the microservices cut at head—and they can reuse the same set of prod backends swapped in to each of these *N* “environments.”
+Finally, the team is taking advantage of this decentralization in a clever new postsubmit failure-isolation strategy. For each of the *N* microservices within the Assistant, the team will run a post-submit environment containing the microservice built at head, along with production (or close to it) versions of the other *N* – 1 services, to isolate problems to the newly built server. This setup would normally be *O*(*N*2) cost to facilitate, but the team leverages a cool feature called *hotswapping* to cut this cost to *O*(*N*). Essentially, hotswapping allows a request to instruct a server to “swap” in the address of a backend to call instead of the usual one. So only *N* servers need to be run, one for each of the microservices cut at head—and they can reuse the same set of prod backends swapped in to each of these *N* “environments.”
 
+最後，該團隊正在利用這種分散的優勢，採取一種巧妙的新的提交後故障隔離策略。對於助手中的N個微服務中的每一個，團隊將執行一個提交後的環境，其中包含在頭部建構的微服務，以及其他N-1個服務的生產（或接近生產）版本，以將問題隔離到新建構的伺服器。這種設定通常是O(N2)的成本，但該團隊利用了一個很酷的功能，稱為熱交換，將這一成本削減到O(N)。從本質上講，"熱交換"允許一個請求指示伺服器 "交換 "一個後端地址來呼叫，而不是通常的一個。因此，只需要執行N個伺服器，每個微服務都有一個，而且它們可以重複使用同一組被交換到這N個 "環境 "中的生產環境後端。
 最後，該團隊正在利用這種分散的優勢，採取一種巧妙的新的提交後故障隔離策略。對於助手中的N個微服務中的每一個，團隊將執行一個提交後的環境，其中包含在頭部建構的微服務，以及其他N-1個服務的生產（或接近生產）版本，以將問題隔離到新建構的伺服器。這種設定通常是O(N2)的成本，但該團隊利用了一個很酷的功能，稱為熱交換，將這一成本削減到O(N)。從本質上講，"熱交換 "允許一個請求指示伺服器 "交換 "一個後端地址來呼叫，而不是通常的一個。因此，只需要執行N個伺服器，每個微服務都有一個，而且它們可以重複使用同一組被交換到這N個 "環境 "中的生產環境後端。
 
 -----
 
-As we’ve seen in this section, hermetic testing can both reduce instability in larger- scoped tests and help isolate failures—addressing two of the significant CI challenges we identified in the previous section. However, hermetic backends can also be more expensive because they use more resources and are slower to set up. Many teams use combinations of hermetic and live backends in their test environments.
+As we’ve seen in this section, hermetic testing can both reduce instability in largerscoped tests and help isolate failures—addressing two of the significant CI challenges we identified in the previous section. However, hermetic backends can also be more expensive because they use more resources and are slower to set up. Many teams use combinations of hermetic and live backends in their test environments.
 
 正如我們在本節中所看到的，封閉測試既可以減少大範圍測試中的不穩定性，也可以幫助隔離故障，解決我們在上一節中確定的兩個重大CI挑戰。然而，封閉式後端也可能更昂貴，因為它們使用更多的資源，並且設定速度較慢。許多團隊在他們的測試環境中使用密封和活動後端的組合。
 
@@ -504,6 +525,7 @@ Adam Bender 亞當-本德
 
 We run a massive continuous build, called the Test Automation Platform (TAP), of our entire codebase. It is responsible for running the majority of our automated tests. As a direct consequence of our use of a monorepo, TAP is the gateway for almost all changes at Google. Every day it is responsible for handling more than 50,000 unique changes *and* running more than four billion individual test cases.
 
+我們在整個程式碼庫中執行一個大規模的持續建構，稱為測試自動化平台（TAP）。它負責執行我們大部分的自動化測試。由於我們使用的是monorepo，TAP是谷歌幾乎所有變化的門戶。每天，它負責處理超過50,000個獨特的變化，執行超過40億個獨立的測試使用案例。
 我們在整個程式碼庫中執行一個大規模的持續建構，稱為測試自動化平台（TAP）。它負責執行我們大部分的自動化測試。由於我們使用的是monorepo，TAP是谷歌幾乎所有變化的門戶。每天，它負責處理超過50,000個獨特的變化，執行超過40億個單獨的測試使用案例。
 
 TAP is the beating heart of Google’s development infrastructure. Conceptually, the process is very simple. When an engineer attempts to submit code, TAP runs the associated tests and reports success or failure. If the tests pass, the change is allowed into the codebase.
@@ -518,6 +540,7 @@ To catch issues quickly and consistently, it is important to ensure that tests a
 
 As discussed earlier, waiting a long time to run every test on presubmit can be severely disruptive, in some cases taking hours. To minimize the time spent waiting, Google’s CB approach allows potentially breaking changes to land in the repository (remember that they become immediately visible to the rest of the company!). All we ask is for each team to create a fast subset of tests, often a project’s unit tests, that can be run before a change is submitted (usually before it is sent for code review)—the presubmit. Empirically, a change that passes the presubmit has a very high likelihood (95%+) of passing the rest of the tests, and we optimistically allow it to be integrated so that other engineers can then begin to use it.
 
+如前所述，等待很長時間來執行預提交的每個測試可能會造成嚴重破壞，在某些情況下需要等待數小時。為了最大限度地減少等待時間，谷歌的CB方法允許潛在的破壞性更改提交到儲存庫中（請記住，這些更改會立即被公司其他人看到！）。我們只要求每個團隊建立一個快速的測試子集，通常是一個專案的單元測試，可以在提交更改之前（通常是在傳送更改進行程式碼審查之前）執行這些測試。根據經驗，透過預提交的變更透過其餘測試的可能性非常高（95%+），我們樂觀地允許將其整合，以便其他工程師可以開始使用它。
 如前所述，等待很長時間來執行預提交的每個測試可能會造成嚴重破壞，在某些情況下需要數小時。為了最大限度地減少等待時間，谷歌的CB方法允許潛在的破壞性更改提交到儲存庫中（請記住，這些更改會立即被公司其他人看到！）。我們只要求每個團隊建立一個快速的測試子集，通常是一個專案的單元測試，可以在提交更改之前（通常是在傳送更改進行程式碼審查之前）執行這些測試。根據經驗，透過預提交的變更透過其餘測試的可能性非常高（95%+），我們樂觀地允許將其整合，以便其他工程師可以開始使用它。
 
 After a change has been submitted, we use TAP to asynchronously run all potentially affected tests, including larger and slower tests.
@@ -576,6 +599,7 @@ The primary mechanism for determining which tests need to be run is an analysis 
 
 Another factor influencing the use of TAP is the speed of tests being run. TAP is often able to run changes with fewer tests sooner than those with more tests. This bias encourages engineers to write small, focused changes. The difference in waiting time between a change that triggers 100 tests and one that triggers 1,000 can be tens of minutes on a busy day. Engineers who want to spend less time waiting end up making smaller, targeted changes, which is a win for everyone.
 
+影響TAP使用的另一個因素是測試執行的速度。TAP通常能夠以更少的測試比更多測試更快地執行更改。這種情況鼓勵工程師編寫小而集中的更改。在繁忙的一天中，觸發100個測試的更改和觸發1000個測試的更改之間的等待時間差異可能是幾十分鐘。希望花更少時間等待的工程師最終會做出更小的、有針對性的修改，這對所有人來說都是一種勝利。
 影響TAP使用的另一個因素是測試執行的速度。TAP通常能夠以更少的測試比更多測試更快地執行更改。這種情況鼓勵工程師編寫小而集中的更改。在繁忙的一天中，觸發100個測試的更改和觸發1000個測試的更改之間的等待時間差異可能是幾十分鐘。希望花更少時間等待的工程師最終會做出更小的、有針對性的修改，這對所有人來說都是一種勝利。 
 
 ----
@@ -584,12 +608,14 @@ Another factor influencing the use of TAP is the speed of tests being run. TAP i
 
 Google Takeout started out as a data backup and download product in 2011. Its founders pioneered the idea of “data liberation”—that users should be able to easily take their data with them, in a usable format, wherever they go. They began by integrating Takeout with a handful of Google products themselves, producing archives of users’ photos, contact lists, and so on for download at their request. However, Takeout didn’t stay small for long, growing as both a platform and a service for a wide variety of Google products. As we’ll see, effective CI is central to keeping any large project healthy, but is especially critical when applications rapidly grow.
 
+2011年，Google Takeout開始作為一種資料備份和下載產品。其創始人率先提出了“資料解放”的理念，即使用者無論走到哪裡，都應該能夠輕鬆地以可用的格式攜帶資料。他們首先將Takeout與少量谷歌產品整合在一起，製作使用者照片、聯絡人列表等檔案，以便在他們的要求下載。然而，Takeout並沒有在很長一段時間內保持規模，它不僅是一個平台，而且是一項針對各種谷歌產品的服務。正如我們將看到的，有效的CI對於保持任何大型專案的健康至關重要，但在應用程式快速增長時尤為關鍵。
 2011年，Google Takeout開始作為一種資料備份和下載產品。其創始人率先提出了“資料解放”的理念，即使用者無論走到哪裡，都應該能夠輕鬆地以可用的格式攜帶資料。他們首先將Takeout與少量谷歌產品整合在一起，製作使用者照片、聯絡人列表等檔案，以便在他們的要求下下載。然而，Takeout並沒有在很長一段時間內保持規模，它不僅是一個平台，而且是一項針對各種谷歌產品的服務。正如我們將看到的，有效的CI對於保持任何大型專案的健康至關重要，但在應用程式快速增長時尤為關鍵。
 
 #### Scenario #1: Continuously broken dev deploys 情景#1：持續中斷的開發部署
 
 **Problem:** As Takeout gained a reputation as a powerful Google-wide data fetching, archiving, and download tool, other teams at the company began to turn to it, requesting APIs so that their own applications could provide backup and download functionality, too, including Google Drive (folder downloads are served by Takeout) and Gmail (for ZIP file previews). All in all, Takeout grew from being the backend for just the original Google Takeout product, to providing APIs for at least 10 other Google products, offering a wide range of functionality.
 
+**問題:**隨著Takeout作為功能強大的Google範圍內的資料獲取、歸檔和下載工具而聲名鵲起，該公司的其他團隊開始轉向它，請求API以便他們自己的應用程式也可以提供備份和下載功能，包括Google Drive（資料夾下載由Takeout提供）和Gmail（用於ZIP檔案預覽）. 總之，Takeout從最初的Google Takeout產品的後端發展到為至少10種其他Google產品提供API，提供廣泛的功能。
 **問題:** 隨著Takeout作為功能強大的Google範圍內的資料獲取、歸檔和下載工具而聲名鵲起，該公司的其他團隊開始轉向它，請求API以便他們自己的應用程式也可以提供備份和下載功能，包括Google Drive（資料夾下載由Takeout提供）和Gmail（用於ZIP檔案預覽）. 總之，Takeout從最初的Google Takeout產品的後端發展到為至少10種其他Google產品提供API，提供廣泛的功能。
 
 The team decided to deploy each of the new APIs as a customized instance, using the same original Takeout binaries but configuring them to work a little differently. For example, the environment for Drive bulk downloads has the largest fleet, the most quota reserved for fetching files from the Drive API, and some custom authentication logic to allow non-signed-in users to download public folders.
@@ -606,6 +632,7 @@ Some efforts were made to detangle and modularize configuration, but the bigger 
 
 **What the team did.** The team created temporary, sandboxed mini-environments for each of these instances that ran on presubmit and tested that all servers were healthy on startup. Running the temporary environments on presubmit prevented 95% of broken servers from bad configuration and reduced nightly deployment failures by 50%.
 
+**團隊所做的**。**團隊為每個例項建立了臨時的、沙盒式的迷你環境，在預提交時執行，並測試所有伺服器在啟動時是否健康。在提交前執行臨時環境可以防止95%的伺服器因配置不當而損壞，並將夜間部署失敗率降低了50%。
 **團隊所做的** 。團隊為每個例項建立了臨時的、沙盒式的迷你環境，在預提交時執行，並測試所有伺服器在啟動時是否健康。在提交前執行臨時環境可以防止95%的伺服器因配置不當而損壞，並將夜間部署失敗率降低了50%。
 
 Although these new sandboxed presubmit tests dramatically reduced deployment failures, they didn’t remove them entirely. In particular, Takeout’s end-to-end tests would still frequently break the deploy, and these tests were difficult to run on presubmit (because they use test accounts, which still behave like real accounts in some respects and are subject to the same security and privacy safeguards). Redesigning them to be presubmit friendly would have been too big an undertaking.
@@ -627,6 +654,8 @@ So, the team reused the sandboxed environments from presubmit, easily extending 
 
 **經驗教訓。**更快的反饋迴圈防止了開發部署中的問題：
 
+- 將不同Takeout產品的測試從 "夜間部署後"轉移到預提交，可以防止95%的伺服器因配置不良而損壞，並將夜間部署的失敗率降低50%。
+- 儘管端到端測試不能全部轉移到預提交，但它們仍然從 "夜間部署後"轉移到 "兩小時內提交後"。這有效地將"罪魁禍首"減少了12倍。
 - 將不同Takeout產品的測試從 "夜間部署後 "轉移到預提交，可以防止95%的伺服器因配置不良而損壞，並將夜間部署的失敗率降低50%。
 - 儘管端到端測試不能全部轉移到預提交，但它們仍然從 "夜間部署後 "轉移到 "兩小時內提交後"。這有效地將 "罪魁禍首集 "減少了12倍。
 
@@ -634,6 +663,7 @@ So, the team reused the sandboxed environments from presubmit, easily extending 
 
 **Problem:** As Takeout incorporated more Google products, it grew into a mature platform that allowed product teams to insert plug-ins, with product-specific data- fetching code, directly into Takeout’s binary. For example, the Google Photos plug-in knows how to fetch photos, album metadata, and the like. Takeout expanded from its original “handful” of products to now integrate with more than *90*.
 
+**問題：**隨著Takeout整合了更多的谷歌產品，它已經發展成為一個成熟的平台，允許產品團隊直接在Takeout的二進位制檔案中插入外掛，其中包含產品特定的資料獲取程式碼。例如，谷歌照片外掛知道如何獲取照片、相簿元資料等。Takeout從最初的 "少數"產品擴充到現在與超過*90個*的產品整合。
 **問題：**隨著Takeout整合了更多的谷歌產品，它已經發展成為一個成熟的平台，允許產品團隊直接在Takeout的二進位制檔案中插入外掛，其中包含產品特定的資料獲取程式碼。例如，谷歌照片外掛知道如何獲取照片、相簿元資料等。Takeout從最初的 "少數 "產品擴充到現在與超過*90個*的產品整合。
 
 Takeout’s end-to-end tests dumped its failures to a log, and this approach didn’t scale to 90 product plug-ins. As more products integrated, more failures were introduced. Even though the team was running the tests earlier and more often with the addition of the post-submit CI, multiple failures would still pile up inside and were easy to miss. Going through these logs became a frustrating time sink, and the tests were almost always failing.
@@ -696,10 +726,12 @@ For the rollout problem, the team added capability for plug-in engineers to spec
 
 When bug tags from disabled tests began to accumulate and were not updated, the team automated their cleanup. The tests would now check whether a bug was closed by querying our bug system’s API. If a tagged-failing test actually passed and was passing for longer than a configured time limit, the test would prompt to clean up the tag (and mark the bug fixed, if it wasn’t already). There was one exception for this strategy: flaky tests. For these, the team would allow a test to be tagged as flaky, and the system wouldn’t prompt a tagged “flaky” failure for cleanup if it passed.
 
+當被禁用的測試的bug標籤開始積累並且不被更新時，該團隊將其清理自動化。測試現在會透過查詢我們的錯誤系統的API來檢查一個錯誤是否被關閉。如果一個被標記為失敗的測試實際通過了，並且透過的時間超過了配置的時間限制，測試就會提示清理標籤（如果還沒有被修復的話，就標記為bug修復）。這個策略有一個例外：不穩定的測試。對於這些，團隊將允許測試被標記為不穩定，如果測試通過了，系統不會提示清理標記的 "不穩定"故障。
 當被禁用的測試的bug標籤開始積累並且不被更新時，該團隊將其清理自動化。測試現在會透過查詢我們的錯誤系統的API來檢查一個錯誤是否被關閉。如果一個被標記為失敗的測試實際通過了，並且透過的時間超過了配置的時間限制，測試就會提示清理標籤（如果還沒有被修復的話，就標記為bug修復）。這個策略有一個例外：不穩定的測試。對於這些，團隊將允許測試被標記為不穩定，如果測試通過了，系統不會提示清理標記的 "不穩定 "故障。
 
 These changes made a mostly self-maintaining test suite, as illustrated in [Figure 23-5](#_bookmark2093).
 
+’這些變化使得測試套件大多是自我維護的，如圖23-5所示。
 這些變化使得測試套件大多是自我維護的，如圖23-5所示。
 
 ![Figure 23-5](./images/Figure%2023-5.png)
@@ -708,6 +740,7 @@ These changes made a mostly self-maintaining test suite, as illustrated in [Figu
 
 **Lessons learned.** Disabling failing tests that can’t be immediately fixed is a practical approach to keeping your suite green, which gives confidence that you’re aware of all test failures. Also, automating the test suite’s maintenance, including rollout management and updating tracking bugs for fixed tests, keeps the suite clean and prevents technical debt. In DevOps parlance, we could call the metric in [Figure 23-5 ](#_bookmark2093)MTTCU: mean time to clean up.
 
+**經驗教訓。**禁用無法立即修復的失敗測試是保持套件綠色的一種切實可行的方法，這使人相信你知道所有的測試失敗。另外，自動化測試套件的維護，包括推出管理和更新追蹤固定測試的bug，保持套件的清潔，防止技術債務。用DevOps的說法，我們可以把圖23-5 MTTCU中的指標稱為：平均清理時間。
 **經驗教訓。**禁用無法立即修復的失敗測試是保持套件綠色的一種切實可行的方法，這使人相信你知道所有的測試失敗。另外，自動化測試套件的維護，包括推出管理和更新追蹤固定測試的bug，保持套件的清潔，防止技術債務。用DevOps的說法，我們可以把圖23-5MTTCU中的指標稱為：平均清理時間。
 
 **Future improvement.** Automating the filing and tagging of bugs would be a helpful next step. This is still a manual and burdensome process. As mentioned earlier, some of our larger teams already do this.
@@ -716,6 +749,7 @@ These changes made a mostly self-maintaining test suite, as illustrated in [Figu
 
 **Further challenges.** The scenarios we’ve described are far from the only CI challenges faced by Takeout, and there are still more problems to solve. For example, we mentioned the difficulty of isolating failures from upstream services in “CI Challenges” on page 490. This is a problem that Takeout still faces with rare breakages originating with upstream services, such as when a security update in the streaming infrastructure used by Takeout’s “Drive folder downloads” API broke archive decryption when it deployed to production. The upstream services are staged and tested themselves, but there is no simple way to automatically check with CI if they are compatible with Takeout after they’re launched into production. An initial solution involved creating an “upstream staging” CI environment to test production Takeout binaries against the staged versions of their upstream dependencies. However, this proved difficult to maintain, with additional compatibility issues between staging and production versions.
 
+**進一步的挑戰。**我們所描述的場景遠不是Takeout所面臨的唯一的CI挑戰，還有更多問題需要解決。例如，我們在第490頁的"CI挑戰"中提到了從上游服務隔離故障的困難。這是Takeout仍然面臨的一個問題，即源於上游服務的罕見故障，例如Takeout的“驅動器資料夾下載”API使用的流式基礎結構中的安全更新在部署到生產環境時破壞了存檔解密。上游服務都是經過階段性測試的，但沒有簡單的方法在它們投入生產後用CI自動檢查它們是否與Takeout相容。最初的解決方案是建立一個"上游臨時"的CI環境，根據上游依賴的暫存版本測試Takeout的生產二進位制檔案。然而，這被證明是很難維護的，在臨時版本和生產版本之間存在著額外的相容性問題。
 **進一步的挑戰。**我們所描述的場景遠不是Takeout所面臨的唯一的CI挑戰，還有更多問題需要解決。例如，我們在第490頁的 "CI挑戰 "中提到了從上游服務隔離故障的困難。這是Takeout仍然面臨的一個問題，即源於上游服務的罕見故障，例如Takeout的“驅動器資料夾下載”API使用的流式基礎結構中的安全更新在部署到生產環境時破壞了存檔解密。上游服務都是經過階段性測試的，但沒有簡單的方法在它們投入生產後用CI自動檢查它們是否與Takeout相容。最初的解決方案是建立一個 "上游臨時 "的CI環境，根據上游依賴的暫存版本測試Takeout的生產二進位制檔案。然而，這被證明是很難維護的，在臨時版本和生產版本之間存在著額外的相容性問題。
 
 ### But I Can’t Afford CI  但我用不起CI費用

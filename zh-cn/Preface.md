@@ -36,7 +36,7 @@ The book emphasizes three fundamental principles that we feel software organizat
 
 本書強調了三個基本原則，我們認為軟體組織在設計、架構和編寫程式碼時應該牢記這些原則：
 *時間和變化*
-	​程式碼如何展期生命週期內進行適配。
+	​程式碼如何在其生命週期內進行適配。
 *規模和增長*
 	​一個組織如何適應它的發展過程。
 *權衡和成本*

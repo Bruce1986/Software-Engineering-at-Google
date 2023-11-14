@@ -41,6 +41,7 @@ Because of bias, Google has at times failed to represent users equitably within 
 
 In 2015, software engineer Jacky Alciné pointed out[^2] that the image recognition algorithms in Google Photos were classifying his black friends as “gorillas.” Google was slow to respond to these mistakes and incomplete in addressing them.
 
+2015年，軟體工程師Jacky Alciné指出，谷歌照片中的圖像識別演算法將他的黑人朋友歸為 "大猩猩"。谷歌對這些錯誤的反應很慢，解決起來也不徹底。
 2015年，軟體工程師Jacky Alciné指出，谷歌照片中的影象識別演算法將他的黑人朋友歸為 "大猩猩"。谷歌對這些錯誤的反應很慢，解決起來也不徹底。
 
 What caused such a monumental failure? Several things:
@@ -48,6 +49,10 @@ What caused such a monumental failure? Several things:
 - Google itself (and the tech industry in general) did not (and does not) have much black representation,[^3] and that affects decisions subjective in the design of such algorithms and the collection of such datasets. The unconscious bias of the organization itself likely led to a more representative product being left on the table.
 - Google’s target market for image recognition did not adequately include such underrepresented groups. Google’s tests did not catch these mistakes; as a result, our users did, which both embarrassed Google and harmed our users.
 
+是什麼導致了這樣一個巨大的失誤？有幾件事：
+- 圖像識別演算法取決於是否提供了一個 "適當的"（通常意味著 "完整的"）資料集。送入谷歌圖像識別演算法的照片資料顯然是不完整的。簡而言之，這些資料並不代表所有人口。
+- 谷歌本身（以及整個科技行業）過去沒有（現在也沒有）很多黑人代表，這影響了設計這種演算法和收集這種資料集的主觀決定。組織本身無意識的偏見很可能導致更具代表性的產品被擱置。
+- 谷歌的圖像識別目標市場並沒有充分包括這種代表性不足的群體。谷歌的測試沒有發現這些錯誤；結果是我們的使用者發現了，這既讓谷歌感到尷尬，也傷害了我們的使用者。
 是什麼導致了這樣一個巨大的失誤？有幾件事：
 - 影象識別演算法取決於是否提供了一個 "適當的"（通常意味著 "完整的"）資料集。送入谷歌影象識別演算法的照片資料顯然是不完整的。簡而言之，這些資料並不代表所有人口。
 - 谷歌本身（以及整個科技行業）過去沒有（現在也沒有）很多黑人代表，這影響了設計這種演算法和收集這種資料集的主觀決定。組織本身無意識的偏見很可能導致更具代表性的產品被擱置。
@@ -105,6 +110,7 @@ One mark of an exceptional engineer is the ability to understand how products ca
 
 Over time, you might build tools that billions of people use daily—tools that influence how people think about the value of human lives, tools that monitor human activity, and tools that capture and persist sensitive data, such as images of their children and loved ones, as well as other types of sensitive data. As an engineer, you might wield more power than you realize: the power to literally change society. It’s critical that on your journey to becoming an exceptional engineer, you understand the innate responsibility needed to exercise power without causing harm. The first step is to recognize the default state of your bias caused by many societal and educational factors. After you recognize this, you’ll be able to consider the often-forgotten use cases or users who can benefit or be harmed by the products you build.
 
+隨著時間的推移，你可能會建立數十億人每天使用的工具——影響人們思考人類生命價值的工具，監測人類活動的工具，以及捕獲和永久儲存敏感資料的工具，如他們的孩子和親人的圖像，以及其他型別的敏感資料。作為一名工程師，你可能掌握著比你意識到的更多的權力：真正改變社會的權力。至關重要的是，在你成為一名傑出的工程師的過程中，你必須理解在不造成傷害的情況下行使權力所需的內在責任，這一點至關重要。第一步是要認識到由許多社會和教育因素造成的你的偏見的預設狀態。在你認識到這一點之後，你就能考慮那些經常被遺忘的使用案例或使用者，他們可以從你製造的產品中獲益或受到傷害。
 隨著時間的推移，你可能會建立數十億人每天使用的工具——影響人們思考人類生命價值的工具，監測人類活動的工具，以及捕獲和永久儲存敏感資料的工具，如他們的孩子和親人的影象，以及其他型別的敏感資料。作為一名工程師，你可能掌握著比你意識到的更多的權力：真正改變社會的權力。至關重要的是，在你成為一名傑出的工程師的過程中，你必須理解在不造成傷害的情況下行使權力所需的內在責任，這一點至關重要。第一步是要認識到由許多社會和教育因素造成的你的偏見的預設狀態。在你認識到這一點之後，你就能考慮那些經常被遺忘的使用案例或使用者，他們可以從你製造的產品中獲益或受到傷害。
 
 The industry continues to move forward, building new use cases for artificial intelligence (AI) and machine learning at an ever-increasing speed. To stay competitive, we drive toward scale and efficacy in building a high-talent engineering and technology workforce. Yet we need to pause and consider the fact that today, some people have the ability to design the future of technology and others do not. We need to understand whether the software systems we build will eliminate the potential for entire populations to experience shared prosperity and provide equal access to technology.
