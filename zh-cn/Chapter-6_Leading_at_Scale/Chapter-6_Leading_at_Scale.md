@@ -428,7 +428,7 @@ Successful leaders naturally take on more responsibility as they progress (and t
 ## TL;DRs  內容提要
 
 - Always Be Deciding: Ambiguous problems have no magic answer; they’re all about finding the right trade-offs of the moment, and iterating.
-- Always Be Leaving: Your job, as a leader, is to build an organization that automatically solves a class of ambiguous problems—over time—without you needing to be present.
+- Always Be Leaving: Your job, as a leader, is to build an organization that automatically solves a class of ambiguous problems—over time—without  you needing to be present.
 - Always Be Scaling: Success generates more responsibility over time, and you must proactively manage the scaling of this work in order to protect your scarce resources of personal time, attention, and energy.
 
 - 始終保持決斷力：模糊的問題沒有靈丹妙藥；他們都是關於找到當下最佳的權衡，然後反覆迭代。
