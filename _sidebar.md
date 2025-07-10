@@ -9,7 +9,7 @@
 - [第七章 測量工程效率](zh-cn/Chapter-7_Measuring_Engineering_Productivity/Chapter-7_Measuring_Engineering_Productivity.md)
 - [第八章 風格指導和規則](zh-cn/Chapter-8_Style_Guides_and_Rules/Chapter-8_Style_Guides_and_Rules.md)
 - [第九章 程式碼審查](zh-cn/Chapter-9_Code_Review/Chapter-9_Code_Review.md)
-- [第十章 文件](zh-cn/Chapter-10_Documentation/Chapter-10_Documentatio.md)
+- [第十章 文件](zh-cn/Chapter-10_Documentation/Chapter-10_Documentation.md)
 - [第十一章 測試概述](zh-cn/Chapter-11_Testing_Overview/Chapter-11_Testing_Overview.md)
 - [第十二章 單元測試](zh-cn/Chapter-12_Unit_Testing/Chapter-12_Unit_Testing.md)
 - [第十三章 測試替代](zh-cn/Chapter-13_Test_Doubles/Chapter-13_Test_Doubles.md)
