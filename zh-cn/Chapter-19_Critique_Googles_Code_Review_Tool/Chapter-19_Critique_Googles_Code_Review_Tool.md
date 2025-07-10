@@ -235,7 +235,7 @@ Assigning a reviewer to a change triggers a review request. This request runs �
 
 - 自動將電子郵件列表新增到更改中，以提高意識和透明度
 - 為專案執行自動化測試套件
-- 對程式碼（強制執行原生代碼風格限制）和變更描述（允許產生釋出說明或其他形式的追蹤）執行專案特定的不變因素
+- 對程式碼（強制執行原生程式碼風格限制）和變更描述（允許產生釋出說明或其他形式的追蹤）執行專案特定的不變因素
 
 As running tests is resource intensive, at Google they are part of presubmits (run when requesting review and when committing changes) rather than for every snapshot like Tricorder checks. Critique surfaces the result of running the hooks in a similar way to how analyzer results are displayed, with an extra distinction to highlight the fact that a failed result blocks the change from being sent for review or committed. Critique notifies the author via email if presubmits fail.
 

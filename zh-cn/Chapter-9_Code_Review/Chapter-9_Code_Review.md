@@ -67,7 +67,7 @@ It’s important to remember (and accept) that code itself is a liability. It mi
 
 New features are often necessary, of course, but care should be taken before developing code in the first place to ensure that any new feature is warranted. Duplicated code not only is a wasted effort, it can actually cost more in time than not having the code at all; changes that could be easily performed under one code pattern often require more effort when there is duplication in the codebase. Writing entirely new code is so frowned upon that some of us have a saying: “If you’re writing it from scratch, you’re doing it wrong!”
 
-當然，新特性通常是必需的，但在開發程式碼之前，首先要注意確保任何新特性都是有必要的。重複的程式碼不僅是一種浪費，而且實際上比根本沒有程式碼要花費更多的時間；當代碼庫中存在重複時，可以在一個程式碼模式下輕鬆執行的更改通常需要更多的工作。編寫全新的程式碼是如此令人不快，以至於我們中的一些人都有這樣一句話：“如果你是從頭開始寫的，那你就是做錯了！”
+當然，新特性通常是必需的，但在開發程式碼之前，首先要注意確保任何新特性都是有必要的。重複的程式碼不僅是一種浪費，而且實際上比根本沒有程式碼要花費更多的時間；當程式碼庫中存在重複時，可以在一個程式碼模式下輕鬆執行的更改通常需要更多的工作。編寫全新的程式碼是如此令人不快，以至於我們中的一些人都有這樣一句話：“如果你是從頭開始寫的，那你就是做錯了！”
 
 This is especially true of library or utility code. Chances are, if you are writing a utility, someone else somewhere in a codebase the size of Google’s has probably done something similar. Tools such as those discussed in Chapter 17 are therefore critical for both finding such utility code and preventing the introduction of duplicate code. Ideally, this research is done beforehand, and a design for anything new has been communicated to the proper groups before any new code is written.
 
@@ -429,7 +429,7 @@ The least common type of code review is that of entirely new code, a so-called *
 
 To ensure that code is sustainable, a greenfield review should ensure that an API matches an agreed design (which may require reviewing a design document) and is tested *fully*, with all API endpoints having some form of unit test, and that those tests fail when the code’s assumptions change. (See Chapter 11). The code should also have proper owners (one of the first reviews in a new project is often of a single OWNERS file for the new directory), be sufficiently commented, and provide supplemental documentation, if needed. A greenfield review might also necessitate the introduction of a project into the continuous integration system. (See Chapter 23).
 
-為了確保程式碼是可持續性，綠地審查應該確保API與商定的設計相匹配（這可能需要審查設計文件），並進行*充分測試*，所有API端點都有某種形式的單元測試，而且當代碼的假設發生變化時，這些測試會失效。(見第11章）。程式碼還應該有適當的所有者（一個新專案的第一次審查往往是對新目錄的一個單一的OWNERS檔案的審查），有足夠的註釋，如果需要的話，還應該提供補充文件。綠地審查也可能需要將專案引入持續整合系統。(參見第23章）。
+為了確保程式碼是可持續性，綠地審查應該確保API與商定的設計相匹配（這可能需要審查設計文件），並進行*充分測試*，所有API端點都有某種形式的單元測試，而且當程式碼的假設發生變化時，這些測試會失效。(見第11章）。程式碼還應該有適當的所有者（一個新專案的第一次審查往往是對新目錄的一個單一的OWNERS檔案的審查），有足夠的註釋，如果需要的話，還應該提供補充文件。綠地審查也可能需要將專案引入持續整合系統。(參見第23章）。
 
 ### Behavioral Changes, Improvements, and Optimizations 行為更改、改進和最佳化
 

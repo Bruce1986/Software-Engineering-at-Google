@@ -77,7 +77,7 @@ First, the infrastructure teams that build and manage the underlying systems are
 
 Consider the amount of time it takes to do the first of a series of semi-mechanical changes that you don’t understand. You probably spend some time reading about the motivation and nature of the change, find an easy example, try to follow the provided suggestions, and then try to apply that to your local code. Repeating this for every team in an organization greatly increases the overall cost of execution. By making only a few centralized teams responsible for LSCs, Google both internalizes those costs and drives them down by making it possible for the change to happen more efficiently.
 
-考慮一下做一系列你不理解的半自動化變更中的第一次所需的時間。你可能會花一些時間來閱讀關於更改的動機和性質，找到一個簡單的例子，嘗試遵循所提供的建議，然後嘗試將其應用於你的原生代碼。對組織中的每個團隊重複此操作會大大增加執行的總體成本。透過只讓幾個集中的團隊負責LSC，谷歌將這些成本內部化，並透過使變革更有效地發生來降低成本。
+考慮一下做一系列你不理解的半自動化變更中的第一次所需的時間。你可能會花一些時間來閱讀關於更改的動機和性質，找到一個簡單的例子，嘗試遵循所提供的建議，然後嘗試將其應用於你的原生程式碼。對組織中的每個團隊重複此操作會大大增加執行的總體成本。透過只讓幾個集中的團隊負責LSC，谷歌將這些成本內部化，並透過使變革更有效地發生來降低成本。
 
 Second, nobody likes unfunded mandates.[^4] Even though a new system might be categorically better than the one it replaces, those benefits are often diffused across an organization and thus unlikely to matter enough for individual teams to want to update on their own initiative. If the new system is important enough to migrate to, the costs of migration will be borne somewhere in the organization. Centralizing the migration and accounting for its costs is almost always faster and cheaper than depending on individual teams to organically migrate.
 
@@ -537,7 +537,7 @@ As part of the mailing process, Rosie also runs the per-project precommit tools,
 
 We also aggressively ignore presubmit check failures that preexist the change in question. When working on an individual project, it’s easy for an engineer to fix those and continue with their original work, but that technique doesn’t scale when making LSCs across Google’s codebase. Local code owners are responsible for having no preexisting failures in their codebase as part of the social contract between them and infrastructure teams.
 
-我們還積極地忽略了預先存在問題變更的提交前檢查失敗。在處理單個專案時，工程師很容易修復這些問題並繼續他們原來的工作，但當在Google的程式碼庫中製作LSC時，這種技術無法擴充。原生代碼所有者有責任確保其程式碼庫中沒有先前存在的故障，這是他們與基礎設施團隊之間契約的一部分。
+我們還積極地忽略了預先存在問題變更的提交前檢查失敗。在處理單個專案時，工程師很容易修復這些問題並繼續他們原來的工作，但當在Google的程式碼庫中製作LSC時，這種技術無法擴充。原生程式碼所有者有責任確保其程式碼庫中沒有先前存在的故障，這是他們與基礎設施團隊之間契約的一部分。
 
 #### Reviewing 審查
 
