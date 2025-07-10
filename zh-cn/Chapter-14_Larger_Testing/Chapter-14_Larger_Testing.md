@@ -330,7 +330,7 @@ The SUT in a large test can be a major source of both unreliability and long tur
 
 The most common first alternative is to create a giant shared staging environment and to run tests there. This is usually done as part of some release promotion process, but it again limits test execution to only when the code is available. As an alternative, some teams will allow engineers to “reserve” time in the staging environment and to use that time window to deploy pending code and to run tests, but this does not scale with a growing number of engineers or a growing number of services, because the environment, its number of users, and the likelihood of user conflicts all quickly grow.
 
-最常見的第一種選擇是建立一個巨大的共享預發環境並在那裡執行測試。這通常是作為某些釋出升級過程的一部分來完成的，但它再次將測試執行限制為僅當代碼可用時。作為一個替代方案，一些團隊允許工程師在預發環境中"保留 "時間，並使用該時間視窗來部署待定的程式碼和執行測試，但這並不能隨著工程師數量的增加或服務數量的增加而擴充，因為環境、使用者數量和使用者衝突的可能性都會迅速增加。
+最常見的第一種選擇是建立一個巨大的共享預發環境並在那裡執行測試。這通常是作為某些釋出升級過程的一部分來完成的，但它再次將測試執行限制為僅當程式碼可用時。作為一個替代方案，一些團隊允許工程師在預發環境中"保留 "時間，並使用該時間視窗來部署待定的程式碼和執行測試，但這並不能隨著工程師數量的增加或服務數量的增加而擴充，因為環境、使用者數量和使用者衝突的可能性都會迅速增加。
 
 The next step is to support cloud-isolated or machine-hermetic SUTs. Such an environment improves the situation by avoiding the conflicts and reservation requirements for code release.
 

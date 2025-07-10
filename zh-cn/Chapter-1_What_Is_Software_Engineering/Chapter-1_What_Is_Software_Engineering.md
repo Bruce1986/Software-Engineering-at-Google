@@ -306,7 +306,7 @@ This story isn’t at all unusual. Engineers at many companies can tell a simila
 
 The more frequently you change your infrastructure, the easier it becomes to do so. We have found that most of the time, when code is updated as part of something like a compiler upgrade, it becomes less brittle and easier to upgrade in the future. In an ecosystem in which most code has gone through several upgrades, it stops depending on the nuances of the underlying implementation; instead, it depends on the actual abstraction guaranteed by the language or OS. Regardless of what exactly you are upgrading, expect the first upgrade for a codebase to be significantly more expensive than later upgrades, even controlling for other factors.
 
-你更改基礎設施的頻率越高，更改就越容易。我們發現，在大多數情況下，當代碼作為編譯器升級的一部分進行更新時，它會變得沒那麼脆弱，將來更容易升級。大多數程式碼都經歷了幾次升級的一個系統中，它的停止取決於底層實現的細微差別。相反，它取決於語言或作業系統所保證的抽象。無論你升級的是什麼，程式碼庫的第一次升級都比以後的升級要複雜得多，甚至可以控制其他因素。
+你更改基礎設施的頻率越高，更改就越容易。我們發現，在大多數情況下，當程式碼作為編譯器升級的一部分進行更新時，它會變得沒那麼脆弱，將來更容易升級。大多數程式碼都經歷了幾次升級的一個系統中，它的停止取決於底層實現的細微差別。相反，它取決於語言或作業系統所保證的抽象。無論你升級的是什麼，程式碼庫的第一次升級都比以後的升級要複雜得多，甚至可以控制其他因素。
 
 > [^14]: Specifically, interfaces from the C++ standard library needed to be referred to in namespace std, and an optimization change for std::string turned out to be a significant pessimization for our usage, thus requiring some additional workarounds.
 >

@@ -11,7 +11,7 @@
 
 Unit tests are a critical tool for keeping developers productive and reducing defects in code. Although they can be easy to write for simple code, writing them becomes difficult as code becomes more complex.
 
-單元測試是保持開發人員生產力和減少程式碼缺陷的重要工具。儘管對於簡單的程式碼來說，單元測試很容易編寫，但當代碼變得更加複雜時，編寫單元測試就變得困難了。
+單元測試是保持開發人員生產力和減少程式碼缺陷的重要工具。儘管對於簡單的程式碼來說，單元測試很容易編寫，但當程式碼變得更加複雜時，編寫單元測試就變得困難了。
 
 For example, imagine trying to write a test for a function that sends a request to an external server and then stores the response in a database. Writing a handful of tests might be doable with some effort. But if you need to write hundreds or thousands of tests like this, your test suite will likely take hours to run, and could become flaky due to issues like random network failures or tests overwriting one another’s data.
 

@@ -181,15 +181,15 @@ A few years ago, our C++ style guide promised to almost never change style guide
 
 When the codebase was smaller and there were fewer old, dusty corners, that made sense.
 
-當代碼庫比較小的時候，老舊的程式碼比較少的時候，這是有意義的。
+當程式碼庫比較小的時候，老舊的程式碼比較少的時候，這是有意義的。
 
 When the codebase grew bigger and older, that stopped being a thing to prioritize. This was (for the arbiters behind our C++ style guide, at least) a conscious change: when striking this bit, we were explicitly stating that the C++ codebase would never again be completely consistent, nor were we even aiming for that.
 
-當代碼庫變得更大、更老舊時，這就不再是需要優先考慮的事情了。這是(至少對於我們C++風格指南背後的裁定者來說)一個有意識的改變:當改變這一點時，我們明確地宣告C++程式碼庫將不再是完全一致的，我們甚至也不打算這樣做。
+當程式碼庫變得更大、更老舊時，這就不再是需要優先考慮的事情了。這是(至少對於我們C++風格指南背後的裁定者來說)一個有意識的改變:當改變這一點時，我們明確地宣告C++程式碼庫將不再是完全一致的，我們甚至也不打算這樣做。
 
 It would simply be too much of a burden to not only update the rules to current best practices, but to also require that we apply those rules to everything that’s ever been written. Our Large Scale Change tooling and processes allow us to update almost all of our code to follow nearly every new pattern or syntax so that most old code exhibits the most recent approved style (see Chapter 22). Such mechanisms aren’t perfect, however; when the codebase gets as large as it is, we can’t be sure every bit of old code can conform to the new best practices. Requiring perfect consistency has reached the point where there’s too much cost for the value.
 
-不僅要將規則更新到當前的最佳實踐，而且還要將這些規則應用到已經編寫的所有內容，這樣的負擔太大了。我們的大規模變更工具和過程允許我們更新幾乎所有的程式碼，以遵循幾乎每一個新的模式或語法，所以大多數舊的程式碼都呈現出最新的被認可的風格(見第22章)。然而，這種機制並不完美;當代碼庫變得足夠大時，我們不能保證每一段舊程式碼都能符合新的最佳實踐。對完美一致性的要求需要付出的價代價太大了。
+不僅要將規則更新到當前的最佳實踐，而且還要將這些規則應用到已經編寫的所有內容，這樣的負擔太大了。我們的大規模變更工具和過程允許我們更新幾乎所有的程式碼，以遵循幾乎每一個新的模式或語法，所以大多數舊的程式碼都呈現出最新的被認可的風格(見第22章)。然而，這種機制並不完美;當程式碼庫變得足夠大時，我們不能保證每一段舊程式碼都能符合新的最佳實踐。對完美一致性的要求需要付出的代價太大了。
 
 -----
 
