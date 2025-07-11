@@ -53,7 +53,7 @@ The use of test doubles introduces a few complications to software development t
 *模擬度*  
     模擬度是指測試替代的行為與它所替代的真實實現的行為有多大的相似性。如果測試替代的行為與真正的實現有很大的不同，那麼使用測試替代的測試可能不會提供太多的價值——例如，想象一下，嘗試用測試替代為一個數據庫寫一個測試，這個資料庫忽略了新增到資料庫的任何資料，總是返回空結果。這樣做是完美的模擬度不能接受的；測試替代通常需要比實際的實現簡單得多，以便適合在測試中使用。在許多情況下，即使沒有完美的模擬度，使用測試替代也是合適的。使用測試替代的單元測試通常需要由執行實際實現的更大範圍的測試來支援。
 
-## Test Doubles at Google Google的測試替代
+## Test Doubles at Google Google 的測試替代
 
 At Google, we’ve seen countless examples of the benefits to productivity and software quality that test doubles can bring to a codebase, as well as the negative impact they can cause when used improperly. The practices we follow at Google have evolved over time based on these experiences. Historically, we had few guidelines on how to effectively use test doubles, but best practices evolved as we saw common patterns and antipatterns arise in many teams’ codebases.
 
