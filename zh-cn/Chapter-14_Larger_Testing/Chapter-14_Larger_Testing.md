@@ -208,7 +208,7 @@ It is *critical* for longer-term health to move toward the test pyramid within t
 
 在開發的頭幾天，透過建立單元測試，向金字塔式測試邁進，然後在這之後透過引入自動化整合測試，擺脫手動端到端的測試，這對長期的穩定是*至關重要*的。我們成功地使單元測試成為提交的要求，但彌補單元測試和手工測試之間的差距對長期穩健是必要的。
 
-#### Larger Tests at Google Scale Google規模的大型測試
+#### Larger Tests at Google Scale Google 規模的大型測試
 
 It would seem that larger tests should be more necessary and more appropriate at larger scales of software, but even though this is so, the complexity of authoring, running, maintaining, and debugging these tests increases with the growth in scale, even more so than with unit tests.
 
