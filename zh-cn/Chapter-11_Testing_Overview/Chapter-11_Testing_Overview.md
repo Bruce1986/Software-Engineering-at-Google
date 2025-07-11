@@ -74,7 +74,7 @@ At Google, we have determined that testing cannot be an afterthought. Focusing o
 >
 > 2   參見“達蘭的失敗”
 
-### The Story of Google Web Server  Google網路伺服器的故事
+### The Story of Google Web Server  Google 網路伺服器的故事
 
 In Google’s early days, engineer-driven testing was often assumed to be of little importance. Teams regularly relied on smart people to get the software right. A few systems ran large integration tests, but mostly it was the Wild West. One product in particular seemed to suffer the worst: it was called the Google Web Server, also known as GWS.
 
