@@ -11,7 +11,7 @@ by **Titus Winters, Tom Manshreck, and Hyrum Wright**
 
 ## 為什麼翻譯
 
-目前 GitHub 上並沒有對《Software Engineering at Google》的中文翻譯。加之本人的英語也不好，好不容易看了一遍，似有所有領悟，想要再看一遍的時候，發現滿眼都是英文，實在是痛苦！    
+目前 GitHub 上並沒有對《Software Engineering at Google》的中文翻譯。加之本人的英語也不好，好不容易看了一遍，似有所有領悟，想要再看一遍的時候，发现滿眼都是英文，實在是痛苦！    
 
 為了讓自己也讓更多的中文讀者有更好的閱讀體驗，學習到當前人類最為複雜系統是如何開發和維護的知識。    
 

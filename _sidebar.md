@@ -26,4 +26,3 @@
 - [第二十四章 持續交付](zh-cn/Chapter-24_Continuous_Delivery/Chapter-24_Continuous_Delivery.md)
 - [第二十五章 計算即服務](zh-cn/Chapter-25_Compute_as_a_Service/Chapter-25_Compute_as_a_Service.md)
 - [後記](zh-cn/Afterword.md)
-
