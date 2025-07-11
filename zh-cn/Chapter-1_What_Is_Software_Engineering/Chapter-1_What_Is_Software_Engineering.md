@@ -402,7 +402,7 @@ In addition to the aforementioned costs (or our estimate of them), there are bia
 
 In many organizations, whiteboard markers are treated as precious goods. They are tightly controlled and always in short supply. Invariably, half of the markers at any given whiteboard are dry and unusable. How often have you been in a meeting that was disrupted by lack of a working marker? How often have you had your train of thought derailed by a marker running out? How often have all the markers just gone missing, presumably because some other team ran out of markers and had to abscond with yours? All for a product that costs less than a dollar.
 
-在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理序？多少次因為記號筆水用完而導致思路中斷？又有多少次，所有的記號筆都不翼而飛，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
+在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理它？多少次因為記號筆水用完而導致思路中斷？又有多少次，所有的記號筆都不翼而飛，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
 
 Google tends to have unlocked closets full of office supplies, including whiteboard markers, in most work areas. With a moment’s notice it is easy to grab dozens of markers in a variety of colors. Somewhere along the line we made an explicit trade- off: it is far more important to optimize for obstacle-free brainstorming than to protect against someone wandering off with a bunch of markers.
 
@@ -452,7 +452,7 @@ With an agreed-upon conversion table in hand, every engineer can do their own an
 
 For the second type of decision, there is no easy answer. We rely on experience, leadership, and precedent to negotiate these issues. We’re investing in research to help us quantify the hard-to-quantify (see Chapter 7). However, the best broad suggestion that we have is to be aware that not everything is measurable or predictable and to attempt to treat such decisions with the same priority and greater care. They are often just as important, but more difficult to manage.
 
-對於第二類決策，沒有簡單的答案。我們依靠經驗、領導作風和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）不過，我們所能提供的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先順序和更謹慎得對待此類決策。它們往往同樣重要，但更難管理。
+對於第二類決策，沒有簡單的答案。我們依靠經驗、領導作風和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）不過，我們所能提供的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先順序和更謹慎地對待此類決策。它們往往同樣重要，但更難管理。
 
 ### Example: Distributed Builds 範例：分散式建構
 
