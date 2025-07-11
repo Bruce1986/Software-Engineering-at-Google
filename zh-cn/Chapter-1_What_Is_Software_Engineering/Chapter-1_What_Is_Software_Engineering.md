@@ -18,7 +18,7 @@ We see three critical differences between programming and software engineering: 
 
 Within Google, we sometimes say, “Software engineering is programming integrated over time.” Programming is certainly a significant part of software engineering: after all, programming is how you generate new software in the first place. If you accept this distinction, it also becomes clear that we might need to delineate between programming tasks (development) and software engineering tasks (development, modification, maintenance). The addition of time adds an important new dimension to programming. Cubes aren’t squares, distance isn’t velocity. Software engineering isn’t programming.
 
-在谷歌內部，我們有時會說，"軟體工程是隨著時間推移的程式設計。"程式設計當然是軟體工程的一個重要部分：畢竟，程式設計首先是產生新軟體的方式。如果你接受這一區別，那麼很明顯，我們可能需要在程式設計任務（開發）和軟體工程任務（開發、修改、維護）之間進行劃分。時間的增加為程式設計增加了一個重要的新維度。這是一個立方體三維模型不是正方形的二維模型，距離不是速度。軟體工程不是程式設計。
+在Google內部，我們有時會說，"軟體工程是隨著時間推移的程式設計。"程式設計當然是軟體工程的一個重要部分：畢竟，程式設計首先是產生新軟體的方式。如果你接受這一區別，那麼很明顯，我們可能需要在程式設計任務（開發）和軟體工程任務（開發、修改、維護）之間進行劃分。時間的增加為程式設計增加了一個重要的新維度。這是一個立方體三維模型不是正方形的二維模型，距離不是速度。軟體工程不是程式設計。
 
 One way to see the impact of time on a program is to think about the question, “What is the expected life span[^1] of your code?” Reasonable answers to this question vary by roughly a factor of 100,000. It is just as reasonable to think of code that needs to last for a few minutes as it is to imagine code that will live for decades. Generally, code on the short end of that spectrum is unaffected by time. It is unlikely that you need to adapt to a new version of your underlying libraries, operating system (OS), hardware, or language version for a program whose utility spans only an hour. These short-lived systems are effectively “just” a programming problem, in the same way that a cube compressed far enough in one dimension is a square. As we expand that time to allow for longer life spans, change becomes more important. Over a span of a decade or more, most program dependencies, whether implicit or explicit, will likely change. This recognition is at the root of our distinction between software engineering and programming.
 
@@ -58,7 +58,7 @@ We can also say that software engineering is different from programming in terms
 
 Rarely is there a one-size-fits-all solution in software engineering, and the same applies to this book. Given a factor of 100,000 for reasonable answers on “How long will this software live,” a range of perhaps a factor of 10,000 for “How many engineers are in your organization,” and who-knows-how-much for “How many compute resources are available for your project,” Google’s experience will probably not match yours. In this book, we aim to present what we’ve found that works for us in the construction and maintenance of software that we expect to last for decades, with tens of thousands of engineers, and world-spanning compute resources. Most of the practices that we find are necessary at that scale will also work well for smaller endeavors: consider this a report on one engineering ecosystem that we think could be good as you scale up. In a few places, super-large scale comes with its own costs, and we’d be happier to not be paying extra overhead. We call those out as a warning. Hopefully if your organization grows large enough to be worried about those costs, you can find a better answer.
 
-在軟體工程中很少有一刀切的解決方案，這本書也是如此。考慮到“這個軟體能使用多久”的合理答案是100,000倍，而“你的組織中有多少工程師”的範圍可能是10,000，誰知道“你的專案有多少計算資源可用”的範圍是多少，谷歌的經驗可能與你的經驗不一致。在本書中，我們的目標是介紹我們在建構和維護軟體方面的發現，這些軟體預計將持續數十年，擁有數萬計的工程師和遍佈世界的計算資源。我們發現在這種規模下所需要的大多數做法也能很好地適用於複雜度較小的系統：考慮一下這是一個我們認為在你們擴大的時候可以做的很好的工程生態系統的報告。在一些地方，超大規模有其自身的成本，我們更傾向於不付出額外的管理成本。我們發出警告。希望如果你的組織發展到足以擔心這些成本，你可以找到更好的答案。
+在軟體工程中很少有一刀切的解決方案，這本書也是如此。考慮到“這個軟體能使用多久”的合理答案是100,000倍，而“你的組織中有多少工程師”的範圍可能是10,000，誰知道“你的專案有多少計算資源可用”的範圍是多少，Google的經驗可能與你的經驗不一致。在本書中，我們的目標是介紹我們在建構和維護軟體方面的發現，這些軟體預計將持續數十年，擁有數萬計的工程師和遍佈世界的計算資源。我們發現在這種規模下所需要的大多數做法也能很好地適用於複雜度較小的系統：考慮一下這是一個我們認為在你們擴大的時候可以做的很好的工程生態系統的報告。在一些地方，超大規模有其自身的成本，我們更傾向於不付出額外的管理成本。我們發出警告。希望如果你的組織發展到足以擔心這些成本，你可以找到更好的答案。
 
 Before we get to specifics about teamwork, culture, policies, and tools, let’s first elaborate on these primary themes of time, scale, and trade-offs.
 
@@ -79,12 +79,11 @@ We also find developers of short-lived code in common industry settings. Mobile 
 
 On the other end of the spectrum, some successful projects have an effectively unbounded life span: we can’t reasonably predict an endpoint for Google Search, the Linux kernel, or the Apache HTTP Server project. For most Google projects, we must assume that they will live indefinitely—we cannot predict when we won’t need to upgrade our dependencies, language versions, and so on. As their lifetimes grow, these long-lived projects *eventually* have a different feel to them than programming assignments or startup development.
 
-另一方面，一些成功的專案實際上有無限的生命週期：我們無法準確地預測Google搜尋、Linux核心或Apache HTTP伺服器專案的終點。對於大多數谷歌專案，我們必須假設它們將無限期地存在，我們無法預測何時不需要升級依賴項、語言版本等。隨著他們生命週期的延長，這些長期專案最終會有一種不同於程式設計任務或初創企業發展不同的感受。
+另一方面，一些成功的專案實際上有無限的生命週期：我們無法準確地預測Google搜尋、Linux核心或Apache HTTP伺服器專案的終點。對於大多數Google專案，我們必須假設它們將無限期地存在，我們無法預測何時不需要升級依賴項、語言版本等。隨著他們生命週期的延長，這些長期專案最終會有一種不同於程式設計任務或初創企業發展不同的感受。
 
 Consider Figure 1-1, which demonstrates two software projects on opposite ends of this “expected life span” spectrum. For a programmer working on a task with an expected life span of hours, what types of maintenance are reasonable to expect? That is, if a new version of your OS comes out while you’re working on a Python script that will be executed one time, should you drop what you’re doing and upgrade? Of course not: the upgrade is not critical. But on the opposite end of the spectrum, Google Search being stuck on a version of our OS from the 1990s would be a clear problem.
 
-考慮圖1-1，它示範了兩個軟體專案的“預期生命週期”的範圍。對於從事預期生命週期為小時的任務的程式來說，什麼型別的維護是合理的？也就是說，如果你正在編寫一個只需執行一次的 Python 指令碼，這時作業系統推出了新版本，你應該放下手頭的工作去升級系統嗎？當然不是：升級並不重要。但與之相反，如果谷歌搜尋停留在20世紀90年代的作業系統版本上顯然是一個問題。
-考慮圖1-1，它示範了兩個軟體專案的“預期生命週期”的範圍。對於從事預期生命週期為小時的任務的程式來說，什麼型別的維護是合理的？也就是說，如果在編寫一個Python指令碼時出現了一個新版本的作業系統，該指令碼將執行一次，你應該放棄你正在做的事情並升級嗎？當然不是：升級並不重要。但與此相反，谷歌搜尋停留在20世紀90年代的作業系統版本上顯然是一個問題。
+考慮圖1-1，它示範了兩個軟體專案的“預期生命週期”的範圍。對於從事預期生命週期為小時的任務的程式來說，什麼型別的維護是合理的？也就是說，如果你正在編寫一個只需執行一次的 Python 指令碼，這時作業系統推出了新版本，你應該放下手頭的工作去升級系統嗎？當然不是：升級並不重要。但與之相反，如果Google搜尋停留在20世紀90年代的作業系統版本上顯然是一個問題。
 
 > [^6]: Appcelerator, “[Nothing is Certain Except Death, Taxes and a Short Mobile App Lifespan](https://oreil.ly/pnT2_),” Axway Developer blog, December 6, 2012.
 >
@@ -114,7 +113,7 @@ And thus, after actually going through such an upgrade once (or giving up part w
 
 Getting through not only that first big upgrade, but getting to the point at which you can reliably stay current going forward, is the essence of long-term sustainability for your project. Sustainability requires planning and managing the impact of required change. For many projects at Google, we believe we have achieved this sort of sustainability, largely through trial and error.
 
-不僅完成了第一次大升級，而且達到可靠地保持當前狀態的程度，這是專案長期可持續性的本質。可持續性要求規劃和管理所需變化的影響。對於谷歌的許多專案，我們相信我們已經實現了這種持續能力，主要是透過試驗和錯誤。
+不僅完成了第一次大升級，而且達到可靠地保持當前狀態的程度，這是專案長期可持續性的本質。可持續性要求規劃和管理所需變化的影響。對於Google的許多專案，我們相信我們已經實現了這種持續能力，主要是透過試驗和錯誤。
 
 So, concretely, how does short-term programming differ from producing code with a much longer expected life span? Over time, we need to be much more aware of the difference between “happens to work” and “is maintainable.” There is no perfect solution for identifying these issues. That is unfortunate, because keeping software maintainable for the long-term is a constant battle.
 
@@ -140,7 +139,7 @@ Hyrum’s Law represents the practical knowledge that—even with the best of in
 
 > [^8]:	To his credit, Hyrum tried really hard to humbly call this “The Law of Implicit Dependencies,” but “Hyrum’s Law” is the shorthand that most people at Google have settled on.
 >
-> 值得稱道的是，海勒姆非常努力地將其稱為 "隱性依賴定律"，但 "海勒姆定律 "是谷歌公司大多數人都認可的簡稱。
+> 值得稱道的是，海勒姆非常努力地將其稱為 "隱性依賴定律"，但 "海勒姆定律 "是Google公司大多數人都認可的簡稱。
 >
 > [^9]:	See “Workflow,” an xkcd comic.
 >
@@ -210,7 +209,7 @@ Most projects have far more exposure to shifting underlying technology. Most pro
 
 Efficiency improvements further complicate the picture. We want to outfit our datacenters with cost-effective computing equipment, especially enhancing CPU efficiency. However, algorithms and data structures from early-day Google are simply less efficient on modern equipment: a linked-list or a binary search tree will still work fine, but the ever-widening gap between CPU cycles versus memory latency impacts what “efficient” code looks like. Over time, the value in upgrading to newer hardware can be diminished without accompanying design changes to the software. Backward compatibility ensures that older systems still function, but that is no guarantee that old optimizations are still helpful. Being unwilling or unable to take advantage of such opportunities risks incurring large costs. Efficiency concerns like this are particularly subtle: the original design might have been perfectly logical and following reasonable best practices. It’s only after an evolution of backward-compatible changes that a new, more efficient option becomes important. No mistakes were made, but the passage of time still made change valuable.
 
-效率的提高使情況更加複雜。我們希望為資料中心配備經濟高效的計算裝置，特別是提高CPU效率。然而，早期谷歌的演算法和資料結構在現代裝置上效率較低：連結串列或二叉搜尋樹仍能正常工作，但CPU週期與記憶體延遲之間的差距不斷擴大，影響了看起來還像“高效”程式碼。隨著時間的推移，升級到較新硬體的價值會降低，而無需對軟體進行相應的設計更改。向後相容性確保了舊系統仍能正常工作，但這並不能保證舊的最佳化仍然有用。不願意或無法利用這些機會可能會帶來巨大的成本。像這樣的效率問題尤其微妙：最初的設計可能完全符合邏輯，並遵循合理的最佳實踐。只有在向後相容的變化演變之後，新的、更有效的選擇才變得重要。雖然沒有犯錯誤，但隨著時間的推移，變化仍然是有價值的。
+效率的提高使情況更加複雜。我們希望為資料中心配備經濟高效的計算裝置，特別是提高CPU效率。然而，早期Google的演算法和資料結構在現代裝置上效率較低：連結串列或二叉搜尋樹仍能正常工作，但CPU週期與記憶體延遲之間的差距不斷擴大，影響了看起來還像“高效”程式碼。隨著時間的推移，升級到較新硬體的價值會降低，而無需對軟體進行相應的設計更改。向後相容性確保了舊系統仍能正常工作，但這並不能保證舊的最佳化仍然有用。不願意或無法利用這些機會可能會帶來巨大的成本。像這樣的效率問題尤其微妙：最初的設計可能完全符合邏輯，並遵循合理的最佳實踐。只有在向後相容的變化演變之後，新的、更有效的選擇才變得重要。雖然沒有犯錯誤，但隨著時間的推移，變化仍然是有價值的。
 
 Concerns like those just mentioned are why there are large risks for long-term projects that haven’t invested in sustainability. We must be capable of responding to these sorts of issues and taking advantage of these opportunities, regardless of whether they directly affect us or manifest in only the transitive closure of technology we build upon. Change is not inherently good. We shouldn’t change just for the sake of change. But we do need to be capable of change. If we allow for that eventual necessity, we should also consider whether to invest in making that capability cheap. As every system administrator knows, it’s one thing to know in theory that you can recover from tape, and another to know in practice exactly how to do it and how much it will cost when it becomes necessary. Practice and expertise are great drivers of efficiency and reliability.
 
@@ -220,7 +219,7 @@ Concerns like those just mentioned are why there are large risks for long-term p
 
 As noted in the Site Reliability Engineering (SRE) book,[^11] Google’s production system as a whole is among the most complex machines created by humankind. The complexity involved in building such a machine and keeping it running smoothly has required countless hours of thought, discussion, and redesign from experts across our organization and around the globe. So, we have already written a book about the complexity of keeping that machine running at that scale.
 
-正如（SRE）這本書所指出的，谷歌的生產系統作為一個整體是人類創造的最複雜的系統之一。建構這樣複雜系統並保持其平穩執行所涉及的複雜性需要我們組織和全球各地的專家進行無數小時的思考、討論和重構。因此，我們已經寫了一本書，講述了保持機器以這種規模執行的複雜性。
+正如（SRE）這本書所指出的，Google的生產系統作為一個整體是人類創造的最複雜的系統之一。建構這樣複雜系統並保持其平穩執行所涉及的複雜性需要我們組織和全球各地的專家進行無數小時的思考、討論和重構。因此，我們已經寫了一本書，講述了保持機器以這種規模執行的複雜性。
 
 Much of this book focuses on the complexity of scale of the organization that produces such a machine, and the processes that we use to keep that machine running over time. Consider again the concept of codebase sustainability: “Your organization’s codebase is sustainable when you are able to change all of the things that you ought to change, safely, and can do so for the life of your codebase.” Hidden in the discussion of capability is also one of costs: if changing something comes at inordinate cost, it will likely be deferred. If costs grow superlinearly over time, the operation clearly is not scalable.[^12] Eventually, time will take hold and something unexpected will arise that you absolutely must change. When your project doubles in scope and you need to perform that task again, will it be twice as labor intensive? Will you even have the human resources required to address the issue next time?
 
@@ -240,7 +239,7 @@ Everything your organization relies upon to produce and maintain code should be 
 
 > [^11]: Beyer, B. et al. Site Reliability Engineering: How Google Runs Production Systems. (Boston: O’Reilly Media,2016).
 >
-> Beyer, B. et al. Site Reliability Engineering: 谷歌如何執行生產系統。(Boston: O'Reilly Media, 2016).
+> Beyer, B. et al. Site Reliability Engineering: Google如何執行生產系統。(Boston: O'Reilly Media, 2016).
 >
 > [^12]: Whenever we use “scalable” in an informal context in this chapter, we mean “sublinear scaling with regard to human interactions.”
 >
@@ -298,7 +297,7 @@ In our experience, language and compiler upgrades are subtle and difficult tasks
 
 The most storied compiler upgrade in Google’s history took place all the way back in 2006. At that point, we had been operating for a few years and had several thousand engineers on staff. We hadn’t updated compilers in about five years. Most of our engineers had no experience with a compiler change. Most of our code had been exposed to only a single compiler version. It was a difficult and painful task for a team of (mostly) volunteers, which eventually became a matter of finding shortcuts and simplifications in order to work around upstream compiler and language changes that we didn’t know how to adopt.[^14] In the end, the 2006 compiler upgrade was extremely painful. Many Hyrum’s Law problems, big and small, had crept into the codebase and served to deepen our dependency on a particular compiler version. Breaking those implicit dependencies was painful. The engineers in question were taking a risk: we didn’t have the Beyoncé Rule yet, nor did we have a pervasive CI system, so it was difficult to know the impact of the change ahead of time or be sure they wouldn’t be blamed for regressions.
 
-谷歌歷史上最具傳奇色彩的編譯器升級發生在2006年。當時，我們已經運行了幾年，擁有數千名工程師。我們大約有五年沒有升級過編譯器。我們的大多數工程師都沒有升級編譯器的經驗。我們的大部分程式碼只針對在單一編譯器版本。對於一個由（大部分）志願者組成的團隊來說，這是一項艱難而痛苦的任務，最終變成了尋找捷徑和簡化的問題，以便繞過我們不知道如何採用的上游編譯器和語言變化。最後，2006年的編譯器升級過程非常痛苦。許多海勒姆定律問題，無論大小，都潛入了程式碼庫，加深了我們對特定編譯器版本的依賴。打破這些隱含依賴性是痛苦的。相關工程師正在冒風險：我們還沒有碧昂斯規則，也沒有通用的CI系統，因此很難提前知道更改的影響，或者確保他們不會因回退而受到指責。
+Google歷史上最具傳奇色彩的編譯器升級發生在2006年。當時，我們已經運行了幾年，擁有數千名工程師。我們大約有五年沒有升級過編譯器。我們的大多數工程師都沒有升級編譯器的經驗。我們的大部分程式碼只針對在單一編譯器版本。對於一個由（大部分）志願者組成的團隊來說，這是一項艱難而痛苦的任務，最終變成了尋找捷徑和簡化的問題，以便繞過我們不知道如何採用的上游編譯器和語言變化。最後，2006年的編譯器升級過程非常痛苦。許多海勒姆定律問題，無論大小，都潛入了程式碼庫，加深了我們對特定編譯器版本的依賴。打破這些隱含依賴性是痛苦的。相關工程師正在冒風險：我們還沒有碧昂斯規則，也沒有通用的CI系統，因此很難提前知道更改的影響，或者確保他們不會因回退而受到指責。
 
 This story isn’t at all unusual. Engineers at many companies can tell a similar story about a painful upgrade. What is unusual is that we recognized after the fact that the task had been painful and began focusing on technology and organizational changes to overcome the scaling problems and turn scale to our advantage: automation (so that a single human can do more), consolidation/consistency (so that low-level changes have a limited problem scope), and expertise (so that a few humans can do more).
 
@@ -371,7 +370,7 @@ The same basic pattern emerges many times in this book. Bugs that are caught by 
 
 If we understand how to program, understand the lifetime of the software we’re maintaining, and understand how to maintain it as we scale up with more engineers producing and maintaining new features, all that is left is to make good decisions. This seems obvious: in software engineering, as in life, good choices lead to good outcomes. However, the ramifications of this observation are easily overlooked. Within Google, there is a strong distaste for “because I said so.” It is important for there to be a decider for any topic and clear escalation paths when decisions seem to be wrong, but the goal is consensus, not unanimity. It’s fine and expected to see some instances of “I don’t agree with your metrics/valuation, but I see how you can come to that conclusion.” Inherent in all of this is the idea that there needs to be a reason for everything; “just because,” “because I said so,” or “because everyone else does it this way” are places where bad decisions lurk. Whenever it is efficient to do so, we should be able to explain our work when deciding between the general costs for two engineering options.
 
-如果我們瞭解如何程式設計，瞭解我們所維護的軟體的生命週期，並且隨著在我們隨著更多的工程師一起開發和維護新功能，瞭解擴大規模時如何運維它，那麼剩下的就是做出正確的決策。這是顯而易見的：在軟體工程中，如同生活一樣，好的選擇會帶來好的結果。然而，這一觀點很容易被忽視。在谷歌內部，人們對“因為我這麼說了”有反對的意見。重要的是，任何議題都要有一個決策者，當決策是錯誤的時候，要有明確的改進路徑，但目標是共識，而不是一致。看到一些 "我不同意你的衡量標準/評價，但我知道你是如何得出這個結論的 "的情況是沒有問題的，也是可以預期的。所有這一切的內在想法是，每件事都需要一個理由；“僅僅因為”、“因為我這麼說”或“因為其他人都這樣做”是潛在錯誤的決策。 只要這樣做是有效的，在決定兩個工程方案的一般成本時，我們應該能夠解釋清楚。
+如果我們瞭解如何程式設計，瞭解我們所維護的軟體的生命週期，並且隨著在我們隨著更多的工程師一起開發和維護新功能，瞭解擴大規模時如何運維它，那麼剩下的就是做出正確的決策。這是顯而易見的：在軟體工程中，如同生活一樣，好的選擇會帶來好的結果。然而，這一觀點很容易被忽視。在Google內部，人們對“因為我這麼說了”有反對的意見。重要的是，任何議題都要有一個決策者，當決策是錯誤的時候，要有明確的改進路徑，但目標是共識，而不是一致。看到一些 "我不同意你的衡量標準/評價，但我知道你是如何得出這個結論的 "的情況是沒有問題的，也是可以預期的。所有這一切的內在想法是，每件事都需要一個理由；“僅僅因為”、“因為我這麼說”或“因為其他人都這樣做”是潛在錯誤的決策。 只要這樣做是有效的，在決定兩個工程方案的一般成本時，我們應該能夠解釋清楚。
 
 What do we mean by cost? We are not only talking about dollars here. “Cost” roughly translates to effort and can involve any or all of these factors:
 
@@ -393,7 +392,7 @@ What do we mean by cost? We are not only talking about dollars here. “Cost” 
 
 Historically, it’s been particularly easy to ignore the question of societal costs. However, Google and other large tech companies can now credibly deploy products with billions of users. In many cases, these products are a clear net benefit, but when we’re operating at such a scale, even small discrepancies in usability, accessibility, fairness, or potential for abuse are magnified, often to the detriment of groups that are already marginalized. Software pervades so many aspects of society and culture; therefore, it is wise for us to be aware of both the good and the bad that we enable when making product and technical decisions. We discuss this much more in Chapter 4.
 
-從歷史上看，忽視社會成本的問題尤其容易出現。然而，谷歌和其他大型科技公司現在可以可靠地部署擁有數十億使用者的產品。在許多情況下，這些產品是高淨效益的，但當我們以這樣的規模營運時，即使在可用性、可及性和公平性方面或潛在的濫用方面的微小差異也會被放大，往往對邊緣化的群體產生不利影響。軟體滲透到社會和文化的各個方面；因此，明智的做法是，在做出產品和技術決策時，我們要意識到我們所能帶來的好處和壞處。我們將在第4章對此進行更多討論。
+從歷史上看，忽視社會成本的問題尤其容易出現。然而，Google和其他大型科技公司現在可以可靠地部署擁有數十億使用者的產品。在許多情況下，這些產品是高淨效益的，但當我們以這樣的規模營運時，即使在可用性、可及性和公平性方面或潛在的濫用方面的微小差異也會被放大，往往對邊緣化的群體產生不利影響。軟體滲透到社會和文化的各個方面；因此，明智的做法是，在做出產品和技術決策時，我們要意識到我們所能帶來的好處和壞處。我們將在第4章對此進行更多討論。
 
 In addition to the aforementioned costs (or our estimate of them), there are biases: status quo bias, loss aversion, and others. When we evaluate cost, we need to keep all of the previously listed costs in mind: the health of an organization isn’t just whether there is money in the bank, it’s also whether its members are feeling valued and productive. In highly creative and lucrative fields like software engineering, financial cost is usually not the limiting factor—personnel cost usually is. Efficiency gains from keeping engineers happy, focused, and engaged can easily dominate other factors, simply because focus and productivity are so variable, and a 10-to-20% difference is easy to imagine.
 
@@ -403,17 +402,15 @@ In addition to the aforementioned costs (or our estimate of them), there are bia
 
 In many organizations, whiteboard markers are treated as precious goods. They are tightly controlled and always in short supply. Invariably, half of the markers at any given whiteboard are dry and unusable. How often have you been in a meeting that was disrupted by lack of a working marker? How often have you had your train of thought derailed by a marker running out? How often have all the markers just gone missing, presumably because some other team ran out of markers and had to abscond with yours? All for a product that costs less than a dollar.
 
-在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理序？多少次因為記號筆水用完而導致思路中斷？又有多少次，所有的記號筆都不翼而飛，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
-在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理序？多少次因為記號筆水用完而打斷思考？多少次所有的記號筆都不見了，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
+在許多組織中，白板記號筆被視為貴重物品。它們受到嚴格的控制，而且總是供不應求。在任何的白板上，都有一半的記號筆是乾的，無法使用。你有多少次因為沒有一個好用的記號筆而中斷會議處理它？多少次因為記號筆水用完而導致思路中斷？又有多少次，所有的記號筆都不翼而飛，大概是因為其他團隊的記號筆用完了，不得不拿走你的記號筆？所有這些都是因為一個價格不到一美元的產品。
 
 Google tends to have unlocked closets full of office supplies, including whiteboard markers, in most work areas. With a moment’s notice it is easy to grab dozens of markers in a variety of colors. Somewhere along the line we made an explicit trade- off: it is far more important to optimize for obstacle-free brainstorming than to protect against someone wandering off with a bunch of markers.
 
-谷歌往往在大多數工作區域都有未上鎖的櫃子，裡面裝滿了辦公用品，包括記號筆。只要稍加注意，就可以很容易地拿到各種顏色的幾十支記號筆。在某種程度上，我們做了一個明確的權衡：最佳化無障礙頭腦風暴要比防止有人拿著一堆記號筆走神重要得多。
-谷歌往往在大多數工作區域都有未上鎖的櫃子，裡面裝滿了辦公用品，包括記號筆。只要稍加注意，就可以很容易地拿到各種顏色的幾十支記號筆。在某種程度上，我們做了一個明確的權衡：最佳化無障礙的頭腦風暴遠比防止有人拿著一堆記號筆亂跑要重要得多。
+Google往往在大多數工作區域都有未上鎖的櫃子，裡面裝滿了辦公用品，包括記號筆。只要稍加注意，就可以很容易地拿到各種顏色的幾十支記號筆。在某種程度上，我們做了一個明確的權衡：最佳化無障礙的頭腦風暴遠比防止有人拿著一堆記號筆亂跑要重要得多。
 
 We aim to have the same level of eyes-open and explicit weighing of the cost/benefit trade-offs involved for everything we do, from office supplies and employee perks through day-to-day experience for developers to how to provision and run global- scale services. We often say, “Google is a data-driven culture.” In fact, that’s a simplification: even when there isn’t *data*, there might still be *evidence*, *precedent*, and *argument*. Making good engineering decisions is all about weighing all of the available inputs and making informed decisions about the trade-offs. Sometimes, those decisions are based on instinct or accepted best practice, but only after we have exhausted approaches that try to measure or estimate the true underlying costs.
 
-我們的目標是對我們所做的每件事都有同樣程度的關注和明確的成本/收益權衡，從辦公用品和員工津貼到開發者的日常體驗，再到如何提供和執行全球規模的服務。我們經常說，“谷歌是一家資料驅動的公司。”事實上，這很簡單：即使沒有資料，也會有證據、先例和論據。做出好的工程決策就是權衡所有可用的輸入，並就權衡做出明智的決策。有時，這些決策是基於本能或公認的最佳實踐，但僅是一種假設之後，我們用盡了各種方法來衡量或估計真正的潛在成本。
+我們的目標是對我們所做的每件事都有同樣程度的關注和明確的成本/收益權衡，從辦公用品和員工津貼到開發者的日常體驗，再到如何提供和執行全球規模的服務。我們經常說，“Google是一家資料驅動的公司。”事實上，這很簡單：即使沒有資料，也會有證據、先例和論據。做出好的工程決策就是權衡所有可用的輸入，並就權衡做出明智的決策。有時，這些決策是基於本能或公認的最佳實踐，但僅是一種假設之後，我們用盡了各種方法來衡量或估計真正的潛在成本。
 
 In the end, decisions in an engineering group should come down to very few things:
 
@@ -455,8 +452,7 @@ With an agreed-upon conversion table in hand, every engineer can do their own an
 
 For the second type of decision, there is no easy answer. We rely on experience, leadership, and precedent to negotiate these issues. We’re investing in research to help us quantify the hard-to-quantify (see Chapter 7). However, the best broad suggestion that we have is to be aware that not everything is measurable or predictable and to attempt to treat such decisions with the same priority and greater care. They are often just as important, but more difficult to manage.
 
-對於第二類決策，沒有簡單的答案。我們依靠經驗、領導作風和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）不過，我們所能提供的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先順序和更謹慎得對待此類決策。它們往往同樣重要，但更難管理。
-對於第二類決策，沒有簡單的答案。我們依靠經驗、領導和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）然而，我們所擁有的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先權和更大的謹慎對待此類決策。它們往往同樣重要，但更難管理。
+對於第二類決策，沒有簡單的答案。我們依靠經驗、領導作風和先例來協商這些問題。我們正在投入研究，以幫助我們量化難以量化的問題（見第7章）不過，我們所能提供的最好的廣泛建議是，意識到並非所有的事情都是可衡量或可預測的，並嘗試以同樣的優先順序和更謹慎地對待此類決策。它們往往同樣重要，但更難管理。
 
 ### Example: Distributed Builds 範例：分散式建構
 
@@ -466,15 +462,14 @@ Consider your build. According to completely unscientific Twitter polling, somet
 
 Back in the mid-2000s, Google relied purely on a local build system: you checked out code and you compiled it locally. We had massive local machines in some cases (you could build Maps on your desktop!), but compilation times became longer and longer as the codebase grew. Unsurprisingly, we incurred increasing overhead in personnel costs due to lost time, as well as increased resource costs for larger and more powerful local machines, and so on. These resource costs were particularly troublesome: of course we want people to have as fast a build as possible, but most of the time, a high- performance desktop development machine will sit idle. This doesn’t feel like the proper way to invest those resources.
 
-早在2000年代中期，谷歌就完全依賴於本地建構系統：你切出程式碼，然後在本地編譯。在某些情況下，我們有大量的本地機器（你可以在桌面電腦上建構地圖！），但隨著程式碼庫的增長，編譯時間變得越來越長。不出所料，由於時間的浪費，我們的人員成本增加，以及更大、更強大的本地機器的資源成本增加等等。這些資源成本特別麻煩：當然，我們希望人們有一個儘可能快的建構，但大多數時候，一個高效能的桌面開發機器將被閒置。這感覺不像是投資這些資源的正確方式。
+早在2000年代中期，Google就完全依賴於本地建構系統：你切出程式碼，然後在本地編譯。在某些情況下，我們有大量的本地機器（你可以在桌面電腦上建構地圖！），但隨著程式碼庫的增長，編譯時間變得越來越長。不出所料，由於時間的浪費，我們的人員成本增加，以及更大、更強大的本地機器的資源成本增加等等。這些資源成本特別麻煩：當然，我們希望人們有一個儘可能快的建構，但大多數時候，一個高效能的桌面開發機器將被閒置。這感覺不像是投資這些資源的正確方式。
 
 Eventually, Google developed its own distributed build system. Development of this system incurred a cost, of course: it took engineers time to develop, it took more engineer time to change everyone’s habits and workflow and learn the new system, and of course it cost additional computational resources. But the overall savings were clearly worth it: builds became faster, engineer-time was recouped, and hardware investment could focus on managed shared infrastructure (in actuality, a subset of our production fleet) rather than ever-more-powerful desktop machines. Chapter 18 goes into more of the details on our approach to distributed builds and the relevant trade-offs.
 
-最終，谷歌開發了自己的分散式建構系統。開發這個系統當然要付出代價：工程師花費了時間，工程師花更多的時間來改變每個人的習慣和工作流程，學習新系統，當然還需要額外的計算資源。但總體節約顯然值得我去做： 建構速度變快了，工程師的時間被節約了，硬體投資可以集中在管理的共享基礎設施上（實際上是我們生產機群的一個子集），而不是日益強大的桌面機。第18章詳細介紹了我們的分散式建構方法和相關權衡。
+最終，Google開發了自己的分散式建構系統。開發這個系統當然要付出代價：工程師花費了時間，工程師花更多的時間來改變每個人的習慣和工作流程，學習新系統，當然還需要額外的計算資源。但總體節約顯然值得我去做： 建構速度變快了，工程師的時間被節約了，硬體投資可以集中在管理的共享基礎設施上（實際上是我們生產機群的一個子集），而不是日益強大的桌面機。第18章詳細介紹了我們的分散式建構方法和相關權衡。
 
 So, we built a new system, deployed it to production, and sped up everyone’s build. Is that the happy ending to the story? Not quite: providing a distributed build system made massive improvements to engineer productivity, but as time went on, the distributed builds themselves became bloated. What was constrained in the previous case by individual engineers (because they had a vested interest in keeping their local builds as fast as possible) was unconstrained within a distributed build system. Bloated or unnecessary dependencies in the build graph became all too common. When everyone directly felt the pain of a nonoptimal build and was incentivized to be vigilant, incentives were better aligned. By removing those incentives and hiding bloated dependencies in a parallel distributed build, we created a situation in which consumption could run rampant, and almost nobody was incentivized to keep an eye on build bloat. This is reminiscent of Jevons Paradox: consumption of a resource may increase as a response to greater efficiency in its use.
 
-因此，我們建構了一個新系統，將其部署到生產環境中，並加快了每個人的建構速度。這就是故事的圓滿結局嗎？不完全是這樣：提供分散式建構系統極大地提高了工程師的工作效率，但隨著時間的推移，分散式建構本身變得臃腫起來。在以前的情況下，單個工程師受到的限制（因為他們盡最大可能保持本地建構的速度）在分散式建構系統中是不受限制的。建構圖中的臃腫或不必要的依賴關係變得非常普遍。當每個人都直接感受到非最佳建構的痛苦，並被要求去保持警惕時，激勵機制會更好地協調一致。透過取消這些激勵措施，並將臃腫的依賴關係隱藏在並行的分散式建構中，我們創造了一種情況，在這種情況下，消耗可能猖獗，而且幾乎沒有人被要求去關注建構的臃腫。這讓人想起傑文斯悖論（Jevons Paradox）：一種資源的消耗可能會隨著使用效率的提高而增加。
 因此，我們建構了一個新系統，將其部署到生產環境中，並加快了每個人的建構速度。這就是故事的圓滿結局嗎？不完全是這樣：提供分散式建構系統極大地提高了工程師的工作效率，但隨著時間的推移，分散式建構本身變得臃腫起來。在以前的情況下，單個工程師受到的限制（因為他們盡最大可能保持本地建構的速度）在分散式建構系統中是不受限制的。建構圖中的臃腫或不必要的依賴關係變得非常普遍。當每個人都直接感受到非最佳建構的痛苦，並被要求去保持警惕時，激勵措施會更好地協調一致。透過取消這些激勵措施，並將臃腫的依賴關係隱藏在並行的分散式建構中，我們創造了一種情況，在這種情況下，消耗可能猖獗，而且幾乎沒有人被要求去關注建構的臃腫。這讓人想起傑文斯悖論（Jevons Paradox）：一種資源的消耗可能會隨著使用效率的提高而增加。
 
 Overall, the saved costs associated with adding a distributed build system far, far outweighed the negative costs associated with its construction and maintenance. But, as we saw with increased consumption, we did not foresee all of these costs. Having blazed ahead, we found ourselves in a situation in which we needed to reconceptualize the goals and constraints of the system and our usage, identify best practices (small dependencies, machine-management of dependencies), and fund the tooling and maintenance for the new ecosystem. Even a relatively simple trade-off of the form “We’ll spend $$$s for compute resources to recoup engineer time” had unforeseen downstream effects.
@@ -516,7 +511,6 @@ One of the unsung benefits of committing to a data-driven culture is the combine
 
 We believe strongly in data informing decisions, but we recognize that the data will change over time, and new data may present itself. This means, inherently, that decisions will need to be revisited from time to time over the life span of the system in question. For long-lived projects, it’s often critical to have the ability to change directions after an initial decision is made. And, importantly, it means that the deciders need to have the right to admit mistakes. Contrary to some people’s instincts, leaders who admit mistakes are more respected, not less.
 
-我們堅信資料能為決策提供資訊，但我們也認識到資料會隨著時間的推移而變化，新資料可能會出現。這意味著，本質上，在相關係統的生命週期內，需要不時地重新審視決策。對於長期專案而言，在做出初始決策後，有能力改變方向通常是至關重要的。更重要的是，這意味著決策者需要勇氣承認錯誤。與人的直覺相反，勇於承認錯誤的領導人受更多的尊重。
 我們堅信資料能為決策提供資訊，但我們也認識到資料會隨著時間的推移而變化，新資料可能會出現。這意味著，本質上，在相關係統的生命週期內，需要不時地重新審視決策。對於長期專案而言，在做出初始決策後，有能力改變方向通常是至關重要的。更重要的是，這意味著決策者需要勇氣承認錯誤。與人的本能相反，勇於承認錯誤的領導人受更多的尊重。
 
 Be evidence driven, but also realize that things that can’t be measured may still have value. If you’re a leader, that’s what you’ve been asked to do: exercise judgement, assert that things are important. We’ll speak more on leadership in Chapters 5 and 6.
@@ -541,7 +535,7 @@ We believe it is important to differentiate between the related-but-distinct ter
 
 This book discusses all of these topics: policies for an organization and for a single programmer, how to evaluate and refine your best practices, and the tools and technologies that go into maintainable software. Google has worked hard to have a sustainable codebase and culture. We don’t necessarily think that our approach is the one true way to do things, but it does provide proof by example that it can be done. We hope it will provide a useful framework for thinking about the general problem: how do you maintain your code for as long as it needs to keep working?
 
-本書討論了所有這些主題：一個組織和一個程式設計師的策略，如何評估和改進你的最佳實踐，以及用於可維護軟體的工具和技術。谷歌一直在努力打造可持續的程式碼庫和文化。我們不認為我們的方法是做事情的唯一正確方法，但它確實透過例子證明了它是可以做到的。我們希望它將提供一個有用的框架來思考一般問題：你如何維護你的程式碼，讓它正常執行。
+本書討論了所有這些主題：一個組織和一個程式設計師的策略，如何評估和改進你的最佳實踐，以及用於可維護軟體的工具和技術。Google一直在努力打造可持續的程式碼庫和文化。我們不認為我們的方法是做事情的唯一正確方法，但它確實透過例子證明了它是可以做到的。我們希望它將提供一個有用的框架來思考一般問題：你如何維護你的程式碼，讓它正常執行。
 
 ## TL;DRs  內容提要
 

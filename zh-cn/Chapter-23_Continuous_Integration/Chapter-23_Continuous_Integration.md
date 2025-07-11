@@ -125,11 +125,11 @@ It’s also important that feedback from CI be widely accessible. In addition to
 
 Along with logs, our test reporting system provides a detailed history of when build or test targets began to fail, including audits of where the build was cut at each run, where it was run, and by whom. We also have a system for flake classification, which uses statistics to classify flakes at a Google-wide level, so engineers don’t need to figure this out for themselves to determine whether their change broke another project’s test (if the test is flaky: probably not).
 
-除了日誌，我們的測試報告系統還提供了建構或測試目標開始失敗的詳細歷史記錄，包括每次執行時在何處剪下建構、在何處執行以及由誰執行的審計日誌。我們還有一個鬆散分類系統，該系統使用統計資料在谷歌範圍內對薄片進行分類，因此工程師不需要自己來確定他們的更改是否破壞了另一個專案的測試（如果測試是鬆散：可能不是）。
+除了日誌，我們的測試報告系統還提供了建構或測試目標開始失敗的詳細歷史記錄，包括每次執行時在何處剪下建構、在何處執行以及由誰執行的審計日誌。我們還有一個鬆散分類系統，該系統使用統計資料在Google範圍內對薄片進行分類，因此工程師不需要自己來確定他們的更改是否破壞了另一個專案的測試（如果測試是鬆散：可能不是）。
 
 Visibility into test history empowers engineers to share and collaborate on feedback, an essential requirement for disparate teams to diagnose and learn from integration failures between their systems. Similarly, bugs (e.g., tickets or issues) at Google are open with full comment history for all to see and learn from (with the exception, again, of customer PII).
 
-對測試歷史的可視性使工程師能夠就反饋進行共享和協作，這是不同團隊診斷和學習系統間整合故障的基本要求。類似地，谷歌的bug（如罰單或問題）是開放的，有完整的評論歷史供所有人檢視和學習（客戶PII除外）。
+對測試歷史的可視性使工程師能夠就反饋進行共享和協作，這是不同團隊診斷和學習系統間整合故障的基本要求。類似地，Google的bug（如罰單或問題）是開放的，有完整的評論歷史供所有人檢視和學習（客戶PII除外）。
 
 Finally, any feedback from CI tests should not just be accessible but actionable—easy to use to find and fix problems. We’ll look at an example of improving user-unfriendly feedback in our case study later in this chapter. By improving test output readability, you automate the understanding of feedback.
 
@@ -159,7 +159,7 @@ After a change is submitted, the CB should run all relevant tests. If a change p
 
 The first step in Continuous Delivery (CD; discussed more fully in Chapter 24) is *release automation*, which continuously assembles the latest code and configuration from head into release candidates. At Google, most teams cut these at green, as opposed to true, head.
 
-持續交付（CD；在第24章中詳細討論）的第一步是釋出自動化，它不斷地將最新的程式碼和配置從head組裝成候選釋出版本。在谷歌，大多數團隊都是在綠色（而不是真正的）head進行切割。
+持續交付（CD；在第24章中詳細討論）的第一步是釋出自動化，它不斷地將最新的程式碼和配置從head組裝成候選釋出版本。在Google，大多數團隊都是在綠色（而不是真正的）head進行切割。
 
 *Release candidate* (RC): A cohesive, deployable unit created by an automated process,[^5] assembled of code, configuration, and other dependencies that have passed the continuous build.
 
@@ -171,8 +171,8 @@ Note that we include configuration in release candidates—this is extremely imp
 
 Rather, we are saying that any static configuration you *do* have should be promoted as part of the release candidate so that it can undergo testing along with its corresponding code. Remember, a large percentage of production bugs are caused by “silly” configuration problems, so it’s just as important to test your configuration as it is your code (and to test it along *with* the same code that will use it). Version skew is often caught in this release-candidate-promotion process. This assumes, of course, that your static configuration is in version control—at Google, static configuration is in version control along with the code, and hence goes through the same code review process.
 
-相反，我們的意思是，你所擁有的任何靜態配置都應該作為候選版本的一部分進行升級，以便它可以與其對應的程式碼一起接受測試。記住，很大比例的生產錯誤是由 "愚蠢的" 配置問題引起的，所以測試你的配置和測試你的程式碼一樣重要（而且要和將要使用它的相同程式碼一起測試）。在這個釋出--候選--推廣的過程中，經常會出現版本傾斜。當然，這是假設你的靜態配置是在版本控制中的--在谷歌，靜態配置是和程式碼一起在版本控制中的，因此要經過同樣的程式碼審查過程。
-相反，我們的意思是，你所擁有的任何靜態配置都應該作為候選版本的一部分進行升級，以便它可以與其對應的程式碼一起接受測試。記住，很大比例的生產錯誤是由 "愚蠢的 "配置問題引起的，所以測試你的配置和測試你的程式碼一樣重要（而且要和將要使用它的相同程式碼一起測試）。在這個釋出--候選--推廣的過程中，經常會出現版本傾斜。當然，這是假設你的靜態配置是在版本控制中的--在谷歌，靜態配置是和程式碼一起在版本控制中的，因此要經過同樣的程式碼審查過程。
+相反，我們的意思是，你所擁有的任何靜態配置都應該作為候選版本的一部分進行升級，以便它可以與其對應的程式碼一起接受測試。記住，很大比例的生產錯誤是由 "愚蠢的" 配置問題引起的，所以測試你的配置和測試你的程式碼一樣重要（而且要和將要使用它的相同程式碼一起測試）。在這個釋出--候選--推廣的過程中，經常會出現版本傾斜。當然，這是假設你的靜態配置是在版本控制中的--在Google，靜態配置是和程式碼一起在版本控制中的，因此要經過同樣的程式碼審查過程。
+相反，我們的意思是，你所擁有的任何靜態配置都應該作為候選版本的一部分進行升級，以便它可以與其對應的程式碼一起接受測試。記住，很大比例的生產錯誤是由 "愚蠢的 "配置問題引起的，所以測試你的配置和測試你的程式碼一樣重要（而且要和將要使用它的相同程式碼一起測試）。在這個釋出--候選--推廣的過程中，經常會出現版本傾斜。當然，這是假設你的靜態配置是在版本控制中的--在Google，靜態配置是和程式碼一起在版本控制中的，因此要經過同樣的程式碼審查過程。
 
 We then define CD as follows:
 
@@ -188,7 +188,7 @@ The promotion and deployment process often depends on the team. We’ll show how
 
 For teams at Google that want continuous feedback from new changes in production (e.g., Continuous Deployment), it’s usually infeasible to continuously push entire binaries, which are often quite large, on green. For that reason, doing a *selective* Continuous Deployment, through experiments or feature flags, is a common strategy.[^7]
 
-對於谷歌的團隊來說，他們希望從生產中的新變化（例如，持續部署）中獲得持續的反饋，通常不可能持續地將整個二進位制檔案（通常相當大）推到綠色上。因此，透過實驗或特性標誌進行選擇性連續部署是一種常見的策略。
+對於Google的團隊來說，他們希望從生產中的新變化（例如，持續部署）中獲得持續的反饋，通常不可能持續地將整個二進位制檔案（通常相當大）推到綠色上。因此，透過實驗或特性標誌進行選擇性連續部署是一種常見的策略。
 
 As an RC progresses through environments, its artifacts (e.g., binaries, containers) ideally should not be recompiled or rebuilt. Using containers such as Docker helps enforce consistency of an RC between environments, from local development onward. Similarly, using orchestration tools like Kubernetes (or in our case, usually [Borg](https://oreil.ly/89yPv)), helps enforce consistency between deployments. By enforcing consistency of our release and deployment between environments, we achieve higher-fidelity earlier testing and fewer surprises in production.
 
@@ -200,7 +200,7 @@ As an RC progresses through environments, its artifacts (e.g., binaries, contain
 >
 > [5^]: At Google, release automation is managed by a separate system from TAP. We won’t focus on how release automation assembles RCs, but if you’re interested, we do refer you to Site Reliability Engineering (O’Reilly) in which our release automation technology (a system called Rapid) is discussed in detail./
 >
-> 5 在谷歌，釋出自動化是由一個獨立於TAP的系統管理的。我們不會專注於釋出自動化是如何組裝RC的，但如果你有興趣，我們會向你推薦《網站可靠性工程》（O'Reilly），其中詳細討論了我們的釋出自動化技術（一個叫做Rapid的系統）。
+> 5 在Google，釋出自動化是由一個獨立於TAP的系統管理的。我們不會專注於釋出自動化是如何組裝RC的，但如果你有興趣，我們會向你推薦《網站可靠性工程》（O'Reilly），其中詳細討論了我們的釋出自動化技術（一個叫做Rapid的系統）。
 >
 > [6^]: CD with experiments and feature flags is discussed further in Chapter 24.
 >
@@ -255,12 +255,12 @@ We don’t want to waste valuable engineer productivity by waiting too long for 
 
 Most teams at Google run their small tests (like unit tests) on presubmit[^8]—these are the obvious ones to run as they tend to be the fastest and most reliable. Whether and how to run larger-scoped tests on presubmit is the more interesting question, and this varies by team. For teams that do want to run them, hermetic testing is a proven approach to reducing their inherent instability. Another option is to allow large- scoped tests to be unreliable on presubmit but disable them aggressively when they start failing.
 
-谷歌的大多數團隊都在預提交上執行他們的小型測試（如單元測試）-- 這些是明顯要執行的，因為它們往往是最快和最可靠的。是否以及如何在提交前執行更大範圍的測試是個更有趣的問題，這因團隊而異。對於想要執行這些測試的團隊來說，封閉測試是一種行之有效的方法來減少其固有的不穩定性。另一個選擇是允許大範圍的測試在預提交時不可靠，但當它們開始失敗時，要主動禁用它們。
-谷歌的大多數團隊都在預提交上執行他們的小型測試（如單元測試）--這些是明顯要執行的，因為它們往往是最快和最可靠的。是否以及如何在提交前執行更大範圍的測試是個更有趣的問題，這因團隊而異。對於想要執行這些測試的團隊來說，封閉測試是一種行之有效的方法來減少其固有的不穩定性。另一個選擇是允許大範圍的測試在預提交時不可靠，但當它們開始失敗時，要主動禁用它們。
+Google的大多數團隊都在預提交上執行他們的小型測試（如單元測試）-- 這些是明顯要執行的，因為它們往往是最快和最可靠的。是否以及如何在提交前執行更大範圍的測試是個更有趣的問題，這因團隊而異。對於想要執行這些測試的團隊來說，封閉測試是一種行之有效的方法來減少其固有的不穩定性。另一個選擇是允許大範圍的測試在預提交時不可靠，但當它們開始失敗時，要主動禁用它們。
+Google的大多數團隊都在預提交上執行他們的小型測試（如單元測試）--這些是明顯要執行的，因為它們往往是最快和最可靠的。是否以及如何在提交前執行更大範圍的測試是個更有趣的問題，這因團隊而異。對於想要執行這些測試的團隊來說，封閉測試是一種行之有效的方法來減少其固有的不穩定性。另一個選擇是允許大範圍的測試在預提交時不可靠，但當它們開始失敗時，要主動禁用它們。
 
 > [^8]: Each team at Google configures a subset of its project’s tests to run on presubmit (versus post-submit). In reality, our continuous build actually optimizes some presubmit tests to be saved for post-submit, behind the scenes. We’ll further discuss this later on in this chapter.
 >
-> 8 谷歌的每個團隊都將其專案的測試的一個子集配置為在預提交執行（相對於提交後）。實際上，我們的持續建構實際上在幕後優化了一些預提交的測試，以儲存到提交後。我們將在本章的後面進一步討論這個問題。
+> 8 Google的每個團隊都將其專案的測試的一個子集配置為在預提交執行（相對於提交後）。實際上，我們的持續建構實際上在幕後優化了一些預提交的測試，以儲存到提交後。我們將在本章的後面進一步討論這個問題。
 
 #### Release candidate testing 候選版本測試
 
@@ -405,7 +405,7 @@ We’ve discussed some of the established best practices in CI and have introduc
 
 There’s also the challenge of *failure management—*what to do when tests fail. Although smaller problems can usually be fixed quickly, many of our teams find that it’s extremely difficult to have a consistently green test suite when large end-to-end tests are involved. They inherently become broken or flaky and are difficult to debug; there needs to be a mechanism to temporarily disable and keep track of them so that the release can go on. A common technique at Google is to use bug “hotlists” filed by an on-call or release engineer and triaged to the appropriate team. Even better is when these bugs can be automatically generated and filed—some of our larger products, like Google Web Server (GWS) and Google Assistant, do this. These hotlists should be curated to make sure any release-blocking bugs are fixed immediately. Nonrelease blockers should be fixed, too; they are less urgent, but should also be prioritized so the test suite remains useful and is not simply a growing pile of disabled, old tests. Often, the problems caught by end-to-end test failures are actually with tests rather than code.
 
-還有一個挑戰是*失敗管理*--當測試失敗時該怎麼做。儘管較小的問題通常可以很快得到解決，但我們的許多團隊發現，當涉及到大型的端到端測試時，要有一個持續的綠色測試套件是非常困難的。它們本來就會出現故障或不穩定，而且難以除錯；需要有一種機制來暫時禁用並追蹤它們，以便釋出工作能夠繼續進行。在谷歌，一種常見的技術是使用由值班或釋出工程師提交的bug "熱名單"，並將其分發給相應的團隊。如果這些bug能夠自動產生並歸檔，那就更好了--我們的一些大型產品，如谷歌網路伺服器（GWS）和谷歌助手，就能做到這一點。應對這些熱名單進行整理，以確保立即修復所有阻止釋出的bug。非釋出障礙也應該被修復；它們不那麼緊急，但也應該被優先處理，這樣測試套件才會保持有用，而不僅僅是一堆越來越多的失效的舊測試。通常，由端到端測試失敗引起的問題實際上是測試問題，而不是程式碼問題。
+還有一個挑戰是*失敗管理*--當測試失敗時該怎麼做。儘管較小的問題通常可以很快得到解決，但我們的許多團隊發現，當涉及到大型的端到端測試時，要有一個持續的綠色測試套件是非常困難的。它們本來就會出現故障或不穩定，而且難以除錯；需要有一種機制來暫時禁用並追蹤它們，以便釋出工作能夠繼續進行。在Google，一種常見的技術是使用由值班或釋出工程師提交的bug "熱名單"，並將其分發給相應的團隊。如果這些bug能夠自動產生並歸檔，那就更好了--我們的一些大型產品，如Google網路伺服器（GWS）和Google助手，就能做到這一點。應對這些熱名單進行整理，以確保立即修復所有阻止釋出的bug。非釋出障礙也應該被修復；它們不那麼緊急，但也應該被優先處理，這樣測試套件才會保持有用，而不僅僅是一堆越來越多的失效的舊測試。通常，由端到端測試失敗引起的問題實際上是測試問題，而不是程式碼問題。
 
 Flaky tests pose another problem to this process. They erode confidence similar to a broken test, but finding a change to roll back is often more difficult because the failure won’t happen all the time. Some teams rely on a tool to remove such flaky tests from presubmit temporarily while the flakiness is investigated and fixed. This keeps confidence high while allowing for more time to fix the problem.
 
@@ -449,7 +449,7 @@ One type of hermetic backend is a fake. As discussed in Chapter 13, these can be
 
 The cleanest option to achieve a presubmit-worthy integration test is with a fully hermetic setup—that is, starting up the entire stack sandboxed[^11]—and Google provides out-of-the-box sandbox configurations for popular components, like databases, to make it easier. This is more feasible for smaller applications with fewer components, but there are exceptions at Google, even one (by DisplayAds) that starts about four hundred servers from scratch on every presubmit as well as continuously on postsubmit. Since the time that system was created, though, record/replay has emerged as a more popular paradigm for larger systems and tends to be cheaper than starting up a large sandboxed stack.
 
-實現具有預提交價值的整合測試的最乾淨的選擇是使用一個完全精細的設定--即啟動整個堆疊沙盒--谷歌為流行元件（如資料庫）提供開箱即用的沙盒配置，以使其更簡單。這對於元件較少的小型應用程式更為可行，但谷歌也有例外，即使是一個（由DisplayAds提供）在每次提交前以及提交後從零開始啟動大約400台伺服器的應用程式。但是，自建立該系統以來，錄製/重播已成為大型系統的一種更受歡迎的範例，並且往往比啟動大型沙盒堆疊更便宜。
+實現具有預提交價值的整合測試的最乾淨的選擇是使用一個完全精細的設定--即啟動整個堆疊沙盒--Google為流行元件（如資料庫）提供開箱即用的沙盒配置，以使其更簡單。這對於元件較少的小型應用程式更為可行，但Google也有例外，即使是一個（由DisplayAds提供）在每次提交前以及提交後從零開始啟動大約400台伺服器的應用程式。但是，自建立該系統以來，錄製/重播已成為大型系統的一種更受歡迎的範例，並且往往比啟動大型沙盒堆疊更便宜。
 
 Record/replay (see Chapter 14) systems record live backend responses, cache them, and replay them in a hermetic test environment. Record/replay is a powerful tool for reducing test instability, but one downside is that it leads to brittle tests: it’s difficult to strike a balance between the following:
 
@@ -477,11 +477,11 @@ Ideally, a record/replay system should detect only problematic changes and cache
 
 -----
 
-#### The Hermetic Google Assistant 隱秘的谷歌助手
+#### The Hermetic Google Assistant 隱秘的Google助手
 
 Google Assistant provides a framework for engineers to run end-to-end tests, including a test fixture with functionality for setting up queries, specifying whether to simulate on a phone or a smart home device, and validating responses throughout an exchange with Google Assistant.
 
-谷歌助手為工程師提供了一個執行端到端測試的框架，包括一個具有設定查詢功能的測試套件，指定是否在手機或智慧家居裝置上進行模擬，並在與谷歌助手的整個互動中驗證響應。
+Google助手為工程師提供了一個執行端到端測試的框架，包括一個具有設定查詢功能的測試套件，指定是否在手機或智慧家居裝置上進行模擬，並在與Google助手的整個互動中驗證響應。
 
 One of its greatest success stories was making its test suite fully hermetic on presubmit. When the team previously used to run nonhermetic tests on presubmit, the tests would routinely fail. In some days, the team would see more than 50 code changes bypass and ignore the test results. In moving presubmit to hermetic, the team cut the runtime by a factor of 14, with virtually no flakiness. It still sees failures, but those failures tend to be fairly easy to find and roll back.
 
@@ -511,26 +511,26 @@ As we’ve seen in this section, hermetic testing can both reduce instability in
 
 正如我們在本節中所看到的，封閉測試既可以減少大範圍測試中的不穩定性，也可以幫助隔離故障，解決我們在上一節中確定的兩個重大CI挑戰。然而，封閉式後端也可能更昂貴，因為它們使用更多的資源，並且設定速度較慢。許多團隊在他們的測試環境中使用密封和活動後端的組合。
 
-## CI at Google 谷歌的CI
+## CI at Google Google的CI
 
 Now let’s look in more detail at how CI is implemented at Google. First, we’ll look at our global continuous build, TAP, used by the vast majority of teams at Google, and how it enables some of the practices and addresses some of the challenges that we looked at in the previous section. We’ll also look at one application, Google Takeout, and how a CI transformation helped it scale both as a platform and as a service.
 
-現在讓我們更詳細地看看CI在谷歌是如何實施的。首先，我們將瞭解谷歌絕大多數團隊使用的全球持續建構TAP，以及它是如何實現一些實踐和解決我們在上一節中看到的一些挑戰的。我們還將介紹一個應用程式Google Takeout，以及CI轉換如何幫助其作為平臺和服務進行擴充。
+現在讓我們更詳細地看看CI在Google是如何實施的。首先，我們將瞭解Google絕大多數團隊使用的全球持續建構TAP，以及它是如何實現一些實踐和解決我們在上一節中看到的一些挑戰的。我們還將介紹一個應用程式Google Takeout，以及CI轉換如何幫助其作為平臺和服務進行擴充。
 
 -----
 
-### TAP: Google’s Global Continuous Build 谷歌的全球持續建構
+### TAP: Google’s Global Continuous Build Google的全球持續建構
 
 Adam Bender 亞當-本德
 
 We run a massive continuous build, called the Test Automation Platform (TAP), of our entire codebase. It is responsible for running the majority of our automated tests. As a direct consequence of our use of a monorepo, TAP is the gateway for almost all changes at Google. Every day it is responsible for handling more than 50,000 unique changes *and* running more than four billion individual test cases.
 
-我們在整個程式碼庫中執行一個大規模的持續建構，稱為測試自動化平台（TAP）。它負責執行我們大部分的自動化測試。由於我們使用的是monorepo，TAP是谷歌幾乎所有變化的門戶。每天，它負責處理超過50,000個獨特的變化，執行超過40億個獨立的測試使用案例。
-我們在整個程式碼庫中執行一個大規模的持續建構，稱為測試自動化平台（TAP）。它負責執行我們大部分的自動化測試。由於我們使用的是monorepo，TAP是谷歌幾乎所有變化的門戶。每天，它負責處理超過50,000個獨特的變化，執行超過40億個單獨的測試使用案例。
+我們在整個程式碼庫中執行一個大規模的持續建構，稱為測試自動化平台（TAP）。它負責執行我們大部分的自動化測試。由於我們使用的是monorepo，TAP是Google幾乎所有變化的門戶。每天，它負責處理超過50,000個獨特的變化，執行超過40億個獨立的測試使用案例。
+我們在整個程式碼庫中執行一個大規模的持續建構，稱為測試自動化平台（TAP）。它負責執行我們大部分的自動化測試。由於我們使用的是monorepo，TAP是Google幾乎所有變化的門戶。每天，它負責處理超過50,000個獨特的變化，執行超過40億個單獨的測試使用案例。
 
 TAP is the beating heart of Google’s development infrastructure. Conceptually, the process is very simple. When an engineer attempts to submit code, TAP runs the associated tests and reports success or failure. If the tests pass, the change is allowed into the codebase.
 
-TAP是谷歌發展基礎設施的核心。從概念上講，這個過程非常簡單。當工程師試圖提交程式碼時，TAP將執行相關測試並報告成功或失敗。如果測試透過，則允許更改進入程式碼庫。
+TAP是Google發展基礎設施的核心。從概念上講，這個過程非常簡單。當工程師試圖提交程式碼時，TAP將執行相關測試並報告成功或失敗。如果測試透過，則允許更改進入程式碼庫。
 
 #### Presubmit optimization 預提交最佳化
 
@@ -540,8 +540,8 @@ To catch issues quickly and consistently, it is important to ensure that tests a
 
 As discussed earlier, waiting a long time to run every test on presubmit can be severely disruptive, in some cases taking hours. To minimize the time spent waiting, Google’s CB approach allows potentially breaking changes to land in the repository (remember that they become immediately visible to the rest of the company!). All we ask is for each team to create a fast subset of tests, often a project’s unit tests, that can be run before a change is submitted (usually before it is sent for code review)—the presubmit. Empirically, a change that passes the presubmit has a very high likelihood (95%+) of passing the rest of the tests, and we optimistically allow it to be integrated so that other engineers can then begin to use it.
 
-如前所述，等待很長時間來執行預提交的每個測試可能會造成嚴重破壞，在某些情況下需要等待數小時。為了最大限度地減少等待時間，谷歌的CB方法允許潛在的破壞性更改提交到儲存庫中（請記住，這些更改會立即被公司其他人看到！）。我們只要求每個團隊建立一個快速的測試子集，通常是一個專案的單元測試，可以在提交更改之前（通常是在傳送更改進行程式碼審查之前）執行這些測試。根據經驗，透過預提交的變更透過其餘測試的可能性非常高（95%+），我們樂觀地允許將其整合，以便其他工程師可以開始使用它。
-如前所述，等待很長時間來執行預提交的每個測試可能會造成嚴重破壞，在某些情況下需要數小時。為了最大限度地減少等待時間，谷歌的CB方法允許潛在的破壞性更改提交到儲存庫中（請記住，這些更改會立即被公司其他人看到！）。我們只要求每個團隊建立一個快速的測試子集，通常是一個專案的單元測試，可以在提交更改之前（通常是在傳送更改進行程式碼審查之前）執行這些測試。根據經驗，透過預提交的變更透過其餘測試的可能性非常高（95%+），我們樂觀地允許將其整合，以便其他工程師可以開始使用它。
+如前所述，等待很長時間來執行預提交的每個測試可能會造成嚴重破壞，在某些情況下需要等待數小時。為了最大限度地減少等待時間，Google的CB方法允許潛在的破壞性更改提交到儲存庫中（請記住，這些更改會立即被公司其他人看到！）。我們只要求每個團隊建立一個快速的測試子集，通常是一個專案的單元測試，可以在提交更改之前（通常是在傳送更改進行程式碼審查之前）執行這些測試。根據經驗，透過預提交的變更透過其餘測試的可能性非常高（95%+），我們樂觀地允許將其整合，以便其他工程師可以開始使用它。
+如前所述，等待很長時間來執行預提交的每個測試可能會造成嚴重破壞，在某些情況下需要數小時。為了最大限度地減少等待時間，Google的CB方法允許潛在的破壞性更改提交到儲存庫中（請記住，這些更改會立即被公司其他人看到！）。我們只要求每個團隊建立一個快速的測試子集，通常是一個專案的單元測試，可以在提交更改之前（通常是在傳送更改進行程式碼審查之前）執行這些測試。根據經驗，透過預提交的變更透過其餘測試的可能性非常高（95%+），我們樂觀地允許將其整合，以便其他工程師可以開始使用它。
 
 After a change has been submitted, we use TAP to asynchronously run all potentially affected tests, including larger and slower tests.
 
@@ -563,7 +563,7 @@ In practice, the trade-off of allowing changes to be committed before verifying 
 
 One of the problems we face with large test suites at Google is finding the specific change that broke a test. Conceptually, this should be really easy: grab a change, run the tests, if any tests fail, mark the change as bad. Unfortunately, due to a prevalence of flakes and the occasional issues with the testing infrastructure itself, having confidence that a failure is real isn’t easy. To make matters more complicated, TAP must evaluate so many changes a day (more than one a second) that it can no longer run every test on every change. Instead, it falls back to batching related changes together, which reduces the total number of unique tests to be run. Although this approach can make it faster to run tests, it can obscure which change in the batch caused a test to break.
 
-谷歌大型測試套件面臨的一個問題是找到破壞測試的具體變化。從概念上講，這應該很容易：抓取一個變更，執行測試，如果任何測試失敗，將變更標記為壞的。不幸的是，由於片斷的流行以及測試基礎設施本身偶爾出現的問題，要確信失敗是真實的並不容易。更加複雜的是，TAP必須每天評估如此多的變化（一秒鐘超過一個），以至於它不能再對每個變化執行每個測試。取而代之的是，它退回到批處理相關的更改，這減少了要執行的獨特測試的總數。儘管這種方法可以加快執行測試的速度，但它可以掩蓋批處理中導致測試中斷的更改。
+Google大型測試套件面臨的一個問題是找到破壞測試的具體變化。從概念上講，這應該很容易：抓取一個變更，執行測試，如果任何測試失敗，將變更標記為壞的。不幸的是，由於片斷的流行以及測試基礎設施本身偶爾出現的問題，要確信失敗是真實的並不容易。更加複雜的是，TAP必須每天評估如此多的變化（一秒鐘超過一個），以至於它不能再對每個變化執行每個測試。取而代之的是，它退回到批處理相關的更改，這減少了要執行的獨特測試的總數。儘管這種方法可以加快執行測試的速度，但它可以掩蓋批處理中導致測試中斷的更改。
 
 To speed up failure identification, we use two different approaches. First, TAP automatically splits a failing batch up into individual changes and reruns the tests against each change in isolation. This process can sometimes take a while to converge on a failure, so in addition, we have created culprit finding tools that an individual developer can use to binary search through a batch of changes and identify which one is the likely culprit.
 
@@ -585,7 +585,7 @@ Fast rollbacks work hand in hand with a test suite to ensure continued productiv
 
 > [12^]: Any change to Google’s codebase can be rolled back with two clicks!
 >
-> 12 對谷歌程式碼庫的任何改動都可以透過兩次點選來回滾。
+> 12 對Google程式碼庫的任何改動都可以透過兩次點選來回滾。
 
 #### Resource constraints 資源限制
 
@@ -595,7 +595,7 @@ Although engineers can run tests locally, most test executions happen in a distr
 
 The primary mechanism for determining which tests need to be run is an analysis of the downstream dependency graph for every change. Google’s distributed build tools, Forge and Blaze, maintain a near-real-time version of the global dependency graph and make it available to TAP. As a result, TAP can quickly determine which tests are downstream from any change and run the minimal set to be sure the change is safe.
 
-確定需要執行哪些測試的主要機制是分析每個更改的下游依賴關係圖。谷歌的分散式建構工具Forge和Blaze維護了一個近乎即時的全球依賴關係圖版本，並可供使用者使用。因此，TAP可以快速確定任何更改的下游測試，並執行最小集以確保更改是安全的。
+確定需要執行哪些測試的主要機制是分析每個更改的下游依賴關係圖。Google的分散式建構工具Forge和Blaze維護了一個近乎即時的全球依賴關係圖版本，並可供使用者使用。因此，TAP可以快速確定任何更改的下游測試，並執行最小集以確保更改是安全的。
 
 Another factor influencing the use of TAP is the speed of tests being run. TAP is often able to run changes with fewer tests sooner than those with more tests. This bias encourages engineers to write small, focused changes. The difference in waiting time between a change that triggers 100 tests and one that triggers 1,000 can be tens of minutes on a busy day. Engineers who want to spend less time waiting end up making smaller, targeted changes, which is a win for everyone.
 
@@ -608,8 +608,8 @@ Another factor influencing the use of TAP is the speed of tests being run. TAP i
 
 Google Takeout started out as a data backup and download product in 2011. Its founders pioneered the idea of “data liberation”—that users should be able to easily take their data with them, in a usable format, wherever they go. They began by integrating Takeout with a handful of Google products themselves, producing archives of users’ photos, contact lists, and so on for download at their request. However, Takeout didn’t stay small for long, growing as both a platform and a service for a wide variety of Google products. As we’ll see, effective CI is central to keeping any large project healthy, but is especially critical when applications rapidly grow.
 
-2011年，Google Takeout開始作為一種資料備份和下載產品。其創始人率先提出了“資料解放”的理念，即使用者無論走到哪裡，都應該能夠輕鬆地以可用的格式攜帶資料。他們首先將Takeout與少量谷歌產品整合在一起，製作使用者照片、聯絡人列表等檔案，以便在他們的要求下載。然而，Takeout並沒有在很長一段時間內保持規模，它不僅是一個平台，而且是一項針對各種谷歌產品的服務。正如我們將看到的，有效的CI對於保持任何大型專案的健康至關重要，但在應用程式快速增長時尤為關鍵。
-2011年，Google Takeout開始作為一種資料備份和下載產品。其創始人率先提出了“資料解放”的理念，即使用者無論走到哪裡，都應該能夠輕鬆地以可用的格式攜帶資料。他們首先將Takeout與少量谷歌產品整合在一起，製作使用者照片、聯絡人列表等檔案，以便在他們的要求下下載。然而，Takeout並沒有在很長一段時間內保持規模，它不僅是一個平台，而且是一項針對各種谷歌產品的服務。正如我們將看到的，有效的CI對於保持任何大型專案的健康至關重要，但在應用程式快速增長時尤為關鍵。
+2011年，Google Takeout開始作為一種資料備份和下載產品。其創始人率先提出了“資料解放”的理念，即使用者無論走到哪裡，都應該能夠輕鬆地以可用的格式攜帶資料。他們首先將Takeout與少量Google產品整合在一起，製作使用者照片、聯絡人列表等檔案，以便在他們的要求下載。然而，Takeout並沒有在很長一段時間內保持規模，它不僅是一個平台，而且是一項針對各種Google產品的服務。正如我們將看到的，有效的CI對於保持任何大型專案的健康至關重要，但在應用程式快速增長時尤為關鍵。
+2011年，Google Takeout開始作為一種資料備份和下載產品。其創始人率先提出了“資料解放”的理念，即使用者無論走到哪裡，都應該能夠輕鬆地以可用的格式攜帶資料。他們首先將Takeout與少量Google產品整合在一起，製作使用者照片、聯絡人列表等檔案，以便在他們的要求下下載。然而，Takeout並沒有在很長一段時間內保持規模，它不僅是一個平台，而且是一項針對各種Google產品的服務。正如我們將看到的，有效的CI對於保持任何大型專案的健康至關重要，但在應用程式快速增長時尤為關鍵。
 
 #### Scenario #1: Continuously broken dev deploys 情景#1：持續中斷的開發部署
 
@@ -663,8 +663,8 @@ So, the team reused the sandboxed environments from presubmit, easily extending 
 
 **Problem:** As Takeout incorporated more Google products, it grew into a mature platform that allowed product teams to insert plug-ins, with product-specific data- fetching code, directly into Takeout’s binary. For example, the Google Photos plug-in knows how to fetch photos, album metadata, and the like. Takeout expanded from its original “handful” of products to now integrate with more than *90*.
 
-**問題：**隨著Takeout整合了更多的谷歌產品，它已經發展成為一個成熟的平台，允許產品團隊直接在Takeout的二進位制檔案中插入外掛，其中包含產品特定的資料獲取程式碼。例如，谷歌照片外掛知道如何獲取照片、相簿元資料等。Takeout從最初的 "少數"產品擴充到現在與超過*90個*的產品整合。
-**問題：**隨著Takeout整合了更多的谷歌產品，它已經發展成為一個成熟的平台，允許產品團隊直接在Takeout的二進位制檔案中插入外掛，其中包含產品特定的資料獲取程式碼。例如，谷歌照片外掛知道如何獲取照片、相簿元資料等。Takeout從最初的 "少數 "產品擴充到現在與超過*90個*的產品整合。
+**問題：**隨著Takeout整合了更多的Google產品，它已經發展成為一個成熟的平台，允許產品團隊直接在Takeout的二進位制檔案中插入外掛，其中包含產品特定的資料獲取程式碼。例如，Google照片外掛知道如何獲取照片、相簿元資料等。Takeout從最初的 "少數"產品擴充到現在與超過*90個*的產品整合。
+**問題：**隨著Takeout整合了更多的Google產品，它已經發展成為一個成熟的平台，允許產品團隊直接在Takeout的二進位制檔案中插入外掛，其中包含產品特定的資料獲取程式碼。例如，Google照片外掛知道如何獲取照片、相簿元資料等。Takeout從最初的 "少數 "產品擴充到現在與超過*90個*的產品整合。
 
 Takeout’s end-to-end tests dumped its failures to a log, and this approach didn’t scale to 90 product plug-ins. As more products integrated, more failures were introduced. Even though the team was running the tests earlier and more often with the addition of the post-submit CI, multiple failures would still pile up inside and were easy to miss. Going through these logs became a frustrating time sink, and the tests were almost always failing.
 
@@ -682,15 +682,15 @@ Takeout的端到端測試將其故障轉儲到日誌中，這種方法不能擴�
 
 **經驗教訓。**來自CI的可存取、可操作的反饋減少了測試失敗，提高了生產力。這些舉措使Takeout團隊參與除錯客戶（產品外掛）測試失敗的情況減少了35%。
 
-#### Scenario #3: Debugging “all of Google” 情景#3：除錯 "所有谷歌"
+#### Scenario #3: Debugging “all of Google” 情景#3：除錯 "所有Google"
 
 **Problem:** An interesting side effect of the Takeout CI that the team did not anticipate was that, because it verified the output of 90-some odd end-user–facing products, in the form of an archive, they were basically testing “all of Google” and catching issues that had nothing to do with Takeout. This was a good thing—Takeout was able to help contribute to the quality of Google’s products overall. However, this introduced a problem for their CI processes: they needed better failure isolation so that they could determine which problems were in their build (which were the minority) and which lay in loosely coupled microservices behind the product APIs they called.
 
-**問題：**Takeout CI的一個有趣的副作用是團隊沒有預料到的，因為它以歸檔的形式驗證了90多個面向終端使用者的產品的輸出，他們基本上是在測試 "所有的Google產品"，捕捉與Takeout無關的問題。這是一件好事--Takeout能夠幫助提高谷歌產品的整體品質。然而，這給他們的CI流程帶來了一個問題：他們需要更好的故障隔離，以便他們能夠確定哪些問題是在他們的建構中（哪些是少數），哪些是在他們呼叫的產品API背後鬆散耦合的微服務中。
+**問題：**Takeout CI的一個有趣的副作用是團隊沒有預料到的，因為它以歸檔的形式驗證了90多個面向終端使用者的產品的輸出，他們基本上是在測試 "所有的Google產品"，捕捉與Takeout無關的問題。這是一件好事--Takeout能夠幫助提高Google產品的整體品質。然而，這給他們的CI流程帶來了一個問題：他們需要更好的故障隔離，以便他們能夠確定哪些問題是在他們的建構中（哪些是少數），哪些是在他們呼叫的產品API背後鬆散耦合的微服務中。
 
 **What the team did.** The team’s solution was to run the exact same test suite continuously against production as it already did in its post-submit CI. This was cheap to implement and allowed the team to isolate which failures were new in its build and which were in production; for instance, the result of a microservice release somewhere else “in Google.”
 
-**團隊所做的**。該團隊的解決方案是針對生產持續執行完全相同的測試套件，正如它在提交後CI中所做的那樣。這樣做的成本很低，並允許團隊隔離哪些故障是在其建構中出現的，哪些是在生產中出現的；例如，微服務釋出的結果“在谷歌的其他地方”。
+**團隊所做的**。該團隊的解決方案是針對生產持續執行完全相同的測試套件，正如它在提交後CI中所做的那樣。這樣做的成本很低，並允許團隊隔離哪些故障是在其建構中出現的，哪些是在生產中出現的；例如，微服務釋出的結果“在Google的其他地方”。
 
 **Lesson learned.** Running the same test suite against prod and a post-submit CI (with newly built binaries, but the same live backends) is a cheap way to isolate failures.
 
@@ -698,7 +698,7 @@ Takeout的端到端測試將其故障轉儲到日誌中，這種方法不能擴�
 
 **Remaining challenge.** Going forward, the burden of testing “all of Google” (obviously, this is an exaggeration, as most product problems are caught by their respective teams) grows as Takeout integrates with more products and as those products become more complex. Manual comparisons between this CI and prod are an expensive use of the Build Cop’s time.
 
-**仍然存在的挑戰。**展望未來，隨著Takeout與更多的產品整合，以及這些產品變得更加複雜，測試 "所有谷歌"（顯然，這是一個誇張的說法，因為大多數產品問題都是由他們各自的團隊發現的）的負擔越來越重。在這個CI和prod之間進行手動比較是對Build Cop時間的昂貴使用。
+**仍然存在的挑戰。**展望未來，隨著Takeout與更多的產品整合，以及這些產品變得更加複雜，測試 "所有Google"（顯然，這是一個誇張的說法，因為大多數產品問題都是由他們各自的團隊發現的）的負擔越來越重。在這個CI和prod之間進行手動比較是對Build Cop時間的昂貴使用。
 
 **Future improvement.** This presents an interesting opportunity to try hermetic testing with record/replay in Takeout’s post-submit CI. In theory, this would eliminate failures from backend product APIs surfacing in Takeout’s CI, which would make the suite more stable and effective at catching failures in the last two hours of Takeout changes—which is its intended purpose.
 
@@ -756,7 +756,7 @@ These changes made a mostly self-maintaining test suite, as illustrated in [Figu
 
 You might be thinking that’s all well and good, but you have neither the time nor money to build any of this. We certainly acknowledge that Google might have more resources to implement CI than the typical startup does. Yet many of our products have grown so quickly that they didn’t have time to develop a CI system either (at least not an adequate one).
 
-你可能會想，這一切都很好，但你既沒有時間也沒有錢來建立這些。我們當然承認，谷歌可能比一般的創業公司擁有更多的資源來實施CI。然而，我們的許多產品成長得如此之快，以至於他們也沒有時間去開發一個CI系統（至少不是一個合適的系統）。
+你可能會想，這一切都很好，但你既沒有時間也沒有錢來建立這些。我們當然承認，Google可能比一般的創業公司擁有更多的資源來實施CI。然而，我們的許多產品成長得如此之快，以至於他們也沒有時間去開發一個CI系統（至少不是一個合適的系統）。
 
 In your own products and organizations, try and think of the cost you are already paying for problems discovered and dealt with in production. These negatively affect the end user or client, of course, but they also affect the team. Frequent production fire-fighting is stressful and demoralizing. Although building out CI systems is expensive, it’s not necessarily a new cost as much as a cost shifted left to an earlier— and more preferable—stage, reducing the incidence, and thus the cost, of problems occurring too far to the right. CI leads to a more stable product and happier developer culture in which engineers feel more confident that “the system” will catch problems, and they can focus more on features and less on fixing.
 

@@ -15,11 +15,11 @@ Think for a moment about your own codebase. How many files can you reliably upda
 
 At Google, we’ve long ago abandoned the idea of making sweeping changes across our codebase in these types of large atomic changes. Our observation has been that, as a codebase and the number of engineers working in it grows, the largest atomic change possible counterintuitively *decreases—*running all affected presubmit checks and tests becomes difficult, to say nothing of even ensuring that every file in the change is up to date before submission. As it has become more difficult to make sweeping changes to our codebase, given our general desire to be able to continually improve underlying infrastructure, we’ve had to develop new ways of reasoning about large-scale changes and how to implement them.
 
-在谷歌，我們很久之前就放棄了大型原子變更對程式碼庫大規模變更的想法。我們的觀察到的結果是，隨著程式碼庫和在其中工作的工程師數量的增加，最大的原子性更改可能會反直覺地減少，執行所有受影響的預提交檢查和測試變得困難，更不用說確保更改中的每個檔案在提交前都是最新的了。隨著對程式碼庫進行全面更改變得越來越困難，考慮到我們希望能夠持續改進底層基礎設施的普遍願望，我們不得不開發新的方法來推理大規模更改以及如何實現這些更改。
+在Google，我們很久之前就放棄了大型原子變更對程式碼庫大規模變更的想法。我們的觀察到的結果是，隨著程式碼庫和在其中工作的工程師數量的增加，最大的原子性更改可能會反直覺地減少，執行所有受影響的預提交檢查和測試變得困難，更不用說確保更改中的每個檔案在提交前都是最新的了。隨著對程式碼庫進行全面更改變得越來越困難，考慮到我們希望能夠持續改進底層基礎設施的普遍願望，我們不得不開發新的方法來推理大規模更改以及如何實現這些更改。
 
 In this chapter, we’ll talk about the techniques, both social and technical, that enable us to keep the large Google codebase flexible and responsive to changes in underlying infrastructure. We’ll also provide some real-life examples of how and where we’ve used these approaches. Although your codebase might not look like Google’s, understanding these principles and adapting them locally will help your development organization scale while still being able to make broad changes across your codebase.
 
-在這一章中，我們將談論社會和技術方面的技術，這些技術使我們能夠保持谷歌大型程式碼庫的靈活性，並對底層基礎設施的變化做出響應。我們還將提供一些實際例子，說明我們如何以及在何處使用這些方法。儘管你的程式碼庫可能不像谷歌的程式碼庫，但瞭解這些原則並對其進行區域性調整，將有助於你的開發組織在擴大規模的同時，仍然能夠對你的程式碼庫進行大規模的變更。
+在這一章中，我們將談論社會和技術方面的技術，這些技術使我們能夠保持Google大型程式碼庫的靈活性，並對底層基礎設施的變化做出響應。我們還將提供一些實際例子，說明我們如何以及在何處使用這些方法。儘管你的程式碼庫可能不像Google的程式碼庫，但瞭解這些原則並對其進行區域性調整，將有助於你的開發組織在擴大規模的同時，仍然能夠對你的程式碼庫進行大規模的變更。
 
 ## What Is a Large-Scale Change? 什麼是大規模的變更？
 
@@ -34,7 +34,7 @@ LSCs at Google are almost always generated using automated tooling. Reasons for 
 - Enabling low-level infrastructure improvements, such as compiler upgrades
 - Moving users from an old system to a newer one[^3]
 
-谷歌的LSC幾乎都是使用自動工具產生的。製作LSC的原因各不相同，但修改本身通常分為幾個基本類別：
+Google的LSC幾乎都是使用自動工具產生的。製作LSC的原因各不相同，但修改本身通常分為幾個基本類別：
 
 - 使用程式碼庫範圍內的分析工具來清理常見的反模式
 - 替換已廢棄的函式庫特性的使用
@@ -47,11 +47,11 @@ The number of engineers working on these specific tasks in a given organization 
 
 There can be broader motivating causes behind specific LSCs. For example, a new language standard might introduce a more efficient idiom for accomplishing a given task, an internal library interface might change, or a new compiler release might require fixing existing problems that would be flagged as errors by the new release. The majority of LSCs across Google actually have near-zero functional impact: they tend to be widespread textual updates for clarity, optimization, or future compatibility. But LSCs are not theoretically limited to this behavior-preserving/refactoring class of change.
 
-在特定的LSC背後可能有更廣泛的動機。例如，新的語言標準可能會引入一種更有效的習慣用法來完成給定的任務，內部庫介面可能會更改，或者新的編譯器版本可能需要修復新版本標記為錯誤的現有問題。谷歌的大多數LSC實際上幾乎沒有功能影響：它們往往是為了清晰、最佳化或未來相容性而進行的廣泛文字更新。但從理論上講，LSC並不侷限於這種行為維護/重構型別的變化。
+在特定的LSC背後可能有更廣泛的動機。例如，新的語言標準可能會引入一種更有效的習慣用法來完成給定的任務，內部庫介面可能會更改，或者新的編譯器版本可能需要修復新版本標記為錯誤的現有問題。Google的大多數LSC實際上幾乎沒有功能影響：它們往往是為了清晰、最佳化或未來相容性而進行的廣泛文字更新。但從理論上講，LSC並不侷限於這種行為維護/重構型別的變化。
 
 In all of these cases, on a codebase the size of Google’s, infrastructure teams might routinely need to change hundreds of thousands of individual references to the old pattern or symbol. In the largest cases so far, we’ve touched millions of references, and we expect the process to continue to scale well. Generally, we’ve found it advantageous to invest early and often in tooling to enable LSCs for the many teams doing infrastructure work. We’ve also found that efficient tooling also helps engineers performing smaller changes. The same tools that make changing thousands of files efficient also scale down to tens of files reasonably well.
 
-在所有這些情況下，在像谷歌這樣規模的程式碼庫中，基礎設施團隊可能經常需要改變數十萬個對舊模式或符號的單獨參考。在迄今為止最大的案例中，我們已經觸及了數百萬個參考，而且我們希望這個過程能夠繼續良好地擴充。一般來說，我們發現儘早且經常投資於工具，以便為許多從事基礎設施工作的團隊啟用LSC是一種優勢。我們還發現，高效的工具也有助於工程師進行更小的更改。同樣的工具可以有效地更改數千個檔案，也可以很好地擴充到數十個檔案。
+在所有這些情況下，在像Google這樣規模的程式碼庫中，基礎設施團隊可能經常需要改變數十萬個對舊模式或符號的單獨參考。在迄今為止最大的案例中，我們已經觸及了數百萬個參考，而且我們希望這個過程能夠繼續良好地擴充。一般來說，我們發現儘早且經常投資於工具，以便為許多從事基礎設施工作的團隊啟用LSC是一種優勢。我們還發現，高效的工具也有助於工程師進行更小的更改。同樣的工具可以有效地更改數千個檔案，也可以很好地擴充到數十個檔案。
 
 > [^1]:  For some ideas about why, see Chapter 16.
 >
@@ -77,7 +77,7 @@ First, the infrastructure teams that build and manage the underlying systems are
 
 Consider the amount of time it takes to do the first of a series of semi-mechanical changes that you don’t understand. You probably spend some time reading about the motivation and nature of the change, find an easy example, try to follow the provided suggestions, and then try to apply that to your local code. Repeating this for every team in an organization greatly increases the overall cost of execution. By making only a few centralized teams responsible for LSCs, Google both internalizes those costs and drives them down by making it possible for the change to happen more efficiently.
 
-考慮一下做一系列你不理解的半自動化變更中的第一次所需的時間。你可能會花一些時間來閱讀關於更改的動機和性質，找到一個簡單的例子，嘗試遵循所提供的建議，然後嘗試將其應用於你的原生程式碼。對組織中的每個團隊重複此操作會大大增加執行的總體成本。透過只讓幾個集中的團隊負責LSC，谷歌將這些成本內部化，並透過使變革更有效地發生來降低成本。
+考慮一下做一系列你不理解的半自動化變更中的第一次所需的時間。你可能會花一些時間來閱讀關於更改的動機和性質，找到一個簡單的例子，嘗試遵循所提供的建議，然後嘗試將其應用於你的原生程式碼。對組織中的每個團隊重複此操作會大大增加執行的總體成本。透過只讓幾個集中的團隊負責LSC，Google將這些成本內部化，並透過使變革更有效地發生來降低成本。
 
 Second, nobody likes unfunded mandates.[^4] Even though a new system might be categorically better than the one it replaces, those benefits are often diffused across an organization and thus unlikely to matter enough for individual teams to want to update on their own initiative. If the new system is important enough to migrate to, the costs of migration will be borne somewhere in the organization. Centralizing the migration and accounting for its costs is almost always faster and cheaper than depending on individual teams to organically migrate.
 
@@ -97,15 +97,15 @@ Additionally, having teams that own the systems requiring LSCs helps align incen
 
 Although the LSC systems at Google are used for high-priority migrations, we’ve also discovered that just having them available opens up opportunities for various small fixes across our codebase, which just wouldn’t have been possible without them. Much like transportation infrastructure tasks consist of building new roads as well as repairing old ones, infrastructure groups at Google spend a lot of time fixing existing code, in addition to developing new systems and moving users to them.
 
-儘管谷歌的LSC系統用於高優先順序遷移，但我們也發現，只要有它們，就可以在我們的程式碼庫中提供各種小補丁，沒有它們是不可能的。就像交通基礎設施任務包括修建新道路和修復舊道路一樣，谷歌的基礎設施團隊除了開發新系統和將使用者轉移到新系統之外，還花費大量時間修復現有程式碼。
+儘管Google的LSC系統用於高優先順序遷移，但我們也發現，只要有它們，就可以在我們的程式碼庫中提供各種小補丁，沒有它們是不可能的。就像交通基礎設施任務包括修建新道路和修復舊道路一樣，Google的基礎設施團隊除了開發新系統和將使用者轉移到新系統之外，還花費大量時間修復現有程式碼。
 
 For example, early in our history, a template library emerged to supplement the C++ Standard Template Library. Aptly named the Google Template Library, this library consisted of several header files’ worth of implementation. For reasons lost in the mists of time, one of these header files was named *stl_util.h* and another was named *map-util.h* (note the different separators in the file names). In addition to driving the consistency purists nuts, this difference also led to reduced productivity, and engineers had to remember which file used which separator, and only discovered when they got it wrong after a potentially lengthy compile cycle.
 
-例如，在我們歷史的早期，出現了一個範本庫來補充C++標準範本庫。這個庫被恰當地命名為谷歌範本庫，它包括幾個標頭檔案的實現。由於時間上的原因，其中一個頭檔案被命名為*stl_util.h*，另一個被命名為*map-util.h*（注意檔名中的不同分隔符）。除了讓純粹的一致性主義者發瘋之外，這種差異也導致了生產力的下降，工程師們不得不記住哪個檔案使用了哪個分隔符，只有在他們在潛在的漫長的編譯週期中弄錯了才會發現。
+例如，在我們歷史的早期，出現了一個範本庫來補充C++標準範本庫。這個庫被恰當地命名為Google範本庫，它包括幾個標頭檔案的實現。由於時間上的原因，其中一個頭檔案被命名為*stl_util.h*，另一個被命名為*map-util.h*（注意檔名中的不同分隔符）。除了讓純粹的一致性主義者發瘋之外，這種差異也導致了生產力的下降，工程師們不得不記住哪個檔案使用了哪個分隔符，只有在他們在潛在的漫長的編譯週期中弄錯了才會發現。
 
 Although fixing this single-character change might seem pointless, particularly across a codebase the size of Google’s, the maturity of our LSC tooling and process enabled us to do it with just a couple weeks’ worth of background-task effort. Library authors could find and apply this change en masse without having to bother end users of these files, and we were able to quantitatively reduce the number of build failures caused by this specific issue. The resulting increases in productivity (and happiness) more than paid for the time to make the change.
 
-雖然修復這個單一字元的變化看起來毫無意義，尤其是在像谷歌這樣規模的程式碼庫中，但我們的LSC工具和流程的成熟度使我們只需花幾周的時間就能完成這個任務。庫的作者可以發現並應用這一變化，而不必打擾這些檔案的終端使用者，我們能夠從數量上減少由這一特定問題引起的建構失敗的數量。由此帶來的生產力（和幸福感）的提高超過了做這個改變的時間成本。
+雖然修復這個單一字元的變化看起來毫無意義，尤其是在像Google這樣規模的程式碼庫中，但我們的LSC工具和流程的成熟度使我們只需花幾周的時間就能完成這個任務。庫的作者可以發現並應用這一變化，而不必打擾這些檔案的終端使用者，我們能夠從數量上減少由這一特定問題引起的建構失敗的數量。由此帶來的生產力（和幸福感）的提高超過了做這個改變的時間成本。
 
 As the ability to make changes across our entire codebase has improved, the diversity of changes has also expanded, and we can make some engineering decisions knowing that they aren’t immutable in the future. Sometimes, it’s worth the effort to fill a few potholes.
 
@@ -141,7 +141,7 @@ As the size of a change grows, the potential for merge conflicts also increases.
 
 If your company is small, you might be able to sneak in a change that touches every file in the repository on a weekend when nobody is doing development. Or you might have an informal system of grabbing the global repository lock by passing a virtual (or even physical!) token around your development team. At a large, global company like Google, these approaches are just not feasible: somebody is always making changes to the repository.
 
-如果你的公司很小，你可能會在週末沒有人做開發的時候，偷偷地修改版本庫中的每個檔案。或者你可能有一個非正式的系統，透過在開發團隊中傳遞一個虛擬的（甚至是物理的！）令牌來抓取全域的版本庫鎖。在谷歌這樣的大公司，這些方法是不可行的：任何時候都總有人在對版本庫進行修改。
+如果你的公司很小，你可能會在週末沒有人做開發的時候，偷偷地修改版本庫中的每個檔案。或者你可能有一個非正式的系統，透過在開發團隊中傳遞一個虛擬的（甚至是物理的！）令牌來抓取全域的版本庫鎖。在Google這樣的大公司，這些方法是不可行的：任何時候都總有人在對版本庫進行修改。
 
 With few files in a change, the probability of merge conflicts shrinks, so they are more likely to be committed without problems. This property also holds for the following areas as well.
 
@@ -151,7 +151,7 @@ With few files in a change, the probability of merge conflicts shrinks, so they 
 
 The SREs who run Google’s production services have a mantra: “No Haunted Graveyards.” A haunted graveyard in this sense is a system that is so ancient, obtuse, or complex that no one dares enter it. Haunted graveyards are often business-critical systems that are frozen in time because any attempt to change them could cause the system to fail in incomprehensible ways, costing the business real money. They pose a real existential risk and can consume an inordinate amount of resources.
 
-營運谷歌生產服務的SRE們有一句格言：“沒有鬧鬼墓地”。從這個意義上說，鬧鬼墓地是一個如此古老、遲鈍或複雜的系統，以至於沒有人敢進入它。鬧鬼的墓地往往是被凍結的關鍵業務系統，因為任何試圖改變它們的行為都可能導致系統以無法理解的方式失敗，從而使企業付出實實在在的代價。它們構成了真正的生存風險，並可能消耗過多的資源。
+營運Google生產服務的SRE們有一句格言：“沒有鬧鬼墓地”。從這個意義上說，鬧鬼墓地是一個如此古老、遲鈍或複雜的系統，以至於沒有人敢進入它。鬧鬼的墓地往往是被凍結的關鍵業務系統，因為任何試圖改變它們的行為都可能導致系統以無法理解的方式失敗，從而使企業付出實實在在的代價。它們構成了真正的生存風險，並可能消耗過多的資源。
 
 Haunted graveyards don’t just exist in production systems, however; they can be found in codebases. Many organizations have bits of software that are old and unmaintained, written by someone long off the team, and on the critical path of some important revenue-generating functionality. These systems are also frozen in time, with layers of bureaucracy built up to prevent changes that might cause instability. Nobody wants to be the network support engineer II who flipped the wrong bit!
 
@@ -163,7 +163,7 @@ These parts of a codebase are anathema to the LSC process because they prevent t
 
 At Google, we’ve found the counter to this to be good, old-fashioned  testing. When software is thoroughly tested, we can make arbitrary changes to it and know with confidence whether those changes are breaking, no matter the age or complexity of the system. Writing those tests takes a lot of effort, but it allows a codebase like Google’s to evolve over long periods of time, consigning the notion of haunted software graveyards to a graveyard of its own.
 
-在谷歌，我們發現這是一個好的、老式的測試。當軟體經過徹底測試後，我們可以對其進行任意更改，並有信心地知道這些更改是否正在中斷，無論系統的時間或複雜性如何。編寫這些測試需要很多努力，但它允許像谷歌這樣的程式碼庫在很長一段時間內進化，將鬧鬼軟體墓地的概念交付給它自己的墓地。
+在Google，我們發現這是一個好的、老式的測試。當軟體經過徹底測試後，我們可以對其進行任意更改，並有信心地知道這些更改是否正在中斷，無論系統的時間或複雜性如何。編寫這些測試需要很多努力，但它允許像Google這樣的程式碼庫在很長一段時間內進化，將鬧鬼軟體墓地的概念交付給它自己的墓地。
 
 ### Heterogeneity  異質性
 
@@ -173,7 +173,7 @@ LSCs really work only when the bulk of the effort for them can be done by comput
 
 For example, many projects at Google have presubmit tests configured to run before changes are made to their codebase. Those checks can be very complex, ranging from checking new dependencies against a whitelist, to running tests, to ensuring that the change has an associated bug. Many of these checks are relevant for teams writing new features, but for LSCs, they just add additional irrelevant complexity.
 
-例如，谷歌的許多專案都配置了預提交測試，以便在對其程式碼庫進行修改之前執行。這些檢查可能非常複雜，從對照白名單檢查新的依賴關係，到執行測試，再到確保變化有相關的bug。這些檢查中有許多與編寫新功能的團隊有關，但對於LSC來說，它們只是增加了額外的無關的複雜性。
+例如，Google的許多專案都配置了預提交測試，以便在對其程式碼庫進行修改之前執行。這些檢查可能非常複雜，從對照白名單檢查新的依賴關係，到執行測試，再到確保變化有相關的bug。這些檢查中有許多與編寫新功能的團隊有關，但對於LSC來說，它們只是增加了額外的無關的複雜性。
 
 We’ve decided to embrace some of this complexity, such as running presubmit tests, by making it standard across our codebase. For other inconsistencies, we advise teams to omit their special checks when parts of LSCs touch their project code. Most teams are happy to help given the benefit these kinds of changes are to their projects.
 
@@ -205,11 +205,11 @@ The trade-off in this decision is that smaller changes will cause the same tests
 
 Today it is common for a double-digit percentage (10% to 20%) of the changes in a project to be the result of LSCs, meaning a substantial amount of code is changed in projects by people whose full-time job is unrelated to those projects. Without good tests, such work would be impossible, and Google’s codebase would quickly atrophy under its own weight. LSCs enable us to systematically migrate our entire codebase to newer APIs, deprecate older APIs, change language versions, and remove popular but dangerous practices.
 
-如今，一個專案中兩位數百分比（10%到20%）的變更是LSC的結果是很常見的，這意味著大量的程式碼是由全職工作與這些專案無關的人在專案中變更的。如果沒有良好的測試，這樣的工作將是不可能的，谷歌的程式碼庫將在自身的壓力下迅速萎縮。LSC使我們能夠系統地將整個程式碼庫遷移到較新的API，棄用較舊的API，更改語言版本，並刪除流行但危險的做法。
+如今，一個專案中兩位數百分比（10%到20%）的變更是LSC的結果是很常見的，這意味著大量的程式碼是由全職工作與這些專案無關的人在專案中變更的。如果沒有良好的測試，這樣的工作將是不可能的，Google的程式碼庫將在自身的壓力下迅速萎縮。LSC使我們能夠系統地將整個程式碼庫遷移到較新的API，棄用較舊的API，更改語言版本，並刪除流行但危險的做法。
 
 Even a simple one-line signature change becomes complicated when made in a thousand different places across hundreds of different products and services.[^7] After the change is written, you need to coordinate code reviews across dozens of teams. Lastly, after reviews are approved, you need to run as many tests as you can to be sure the change is safe.[^8] We say “as many as you can,” because a good-sized LSC could trigger a rerun of every single test at Google, and that can take a while. In fact, many LSCs have to plan time to catch downstream clients whose code backslides while the LSC makes its way through the process.
 
-即使是一個簡單的單個函式簽名修改，如果在上百個不同的產品和服務的一千多個不同的地方進行，也會變得很複雜。修改寫完後，你需要協調幾十個團隊的程式碼審查。最後，在審查通過後，你需要執行儘可能多的測試，以確保變化是安全的。我們說 "儘可能多"，是因為一個規模不錯的LSC可能會觸發谷歌的每一個測試的重新執行，而這可能需要一段時間。事實上，許多LSC必須計劃好時間，以便在LSC進行的過程中抓住那些程式碼違例的下游客戶。
+即使是一個簡單的單個函式簽名修改，如果在上百個不同的產品和服務的一千多個不同的地方進行，也會變得很複雜。修改寫完後，你需要協調幾十個團隊的程式碼審查。最後，在審查通過後，你需要執行儘可能多的測試，以確保變化是安全的。我們說 "儘可能多"，是因為一個規模不錯的LSC可能會觸發Google的每一個測試的重新執行，而這可能需要一段時間。事實上，許多LSC必須計劃好時間，以便在LSC進行的過程中抓住那些程式碼違例的下游客戶。
 
 Testing an LSC can be a slow and frustrating process. When a change is sufficiently large, your local environment is almost guaranteed to be permanently out of sync with head as the codebase shifts like sand around your work. In such circumstances, it is easy to find yourself running and rerunning tests just to ensure your changes continue to be valid. When a project has flaky tests or is missing unit test coverage, it can require a lot of manual intervention and slow down the entire process. To help speed things up, we use a strategy called the TAP (Test Automation Platform) train.
 
@@ -247,7 +247,7 @@ The train has five steps and is started fresh every three hours:
 
 1. 對於列車上的每個變化，執行1000個隨機選擇的測試樣本。
 2. 收集所有透過1000次測試的變化，並從所有這些變化中建立一個超級變化：”車次"。
-3. 執行所有直接受該組變化影響的測試的聯合。如果LSC足夠大（或足夠底層），這可能意味著執行谷歌資源庫中的每一個測試。這個過程可能需要六個多小時來完成。
+3. 執行所有直接受該組變化影響的測試的聯合。如果LSC足夠大（或足夠底層），這可能意味著執行Google資源庫中的每一個測試。這個過程可能需要六個多小時來完成。
 4. 對於每一個失敗的非漏洞測試，針對每一個進入火車的變化單獨重新執行它，以確定哪些變化導致它失敗。
 5. TAP為每個上火車的變化產生一份報告。該報告描述了所有透過和未透過的目標，可以作為LSC可以安全提交的證據。
 
@@ -281,11 +281,11 @@ Since its earliest days, Google’s C++ codebase has had a self-destructing smar
 
 In C++11, the language introduced a new type: std::unique_ptr. It fulfilled the same function as scoped_ptr, but also prevented other classes of bugs that the language now could detect. std::unique_ptr was strictly better than scoped_ptr, yet Google’s codebase had more than 500,000 references to scoped_ptr scattered among millions of source files. Moving to the more modern type required the largest LSC attempted to that point within Google.
 
-在C++11中，該語言引入了一個新的型別：std::unique_ptr。std::unique_ptr嚴格來說比scoped_ptr好，但Google的程式碼庫中有超過50萬個對scoped_ptr的參考，散佈在數百萬個原始檔中。向更現代的模式發展需要谷歌內部最大的LSC。
+在C++11中，該語言引入了一個新的型別：std::unique_ptr。std::unique_ptr嚴格來說比scoped_ptr好，但Google的程式碼庫中有超過50萬個對scoped_ptr的參考，散佈在數百萬個原始檔中。向更現代的模式發展需要Google內部最大的LSC。
 
 Over the course of several months, several engineers attacked the problem in parallel. Using Google’s large-scale migration infrastructure, we were able to change references to scoped_ptr into references to std::unique_ptr as well as slowly adapt scoped_ptr to behave more closely to std::unique_ptr. At the height of the migration process, we were consistently generating, testing and committing more than 700 independent changes, touching more than 15,000 files *per day*. Today, we sometimes manage 10 times that throughput, having refined our practices and improved our tooling.
 
-在幾個月的時間裡，幾位工程師同時攻克了這個問題。利用谷歌的大規模遷移基礎設施，我們能夠將對scoped_ptr的參考改為對std::unique_ptr的參考，並慢慢調整scoped_ptr，使其行為更接近於std::unique_ptr。在遷移過程的高峰期，我們一直在產生、測試和提交超過700個獨立的變化，每天*觸及*超過15000個檔案。今天，在完善了我們的實踐和改進了我們的工具後，我們有時能管理10倍的吞吐量。
+在幾個月的時間裡，幾位工程師同時攻克了這個問題。利用Google的大規模遷移基礎設施，我們能夠將對scoped_ptr的參考改為對std::unique_ptr的參考，並慢慢調整scoped_ptr，使其行為更接近於std::unique_ptr。在遷移過程的高峰期，我們一直在產生、測試和提交超過700個獨立的變化，每天*觸及*超過15000個檔案。今天，在完善了我們的實踐和改進了我們的工具後，我們有時能管理10倍的吞吐量。
 
 Like almost all LSCs, this one had a very long tail of tracking down various nuanced behavior dependencies (another manifestation of Hyrum’s Law), fighting race conditions with other engineers, and uses in generated code that weren’t detectable by our automated tooling. We continued to work on these manually as they were discovered by the testing infrastructure.
 
@@ -297,7 +297,7 @@ scoped_ptr在一些廣泛使用的API中也被用作引數型別，這使得小�
 
 In the end, we were able to finally remove scoped_ptr by first making it a type alias of std::unique_ptr and then performing the textual substitution between the old alias and the new, before eventually just removing the old scoped_ptr alias. Today, Google’s codebase benefits from using the same standard type as the rest of the C++ ecosystem, which was possible only because of our technology and tooling for LSCs.
 
-最後，我們能夠最終刪除scoped_ptr，首先讓它成為std::unique_ptr的類型別名，然後在舊的別名和新的別名之間進行文字替換，最後只是刪除舊的scoped_ptr別名。今天，谷歌的程式碼庫從使用與C++生態系統其他部分相同的標準型別中受益，這可能是因為我們的技術和工具為LSC。
+最後，我們能夠最終刪除scoped_ptr，首先讓它成為std::unique_ptr的類型別名，然後在舊的別名和新的別名之間進行文字替換，最後只是刪除舊的scoped_ptr別名。今天，Google的程式碼庫從使用與C++生態系統其他部分相同的標準型別中受益，這可能是因為我們的技術和工具為LSC。
 
 -----
 
@@ -305,21 +305,21 @@ In the end, we were able to finally remove scoped_ptr by first making it a type 
 
 Google has invested in a significant amount of infrastructure to make LSCs possible. This infrastructure includes tooling for change creation, change management, change review, and testing. However, perhaps the most important support for LSCs has been the evolution of cultural norms around large-scale changes and the oversight given to them. Although the sets of technical and social tools might differ for your organization, the general principles should be the same.
 
-谷歌已經投資了大量的基礎設施，使LSC成為可能。這種基礎設施包括用於建立變更、變更管理、變更審查和測試的工具。然而，對LSC最重要的支援可能是圍繞大規模變化和對它們的監督的文化規範的演變。雖然你的組織的技術和社會工具集可能有所不同，但一般原則應該是相同的。
+Google已經投資了大量的基礎設施，使LSC成為可能。這種基礎設施包括用於建立變更、變更管理、變更審查和測試的工具。然而，對LSC最重要的支援可能是圍繞大規模變化和對它們的監督的文化規範的演變。雖然你的組織的技術和社會工具集可能有所不同，但一般原則應該是相同的。
 
 ### Policies and Culture  策略和文化
 
 As we’ve described in Chapter 16, Google stores the bulk of its source code in a single monolithic repository (monorepo), and every engineer has visibility into almost all of this code. This high degree of openness means that any engineer can edit any file and send those edits for review to those who can approve them. However, each of those edits has costs, both to generate as well as review.[^10]
 
-正如我們在第16章中所描述的那樣，谷歌將其大部分原始碼儲存在單個程式碼庫（monorepo）中，每個工程師都可以看到幾乎所有這些程式碼。這種高度的開放性意味著任何工程師都可以編輯任何檔案，並將這些編輯傳送給可以批准它們的人進行審查。然而，每一個編輯都有成本，包括產生和審查。
+正如我們在第16章中所描述的那樣，Google將其大部分原始碼儲存在單個程式碼庫（monorepo）中，每個工程師都可以看到幾乎所有這些程式碼。這種高度的開放性意味著任何工程師都可以編輯任何檔案，並將這些編輯傳送給可以批准它們的人進行審查。然而，每一個編輯都有成本，包括產生和審查。
 
 Historically, these costs have been somewhat symmetric, which limited the scope of changes a single engineer or team could generate. As Google’s LSC tooling improved, it became easier to generate a large number of changes very cheaply, and it became equally easy for a single engineer to impose a burden on a large number of reviewers across the company. Even though we want to encourage widespread improvements to our codebase, we want to make sure there is some oversight and thoughtfulness behind them, rather than indiscriminate tweaking.[^11]
 
-從歷史上看，這些成本在某種程度上是對稱的，這限制了單個工程師或團隊可能產生的變更範圍。隨著谷歌LSC工具的改進，以極低的成本產生大量更改變得更加容易，而對於單個工程師來說，給公司內的大量審閱者施加負擔也變得同樣容易。儘管我們希望鼓勵對我們的程式碼庫進行廣泛的改進，但我們希望確保在這些改進背後有一些疏忽和深思熟慮，而不是隨意的調整。
+從歷史上看，這些成本在某種程度上是對稱的，這限制了單個工程師或團隊可能產生的變更範圍。隨著GoogleLSC工具的改進，以極低的成本產生大量更改變得更加容易，而對於單個工程師來說，給公司內的大量審閱者施加負擔也變得同樣容易。儘管我們希望鼓勵對我們的程式碼庫進行廣泛的改進，但我們希望確保在這些改進背後有一些疏忽和深思熟慮，而不是隨意的調整。
 
 The end result is a lightweight approval process for teams and individuals seeking to make LSCs across Google. This process is overseen by a group of experienced engineers who are familiar with the nuances of various languages, as well as invited domain experts for the particular change in question. The goal of this process is not to prohibit LSCs, but to help change authors produce the best possible changes, which make the most use of Google’s technical and human capital. Occasionally, this group might suggest that a cleanup just isn’t worth it: for example, cleaning up a common typo without any way of preventing recurrence.
 
-最終的結果是為尋求在谷歌範圍內進行LSC的團隊和個人提供了一個輕量級的審批過程。這個過程由一群經驗豐富的工程師監督，他們熟悉各種語言的細微差別，並邀請了相關特定變化的領域專家。這個過程的目的不是要禁止LSC，而是要幫助修改者產生儘可能好的修改，從而最大限度地利用谷歌的技術和人力資本。偶爾，這個小組可能會建議清理工作不值得做：例如，清理一個常見的錯別字，但沒有任何辦法防止再次發生。
+最終的結果是為尋求在Google範圍內進行LSC的團隊和個人提供了一個輕量級的審批過程。這個過程由一群經驗豐富的工程師監督，他們熟悉各種語言的細微差別，並邀請了相關特定變化的領域專家。這個過程的目的不是要禁止LSC，而是要幫助修改者產生儘可能好的修改，從而最大限度地利用Google的技術和人力資本。偶爾，這個小組可能會建議清理工作不值得做：例如，清理一個常見的錯別字，但沒有任何辦法防止再次發生。
 
 Related to these policies was a shift in cultural norms surrounding LSCs. Although it is important for code owners to have a sense of responsibility for their software, they also needed to learn that LSCs were an important part of Google’s effort to scale our software engineering practices. Just as product teams are the most familiar with their own software, library infrastructure teams know the nuances of the infrastructure, and getting product teams to trust that domain expertise is an important step toward social acceptance of LSCs. As a result of this culture shift, local product teams have grown to trust LSC authors to make changes relevant to those authors’ domains.
 
@@ -327,7 +327,7 @@ Related to these policies was a shift in cultural norms surrounding LSCs. Althou
 
 Occasionally, local owners question the purpose of a specific commit being made as part of a broader LSC, and change authors respond to these comments just as they would other review comments. Socially, it’s important that code owners understand the changes happening to their software, but they also have come to realize that they don’t hold a veto over the broader LSC. Over time, we’ve found that a good FAQ and a solid historic track record of improvements have generated widespread endorsement of LSCs throughout Google.
 
-偶爾，本地所有者會質疑作為更廣泛的LSC的一部分的特定提交的目的，而變更作者會像回應其他審查意見一樣回應這些意見。從社會角度來說，程式碼所有者瞭解發生在他們軟體上的變化是很重要的，但他們也意識到他們對更廣泛的LSC並不擁有否決權。隨著時間的推移，我們發現，一個好的FAQ和一個可靠的歷史改進記錄已經在整個谷歌產生了對LSC的廣泛認可。
+偶爾，本地所有者會質疑作為更廣泛的LSC的一部分的特定提交的目的，而變更作者會像回應其他審查意見一樣回應這些意見。從社會角度來說，程式碼所有者瞭解發生在他們軟體上的變化是很重要的，但他們也意識到他們對更廣泛的LSC並不擁有否決權。隨著時間的推移，我們發現，一個好的FAQ和一個可靠的歷史改進記錄已經在整個Google產生了對LSC的廣泛認可。
 
 > [^10]:  There are obvious technical costs here in terms of compute and storage, but the human costs in time to review a change far outweigh the technical ones.
 >
@@ -359,7 +359,7 @@ As with other areas in this book, an early investment in tooling usually pays of
 
 Arguably the most important piece of large-scale change infrastructure is the set of tooling that shards a master change into smaller pieces and manages the process of testing, mailing, reviewing, and committing them independently. At Google, this tool is called Rosie, and we discuss its use more completely in a few moments when we examine our LSC process. In many respects, Rosie is not just a tool, but an entire platform for making LSCs at Google scale. It provides the ability to split the large sets of comprehensive changes produced by tooling into smaller shards, which can be tested, reviewed, and submitted independently.
 
-可以說，大規模變更基礎設施中最重要的部分是一套工具，它將主變更分割成小塊，並獨立管理測試、推送、審查和提交的過程。在谷歌，這個工具被稱為Rosie，我們將在稍後檢查我們的LSC過程時更全面地討論它的使用。在許多方面，Rosie不僅僅是一個工具，而是一個在谷歌規模上製作LSC的整個平台。它提供了一種能力，可以將工具產生的大型綜合修改集分割成較小的分片，這些分片可以被獨立測試、審查和提交。
+可以說，大規模變更基礎設施中最重要的部分是一套工具，它將主變更分割成小塊，並獨立管理測試、推送、審查和提交的過程。在Google，這個工具被稱為Rosie，我們將在稍後檢查我們的LSC過程時更全面地討論它的使用。在許多方面，Rosie不僅僅是一個工具，而是一個在Google規模上製作LSC的整個平台。它提供了一種能力，可以將工具產生的大型綜合修改集分割成較小的分片，這些分片可以被獨立測試、審查和提交。
 
 ### Testing  測試
 
@@ -369,13 +369,13 @@ Testing is another important piece of large-scale-change–enabling infrastructu
 
 Google’s testing strategy for LSCs differs slightly from that of normal changes while still using the same underlying CI infrastructure. Testing LSCs means not just ensuring the large master change doesn’t cause failures, but that each shard can be submitted safely and independently. Because each shard can contain arbitrary files, we don’t use the standard project-based presubmit tests. Instead, we run each shard over the transitive closure of every test it might affect, which we discussed earlier.
 
-谷歌針對LSC的測試策略與普通更改略有不同，但仍使用相同的底層CI基礎設施。測試LSC不僅意味著確保大型主分支更改不會導致失敗，而且還意味著可以安全、獨立地提交每個分支。因為每個分支可以包含任意檔案，所以我們不使用標準的基於專案的預提交測試。相反，我們在它可能影響的每個測試的可傳遞閉包上執行每個分支，我們在前面討論過。
+Google針對LSC的測試策略與普通更改略有不同，但仍使用相同的底層CI基礎設施。測試LSC不僅意味著確保大型主分支更改不會導致失敗，而且還意味著可以安全、獨立地提交每個分支。因為每個分支可以包含任意檔案，所以我們不使用標準的基於專案的預提交測試。相反，我們在它可能影響的每個測試的可傳遞閉包上執行每個分支，我們在前面討論過。
 
 ### Language Support  程式語言支援
 
 LSCs at Google are typically done on a per-language basis, and some languages support them much more easily than others. We’ve found that language features such as type aliasing and forwarding functions are invaluable for allowing existing users to continue to function while we introduce new systems and migrate users to them nonatomically. For languages that lack these features, it is often difficult to migrate systems incrementally.[^12]
 
-谷歌的LSC通常以每種程式語言為基礎，有些語言比其他語言更容易支援LSC。我們發現，在我們引入新系統並以非原子方式將使用者遷移到這些系統時，諸如類型別名和轉發功能之類別的語言功能對於允許現有使用者繼續工作是非常寶貴的。對於缺少這些功能的程式語言，通常很難增量遷移系統。
+Google的LSC通常以每種程式語言為基礎，有些語言比其他語言更容易支援LSC。我們發現，在我們引入新系統並以非原子方式將使用者遷移到這些系統時，諸如類型別名和轉發功能之類別的語言功能對於允許現有使用者繼續工作是非常寶貴的。對於缺少這些功能的程式語言，通常很難增量遷移系統。
 
 We’ve also found that statically typed languages are much easier to perform large automated changes in than dynamically typed languages. Compiler-based tools along with strong static analysis provide a significant amount of information that we can use to build tools to affect LSCs and reject invalid transformations before they even get to the testing phase. The unfortunate result of this is that languages like Python, Ruby, and JavaScript that are dynamically typed are extra difficult for maintainers. Language choice is, in many respects, intimately tied to the question of code lifespan: languages that tend to be viewed as more focused on developer productivity tend to be more difficult to maintain. Although this isn’t an intrinsic design requirement, it is where the current state of the art happens to be.
 
@@ -383,7 +383,7 @@ We’ve also found that statically typed languages are much easier to perform la
 
 Finally, it’s worth pointing out that automatic language formatters are a crucial part of the LSC infrastructure. Because we work toward optimizing our code for readability, we want to make sure that any changes produced by automated tooling are intelligible to both immediate reviewers and future readers of the code. All of the LSCgeneration tools run the automated formatter appropriate to the language being changed as a separate pass so that the change-specific tooling does not need to concern itself with formatting specifics. Applying automated formatting, such as [google-java-format](https://github.com/google/google-java-format)or [clang-format](https://clang.llvm.org/docs/ClangFormat.html), to our codebase means that automatically produced changes will “fit in” with code written by a human, reducing future development friction. Without automated formatting, large-scale automated changes would never have become the accepted status quo at Google.
 
-最後，值得指出的是，自動語言格式化程式是LSC基礎設施的一個重要組成部分。因為我們致力於最佳化我們的程式碼的可讀性，我們希望確保任何由自動工具產生的變化對即時的審查者和未來的程式碼讀者來說都是可理解的。所有的LSC產生工具都將適合於被修改的語言的自動格式化器作為一個單獨的通道來執行，這樣，針對修改的工具就不需要關注格式化的細節了。將自動格式化，如[google-java-format](https://github.com/google/google-java-format)或[clang-format](https://clang.llvm.org/docs/ClangFormat.html)，應用到我們的程式碼庫中，意味著自動產生的變化將與人類編寫的程式碼 “合併"，減少未來的開發阻力。如果沒有自動格式化，大規模的自動修改就永遠不會成為谷歌的公認現狀。
+最後，值得指出的是，自動語言格式化程式是LSC基礎設施的一個重要組成部分。因為我們致力於最佳化我們的程式碼的可讀性，我們希望確保任何由自動工具產生的變化對即時的審查者和未來的程式碼讀者來說都是可理解的。所有的LSC產生工具都將適合於被修改的語言的自動格式化器作為一個單獨的通道來執行，這樣，針對修改的工具就不需要關注格式化的細節了。將自動格式化，如[google-java-format](https://github.com/google/google-java-format)或[clang-format](https://clang.llvm.org/docs/ClangFormat.html)，應用到我們的程式碼庫中，意味著自動產生的變化將與人類編寫的程式碼 “合併"，減少未來的開發阻力。如果沒有自動格式化，大規模的自動修改就永遠不會成為Google的公認現狀。
 
 > [^12]:   In fact, Go recently introduced these kinds of language features specifically to support large-scale refactorings （ see [https://talks.golang.org/2016/refactor.article](https://talks.golang.org/2016/refactor.article) ）.
 >
@@ -395,7 +395,7 @@ Finally, it’s worth pointing out that automatic language formatters are a cruc
 
 LSCs have become a large part of Google’s internal culture, but they are starting to have implications in the broader world. Perhaps the best known case so far was “[Operation RoseHub](https://oreil.ly/txtDj).”
 
-LSC已經成為谷歌內部文化的一個重要部分，但它們開始在更廣泛的世界中產生影響。迄今為止，最著名的案例也許是"Operation RoseHub"。
+LSC已經成為Google內部文化的一個重要部分，但它們開始在更廣泛的世界中產生影響。迄今為止，最著名的案例也許是"Operation RoseHub"。
 
 In early 2017, a vulnerability in the Apache Commons library allowed any Java application with a vulnerable version of the library in its transitive classpath to become susceptible to remote execution. This bug became known as the Mad Gadget. Among other things, it allowed an avaricious hacker to encrypt the San Francisco Municipal Transportation Agency’s systems and shut down its operations. Because the only requirement for the vulnerability was having the wrong library somewhere in its classpath, anything that depended on even one of many open source projects on GitHub was vulnerable.
 
@@ -425,7 +425,7 @@ With these pieces of infrastructure in place, we can now talk about the process 
 
 Typically, these steps happen after a new system, class, or function has been written, but it’s important to keep them in mind during the design of the new system. At Google, we aim to design successor systems with a migration path from older systems in mind, so that system maintainers can move their users to the new system automatically.
 
-通常，這些步驟發生在編寫新系統、類或函式之後，但在設計新系統時記住它們很重要。在谷歌，我們的目標是在設計後繼系統時考慮到從舊系統的遷移路徑，以便系統維護人員能夠自動將使用者轉移到新系統。
+通常，這些步驟發生在編寫新系統、類或函式之後，但在設計新系統時記住它們很重要。在Google，我們的目標是在設計後繼系統時考慮到從舊系統的遷移路徑，以便系統維護人員能夠自動將使用者轉移到新系統。
 
 ### Authorization  授權
 
@@ -475,7 +475,7 @@ Keep in mind that we optimize for human readability of our codebase, so whatever
 
 After a global change has been generated, the author then starts running Rosie. Rosie takes a large change and shards it based upon project boundaries and ownership rules into changes that *can* be submitted atomically. It then puts each individually sharded change through an independent test-mail-submit pipeline. Rosie can be a heavy user of other pieces of Google’s developer infrastructure, so it caps the number of outstanding shards for any given LSC, runs at lower priority, and communicates with the rest of the infrastructure about how much load it is acceptable to generate on our shared testing infrastructure.
 
-在全域變更產生之後，作者就開始執行Rosie。Rosie接收一個大的變化，並根據專案邊界和所有權規則將其分割成可以原子提交的變化。然後，它把每個單獨的分支變化透過一個獨立的測試-郵件-提交管道。Rosie可能是谷歌開發者基礎設施其他部分的重度使用者，所以它對任何給定的LSC的未完成分片數量設定上限，以較低的優先順序執行，並與基礎設施的其他部分進行溝通，瞭解它在我們的共享測試基礎設施上產生多少負載是可以接受的。
+在全域變更產生之後，作者就開始執行Rosie。Rosie接收一個大的變化，並根據專案邊界和所有權規則將其分割成可以原子提交的變化。然後，它把每個單獨的分支變化透過一個獨立的測試-郵件-提交管道。Rosie可能是Google開發者基礎設施其他部分的重度使用者，所以它對任何給定的LSC的未完成分片數量設定上限，以較低的優先順序執行，並與基礎設施的其他部分進行溝通，瞭解它在我們的共享測試基礎設施上產生多少負載是可以接受的。
 
 We talk more about the specific test-mail-submit process for each shard below.
 
@@ -491,7 +491,7 @@ We often use the “cattle and pets” analogy when referring to individual mach
 
 At Google, as at most organizations, typical changes to the codebase are handcrafted by individual engineers working on specific features or bug fixes. Engineers might spend days or weeks working through the creation, testing, and review of a single change. They come to know the change intimately, and are proud when it is finally committed to the main repository. The creation of such a change is akin to owning and raising a favorite pet.
 
-在谷歌，和大多陣列織一樣，程式碼庫的典型變化是由從事特定功能或錯誤修復的個別工程師手動產生的。工程師們可能會花幾天或幾周的時間來建立、測試和審查一個單一的變化。他們密切瞭解這個變化，當它最終被提交到主資源庫時，他們會感到很自豪。建立這樣的變化就像擁有和養育一隻喜愛的寵物一樣。
+在Google，和大多陣列織一樣，程式碼庫的典型變化是由從事特定功能或錯誤修復的個別工程師手動產生的。工程師們可能會花幾天或幾周的時間來建立、測試和審查一個單一的變化。他們密切瞭解這個變化，當它最終被提交到主資源庫時，他們會感到很自豪。建立這樣的變化就像擁有和養育一隻喜愛的寵物一樣。
 
 In contrast, effective handling of LSCs requires a high degree of automation and produces an enormous number of individual changes. In this environment, we’ve found it useful to treat specific changes as cattle: nameless and faceless commits that might be rolled back or otherwise rejected at any given time with little cost unless the entire herd is affected. Often this happens because of an unforeseen problem not caught by tests, or even something as simple as a merge conflict.
 
@@ -507,7 +507,7 @@ With a “pet” commit, it can be difficult to not take rejection personally, b
 
 Each independent shard is tested by running it through TAP, Google’s CI framework. We run every test that depends on the files in a given change transitively, which often creates high load on our CI system.
 
-每個獨立的分支都是透過谷歌的CI框架TAP來測試的。我們執行每一個依賴於特定變化中的檔案的測試，這常常給我們的CI系統帶來高負荷。
+每個獨立的分支都是透過Google的CI框架TAP來測試的。我們執行每一個依賴於特定變化中的檔案的測試，這常常給我們的CI系統帶來高負荷。
 
 This might sound computationally expensive, but in practice, the vast majority of shards affect fewer than one thousand tests, out of the millions across our codebase. For those that affect more, we can group them together: first running the union of all affected tests for all shards, and then for each individual shard running just the intersection of its affected tests with those that failed the first run. Most of these unions cause almost every test in the codebase to be run, so adding additional changes to that batch of shards is nearly free.
 
@@ -529,7 +529,7 @@ For any LSC process, individual shards should be committable independently. This
 
 After Rosie has validated that a change is safe through testing, it mails the change to an appropriate reviewer. In a company as large as Google, with thousands of engineers, reviewer discovery itself is a challenging problem. Recall from Chapter 9 that code in the repository is organized with OWNERS files, which list users with approval privileges for a specific subtree in the repository. Rosie uses an owners detection service that understands these OWNERS files and weights each owner based upon their expected ability to review the specific shard in question. If a particular owner proves to be unresponsive, Rosie adds additional reviewers automatically in an effort to get a change reviewed in a timely manner.
 
-在Rosie透過測試驗證了某項變更是安全的之後，它就會將該變更推送給適當的審查員。在谷歌這樣一個擁有數千名工程師的大公司，審查員的發現本身就是一個具有挑戰性的問題。回顧第九章，版本庫中的程式碼是用OWNERS檔案組織的，這些檔案列出了對版本庫中特定子樹有批准許可權的使用者。Rosie使用一個所有者檢測服務來理解這些OWNERS檔案，並根據他們審查特定分片的預期能力來衡量每個所有者。如果一個特定的所有者被證明是沒有響應的，Rosie會自動新增額外的審查者，以努力使一個變化得到及時的審查。
+在Rosie透過測試驗證了某項變更是安全的之後，它就會將該變更推送給適當的審查員。在Google這樣一個擁有數千名工程師的大公司，審查員的發現本身就是一個具有挑戰性的問題。回顧第九章，版本庫中的程式碼是用OWNERS檔案組織的，這些檔案列出了對版本庫中特定子樹有批准許可權的使用者。Rosie使用一個所有者檢測服務來理解這些OWNERS檔案，並根據他們審查特定分片的預期能力來衡量每個所有者。如果一個特定的所有者被證明是沒有響應的，Rosie會自動新增額外的審查者，以努力使一個變化得到及時的審查。
 
 As part of the mailing process, Rosie also runs the per-project precommit tools, which might perform additional checks. For LSCs, we selectively disable certain checks such as those for nonstandard change description formatting. Although useful for individual changes on specific projects, such checks are a source of heterogeneity across the codebase and can add significant friction to the LSC process. This heterogeneity is a barrier to scaling our processes and systems, and LSC tools and authors can’t be expected to understand special policies for each team.
 
@@ -561,13 +561,13 @@ Finally, individual changes are committed. As with the mailing step, we ensure t
 
 With Rosie, we are able to effectively create, test, review, and submit thousands of changes per day across all of Google’s codebase and have given teams the ability to effectively migrate their users. Technical decisions that used to be final, such as the name of a widely used symbol or the location of a popular class within a codebase, no longer need to be final.
 
-有了Rosie，我們能夠在谷歌的所有程式碼庫中有效地建立、測試、審查和提交每天數以千計的更改，並使團隊有能力有效地遷移他們的使用者。過去的技術決定，如一個廣泛使用的符號的名稱或一個流行的類在程式碼庫中的位置，不再需要是最終決定。
+有了Rosie，我們能夠在Google的所有程式碼庫中有效地建立、測試、審查和提交每天數以千計的更改，並使團隊有能力有效地遷移他們的使用者。過去的技術決定，如一個廣泛使用的符號的名稱或一個流行的類在程式碼庫中的位置，不再需要是最終決定。
 
 ### Cleanup  清理
 
 Different LSCs have different definitions of “done,” which can vary from completely removing an old system to migrating only high-value references and leaving old ones to organically disappear.[^16] In almost all cases, it’s important to have a system that prevents additional introductions of the symbol or system that the large-scale change worked hard to remove. At Google, we use the Tricorder framework mentioned in Chapters 20 and 19 to flag at review time when an engineer introduces a new use of a deprecated object, and this has proven an effective method to prevent backsliding. We talk more about the entire deprecation process in Chapter 15.
 
-不同的LSC對 "完成" 有不同的定義，從完全刪除舊系統到只遷移高價值的參考，讓舊系統有機地消失。在幾乎所有情況下，重要的是，要有一個系統，防止大規模變革努力消除的符號或系統的額外引入。在谷歌，我們使用和章節中提到的Tricorder框架，在工程師引入被廢棄物件的新用途時，在審查時進行標記，這已被證明是防止倒退的有效方法。我們在第15章中更多地討論了整個廢棄過程。
+不同的LSC對 "完成" 有不同的定義，從完全刪除舊系統到只遷移高價值的參考，讓舊系統有機地消失。在幾乎所有情況下，重要的是，要有一個系統，防止大規模變革努力消除的符號或系統的額外引入。在Google，我們使用和章節中提到的Tricorder框架，在工程師引入被廢棄物件的新用途時，在審查時進行標記，這已被證明是防止倒退的有效方法。我們在第15章中更多地討論了整個廢棄過程。
 
 > [^16]: Sadly, the systems we most want to organically decompose are those that are the most resilient to doing so. They are the plastic six-pack rings of the code ecosystem.
 >
@@ -577,7 +577,7 @@ Different LSCs have different definitions of “done,” which can vary from com
 
 LSCs form an important part of Google’s software engineering ecosystem. At design time, they open up more possibilities, knowing that some design decisions don’t need to be as fixed as they once were. The LSC process also allows maintainers of core infrastructure the ability to migrate large swaths of Google’s codebase from old systems, language versions, and library idioms to new ones, keeping the codebase consistent, spatially and temporally. And all of this happens with only a few dozen engineers supporting tens of thousands of others.
 
-LSC是谷歌軟體工程生態系統的重要組成部分。在設計時，他們開啟了更多的可能性，知道一些設計決策不需要像以前那樣固定。LSC過程還允許核心基礎設施的維護者有能力將谷歌的大量程式碼庫從舊的系統、語言版本和庫習語遷移到新的系統，使程式碼庫在空間上和時間上保持一致。而這一切都發生在只有幾十名工程師支援數萬名其他工程師的情況下。
+LSC是Google軟體工程生態系統的重要組成部分。在設計時，他們開啟了更多的可能性，知道一些設計決策不需要像以前那樣固定。LSC過程還允許核心基礎設施的維護者有能力將Google的大量程式碼庫從舊的系統、語言版本和庫習語遷移到新的系統，使程式碼庫在空間上和時間上保持一致。而這一切都發生在只有幾十名工程師支援數萬名其他工程師的情況下。
 
 No matter the size of your organization, it’s reasonable to think about how you would make these kinds of sweeping changes across your collection of source code. Whether by choice or by necessity, having this ability will allow greater flexibility as your organization scales while keeping your source code malleable over time.
 

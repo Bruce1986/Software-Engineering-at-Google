@@ -15,11 +15,11 @@ Perhaps no software engineering tool is quite as universally adopted throughout 
 
 In this chapter, we’re going to look at why the use of version control has become such an unambiguous norm in software engineering, and we describe the various possible approaches to version control and branch management, including how we do it at scale across all of Google. We’ll also examine the pros and cons of various approaches; although we believe everyone should use version control, some version control policies and processes might work better for your organization (or in general) than others. In particular, we find “trunk-based development” as popularized by DevOps[^1] (one repository, no dev branches) to be a particularly scalable policy approach, and we’ll provide some suggestions as to why that is.
 
-在本章中，我們將瞭解為什麼版本控制工具的使用在軟體工程中已成為如此明確的規範，我們將描述版本控制和分支管理的各種可能方法，包括我們如何在整個谷歌範圍內大規模地使用。我們還將研究各種方法的優缺點；儘管我們認為每個人都應該使用版本控制，但某些版本控制策略和流程可能比其他策略和流程更適合你的組織（或總體而言）。特別是，我們發現由DevOps推廣的 "基於主幹的開發"（一個版本庫，沒有開發分支）是一種特別可擴充的策略方法，我們將提供一些建議來解釋為什麼會這樣。
+在本章中，我們將瞭解為什麼版本控制工具的使用在軟體工程中已成為如此明確的規範，我們將描述版本控制和分支管理的各種可能方法，包括我們如何在整個Google範圍內大規模地使用。我們還將研究各種方法的優缺點；儘管我們認為每個人都應該使用版本控制，但某些版本控制策略和流程可能比其他策略和流程更適合你的組織（或總體而言）。特別是，我們發現由DevOps推廣的 "基於主幹的開發"（一個版本庫，沒有開發分支）是一種特別可擴充的策略方法，我們將提供一些建議來解釋為什麼會這樣。
 
 > [^1]: The DevOps Research Association, which was acquired by Google between the first draft of this chapter and publication, has published extensively on this in the annual “State of DevOps Report” and the book Accelerate. As near as we can tell, it popularized the terminology trunk-based development.
 >
-> 1 DevOps研究協會，在本章初稿和出版之間被谷歌收購，在年度 "DevOps狀況報告 "和《加速》一書中廣泛發表了這方面的內容。據我們所知，它推廣了基於主幹的開發這一術語。
+> 1 DevOps研究協會，在本章初稿和出版之間被Google收購，在年度 "DevOps狀況報告 "和《加速》一書中廣泛發表了這方面的內容。據我們所知，它推廣了基於主幹的開發這一術語。
 
 ## What Is Version Control?  什麼是版本控制？
 
@@ -67,7 +67,7 @@ In the default usage, that branch input will have a commonly understood default:
 
 The (minor) remaining hesitation toward consistent use of version control comes almost directly from conflating programming and software engineering—we teach programming, we train programmers, we interview for jobs based on programming problems and techniques. It’s perfectly reasonable for a new hire, even at a place like Google, to have little or no experience with code that is worked on by more than one person or for more than a couple weeks. Given that experience and understanding of the problem, version control seems like an alien solution. Version control is solving a problem that our new hire hasn’t necessarily experienced: an “undo,” not for a single file but for an entire project, adding a lot of complexity for sometimes nonobvious benefits.
 
-對持續使用版本控制的（微小的）剩餘疑慮幾乎直接來自於程式設計和軟體工程的融合——我們教程式設計，我們培訓程式設計師，我們根據程式設計問題和技術來面試工作。對於一個新員工來說，即使是在像谷歌這樣的地方，對於由一個以上的人或幾個星期以上的時間來處理的程式碼，幾乎沒有經驗，這是完全合理的。鑑於這種經驗和對問題的理解，版本控制似乎是一個陌生的解決方案。版本控制正在解決一個我們的新僱員不一定經歷過的問題：“撤銷”，不是針對單個檔案，而是針對整個專案，這增加了很多複雜性，有時並沒有帶來了明顯的好處。
+對持續使用版本控制的（微小的）剩餘疑慮幾乎直接來自於程式設計和軟體工程的融合——我們教程式設計，我們培訓程式設計師，我們根據程式設計問題和技術來面試工作。對於一個新員工來說，即使是在像Google這樣的地方，對於由一個以上的人或幾個星期以上的時間來處理的程式碼，幾乎沒有經驗，這是完全合理的。鑑於這種經驗和對問題的理解，版本控制似乎是一個陌生的解決方案。版本控制正在解決一個我們的新僱員不一定經歷過的問題：“撤銷”，不是針對單個檔案，而是針對整個專案，這增加了很多複雜性，有時並沒有帶來了明顯的好處。
 
 In some software groups, the same result plays out when management views the job of the techies as “software development” (sit down and write code) rather than “software engineering” (produce code, keep it working and useful for some extended period). With a mental model of programming as the primary task and little understanding of the interplay between code and the passage of time, it’s easy to see something described as “go back to a previous version to undo a mistake” as a weird, high- overhead luxury.
 
@@ -119,7 +119,7 @@ As a response to this scaling problem, the VCSs that were popular through the 90
 
 > [^4]: Anecdote: To illustrate this, I looked for information on what pending/unsubmitted edits Googlers had outstanding for a semipopular file in my most recent project. At the time of this writing, 27 changes are pending, 12 from people on my team, 5 from people on related teams, and 10 from engineers I’ve never met. This is basically working as expected. Technical systems or policies that require out-of-band coordination certainly don’t scale to 24/7 software engineering in distributed locations.
 >
-> 4   軼事：為了說明這一點，我尋找了谷歌在我最近的專案中對一個半流行的檔案所做的未提交/未提交編輯的資訊。在撰寫本文時，有27項變更尚未完成，其中12項來自我的團隊，5項來自相關團隊，10項來自我從未見過的工程師。這基本上按照預期工作。需要帶外協調的技術系統或策略當然不能擴充到分散式位置的全天候軟體工程。
+> 4   軼事：為了說明這一點，我尋找了Google在我最近的專案中對一個半流行的檔案所做的未提交/未提交編輯的資訊。在撰寫本文時，有27項變更尚未完成，其中12項來自我的團隊，5項來自相關團隊，10項來自我從未見過的工程師。這基本上按照預期工作。需要帶外協調的技術系統或策略當然不能擴充到分散式位置的全天候軟體工程。
 
 #### Distributed VCS 分散式VCS
 
@@ -141,7 +141,7 @@ Generally speaking, the dominant source control system today is Git, which imple
 
 Google has a complex relationship with DVCS: our main repository is based on a (massive) custom in-house centralized VCS. There are periodic attempts to integrate more standard external options and to match the workflow that our engineers (especially Nooglers) have come to expect from external development. Unfortunately, those attempts to move toward more common tools like Git have been stymied by the sheer size of the codebase and userbase, to say nothing of Hyrum’s Law effects tying us to a particular VCS and interface for that VCS.[^6] This is perhaps not surprising: most existing tools don’t scale well with 50,000 engineers and tens of millions of commits.[^7] The DVCS model, which often (but not always) includes transmission of history and metadata, requires a lot of data to spin up a repository to work out of.
 
-谷歌與DVCS有著複雜的關係：我們的主要資源函式庫是基於一個（巨大的）自訂的內部集中式VCS。我們定期嘗試整合更多標準的外部選項，並與我們的工程師（尤其是Nooglers）所期望的外部開發的工作流程相匹配。不幸的是，由於程式碼庫和使用者群的巨大規模，以及海勒姆定律的影響，這些向Git這樣的通用工具發展的嘗試受到了阻礙，更不用說將我們束縛在一個特定的VCS和VCS的介面上了。這也許並不奇怪：大多數現有的工具在面對5萬名工程師和數千萬的提交時都不能很好地擴充。DVCS模型，通常（但不總是）包括歷史和元資料的傳輸，需要大量資料來加速儲存庫的執行。
+Google與DVCS有著複雜的關係：我們的主要資源函式庫是基於一個（巨大的）自訂的內部集中式VCS。我們定期嘗試整合更多標準的外部選項，並與我們的工程師（尤其是Nooglers）所期望的外部開發的工作流程相匹配。不幸的是，由於程式碼庫和使用者群的巨大規模，以及海勒姆定律的影響，這些向Git這樣的通用工具發展的嘗試受到了阻礙，更不用說將我們束縛在一個特定的VCS和VCS的介面上了。這也許並不奇怪：大多數現有的工具在面對5萬名工程師和數千萬的提交時都不能很好地擴充。DVCS模型，通常（但不總是）包括歷史和元資料的傳輸，需要大量資料來加速儲存庫的執行。
 
 In our workflow, centrality and in-the-cloud storage for the codebase seem to be critical to scaling. The DVCS model is built around the idea of downloading the entire codebase and having access to it locally. In practice, over time and as your organization scales up, any given developer is going to operate on a relatively smaller percentage of the files in a repository, and a small fraction of the versions of those files. As we grow (in file count and engineer count), that transmission becomes almost entirely waste. The only need for locality for most files occurs when building, but distributed (and reproducible) build systems seem to scale better for that task as well (see Chapter 18).
 
@@ -153,7 +153,7 @@ In our workflow, centrality and in-the-cloud storage for the codebase seem to be
 >
 > [^6]: Monotonically increasing version numbers, rather than commit hashes, are particularly troublesome. Many systems and scripts have grown up in the Google developer ecosystem that assume that the numeric ordering of commits is the same as the temporal order—undoing those hidden dependencies is difficult.
 >
-> 6 單調增加的版本號，而不是提交雜湊值，是特別麻煩的。許多系統和指令碼已經在谷歌開發者生態系統中成長起來，它們假定提交的數字順序與時間順序相同--消除這些隱藏的依賴關係是很困難的。
+> 6 單調增加的版本號，而不是提交雜湊值，是特別麻煩的。許多系統和指令碼已經在Google開發者生態系統中成長起來，它們假定提交的數字順序與時間順序相同--消除這些隱藏的依賴關係是很困難的。
 >
 > [^7]: For that matter, as of the publication of the Monorepo paper, the repository itself had something like 86 TB of data and metadata, ignoring release branches. Fitting that onto a developer workstation directly would be… challenging.
 >
@@ -201,7 +201,7 @@ DVCS實現了很多出色的工作流程和有趣的使用模式。但如果你�
 
 There is some relativity in that Source of Truth. That is, for a given project, that Source of Truth might be different for a different organization. This caveat is important: it’s reasonable for engineers at Google or RedHat to have different Sources of Truth for Linux Kernel patches, still different than Linus (the Linux Kernel maintainer) himself would. DVCS works fine when organizations and their Sources of Truth are hierarchical (and invisible to those outside the organization)—that is perhaps the most practically useful effect of the DVCS model. A RedHat engineer can commit to the local Source of Truth repository, and changes can be pushed from there upstream periodically, while Linus has a completely different notion of what is the Source of Truth. So long as there is no choice or uncertainty as to where a change should be pushed, we can avoid a large class of chaotic scaling problems in the DVCS model.
 
-資訊源具有某種相對性。也就是說，對於一個特定的專案，資訊源對於不同的組織可能是不同的。這一點很重要：谷歌或RedHat的工程師對Linux核心補丁有不同的資訊源是合理的，這與Linus（Linux核心維護者）自己的資訊源還是不同的。當組織和他們的資訊源是分層的（對組織外的人來說是不可見的），DVCS就能很好地工作——這也許是DVCS模型最實際的作用。一個RedHat的工程師可以提交到本地資訊源儲存庫，並且可以定期從那裡向上遊推送變化，而Linus對什麼是資訊源有完全不同的概念。只要沒有選擇或不確定一個變化應該被推到哪裡，我們就可以避免DVCS模型中的一大類混亂的擴充問題。
+資訊源具有某種相對性。也就是說，對於一個特定的專案，資訊源對於不同的組織可能是不同的。這一點很重要：Google或RedHat的工程師對Linux核心補丁有不同的資訊源是合理的，這與Linus（Linux核心維護者）自己的資訊源還是不同的。當組織和他們的資訊源是分層的（對組織外的人來說是不可見的），DVCS就能很好地工作——這也許是DVCS模型最實際的作用。一個RedHat的工程師可以提交到本地資訊源儲存庫，並且可以定期從那裡向上遊推送變化，而Linus對什麼是資訊源有完全不同的概念。只要沒有選擇或不確定一個變化應該被推到哪裡，我們就可以避免DVCS模型中的一大類混亂的擴充問題。
 
 In all of this thinking, we’re assigning special significance to the trunk branch. But of course, “trunk” in your VCS is only the technology default, and an organization can choose different policies on top of that. Perhaps the default branch has been abandoned and all work actually happens on some custom development branch—other than needing to provide a branch name in more operations, there’s nothing inherently broken in that approach; it’s just nonstandard. There’s an (oft-unspoken) truth when discussing version control: the technology is only one part of it for any given organization; there is almost always an equal amount of policy and usage convention on top of that.
 
@@ -293,21 +293,21 @@ By comparison to dev branches, release branches are generally benign: it isn’t
 
 In the highest-functioning technical organizations that Google’s DevOps Research and Assessment (DORA) organization has identified, release branches are practically nonexistent. Organizations that have achieved Continuous Deployment (CD)—the ability to release from trunk many times a day—likely tend to skip release branches: it’s much easier to simply add the fix and redeploy. Thus, cherry-picks and branches seem like unnecessary overhead. Obviously, this is more applicable to organizations that deploy digitally (such as web services and apps) than those that push any form of tangible release to customers; it is generally valuable to know exactly what has been pushed to customers.
 
-在谷歌的DevOps研究和評估組織（DORA）所確定的最高效的技術組織中，釋出分支實際上是不存在的。那些已經實現了持續部署（CD）的組織——每天多次從主幹釋出的能力——很可能傾向於跳過釋出分支：只需新增修復和重新部署就更容易了。因此，挑選（cherry-picks）和分支似乎是不必要的開銷。顯然，這更適用於以數字方式部署的組織（如網路服務和應用程式），而不是那些向客戶推送任何形式的有形釋出的組織；通常，準確地瞭解向客戶推出的產品是很有價值的。
+在Google的DevOps研究和評估組織（DORA）所確定的最高效的技術組織中，釋出分支實際上是不存在的。那些已經實現了持續部署（CD）的組織——每天多次從主幹釋出的能力——很可能傾向於跳過釋出分支：只需新增修復和重新部署就更容易了。因此，挑選（cherry-picks）和分支似乎是不必要的開銷。顯然，這更適用於以數字方式部署的組織（如網路服務和應用程式），而不是那些向客戶推送任何形式的有形釋出的組織；通常，準確地瞭解向客戶推出的產品是很有價值的。
 
 That same DORA research also suggests a strong positive correlation between “trunk- based development,” “no long-lived dev branches,” and good technical outcomes. The underlying idea in both of those ideas seems clear: branches are a drag on productivity. In many cases we think complex branch and merge strategies are a perceived safety crutch—an attempt to keep trunk stable. As we see throughout this book, there are other ways to achieve that outcome.
 
 同樣的DORA研究也表明，"基於主幹的開發"、"沒有長期的開發分支"和良好的技術成果之間有很強的正相關關係。這兩個觀點的基本思路似乎都很清楚：分支拖累了生產力。在許多情況下，我們認為複雜的分支和合並策略是一種可感知的安全支柱——試圖保持主幹的穩定。正如我們在本書中所看到的，還有其他的方法來實現這一結果。
 
-## Version Control at Google  谷歌的版本控制
+## Version Control at Google  Google的版本控制
 
 At Google, the vast majority of our source is managed in a single repository (monorepo) shared among roughly 50,000 engineers. Almost all projects that are owned by Google live there, except large open source projects like Chromium and Android. This includes public-facing products like Search, Gmail, our advertising products, our Google Cloud Platform offerings, as well as the internal infrastructure necessary to support and develop all of those products.
 
-在谷歌，我們的絕大多數原始碼都在一個由大約50,000名工程師共享的儲存庫（monorepo）中管理。除了像Chromium和Android這樣的大型開源專案，幾乎所有屬於谷歌的專案都在這裡。這包括面向公眾的產品，如搜尋、Gmail、我們的廣告產品、我們的谷歌雲平台產品，以及支援和開發所有這些產品所需的內部基礎設施。
+在Google，我們的絕大多數原始碼都在一個由大約50,000名工程師共享的儲存庫（monorepo）中管理。除了像Chromium和Android這樣的大型開源專案，幾乎所有屬於Google的專案都在這裡。這包括面向公眾的產品，如搜尋、Gmail、我們的廣告產品、我們的Google雲平台產品，以及支援和開發所有這些產品所需的內部基礎設施。
 
 We rely on an in-house-developed centralized VCS called Piper, built to run as a distributed microservice in our production environment. This has allowed us to use Google-standard storage, communication, and Compute as a Service technology to provide a globally available VCS storing more than 80 TB of content and metadata. The Piper monorepo is then simultaneously edited and committed to by many thousands of engineers every day. Between humans and semiautomated processes that make use of version control (or improve things checked into VCS), we’ll regularly handle 60,000 to 70,000 commits to the repository per work day. Binary artifacts are fairly common because the full repository isn’t transmitted and thus the normal costs of binary artifacts don’t really apply. Because of the focus on Google-scale from the earliest conception, operations in this VCS ecosystem are still cheap at human scale: it takes perhaps 15 seconds total to create a new client at trunk, add a file, and commit an (unreviewed) change to Piper. This low-latency interaction and well-understood/ well-designed scaling simplifies a lot of the developer experience.
 
-我們依靠內部開發的集中式VCS，名為Piper，該VCS是為在我們的生產環境中作為分散式微服務執行而建構的。這使我們能夠使用谷歌標準的儲存、通訊和計算即服務技術，提供一個全球可用的VCS，儲存超過80TB的內容和元資料。然後，Piper 單版本庫每天由成千上萬的工程師同時進行編輯和提交。在人類和利用版本控制（或改進簽入VCS的內容）的人工流程和半自動化流程之間，我們每個工作日會定期處理60,000到70,000次提交到版本庫。二進位制構件是相當常見的，因為並不需要完整地傳輸到版本庫，因此二進位制構件的成本並不高。由於從最初的概念就專注於谷歌規模，這個VCS生態系統的操作在人群規模上仍然是低成本的：在主幹上建立一個新的客戶端，新增一個檔案，並向Piper提交一個（未經審查的）更改，總共可能需要15秒。這種低延遲的互動和良好的理解/設計的擴充簡化了很多開發者的體驗。
+我們依靠內部開發的集中式VCS，名為Piper，該VCS是為在我們的生產環境中作為分散式微服務執行而建構的。這使我們能夠使用Google標準的儲存、通訊和計算即服務技術，提供一個全球可用的VCS，儲存超過80TB的內容和元資料。然後，Piper 單版本庫每天由成千上萬的工程師同時進行編輯和提交。在人類和利用版本控制（或改進簽入VCS的內容）的人工流程和半自動化流程之間，我們每個工作日會定期處理60,000到70,000次提交到版本庫。二進位制構件是相當常見的，因為並不需要完整地傳輸到版本庫，因此二進位制構件的成本並不高。由於從最初的概念就專注於Google規模，這個VCS生態系統的操作在人群規模上仍然是低成本的：在主幹上建立一個新的客戶端，新增一個檔案，並向Piper提交一個（未經審查的）更改，總共可能需要15秒。這種低延遲的互動和良好的理解/設計的擴充簡化了很多開發者的體驗。
 
 By virtue of Piper being an in-house product, we have the ability to customize it and enforce whatever source control policies we choose. For instance, we have a notion of granular ownership in the monorepo: at every level of the file hierarchy, we can find OWNERS files that list the usernames of engineers that are allowed to approve commits within that subtree of the repository (in addition to the OWNERS that are listed at higher levels in the tree). In an environment with many repositories, this might have been achieved by having separate repositories with filesystem permissions enforcement controlling commit access or via a Git “commit hook” (action triggered at commit time) to do a separate permissions check. By controlling the VCS, we can make the concept of ownership and approval more explicit and enforced by the VCS during an attempted commit operation. The model is also flexible: ownership is just a text file, not tied to a physical separation of repositories, so it is trivial to update as the result of a team transfer or organization restructuring.
 
@@ -317,7 +317,7 @@ By virtue of Piper being an in-house product, we have the ability to customize i
 
 The incredible scaling powers of Piper alone wouldn’t allow the sort of collaboration that we rely upon. As we said earlier: version control is also about policy. In addition to our VCS, one key feature of Google’s version control policy is what we’ve come to refer to as “One Version.” This extends the “Single Source of Truth” concept we looked at earlier—ensuring that a developer knows which branch and repository is their source of truth—to something like “For every dependency in our repository, there must be only one version of that dependency to choose.”[^9] For third-party packages, this means that there can be only a single version of that package checked into our repository, in the steady state.[^10] For internal packages, this means no forking without repackaging/renaming: it must be technologically safe to mix both the original and the fork into the same project with no special effort. This is a powerful feature for our ecosystem: there are very few packages with restrictions like “If you include this package (A), you cannot include other package (B).”
 
-單憑Piper令人難以置信的擴充能力，是無法實現我們所依賴的那種協作的。正如我們之前所說：版本控制也是關於策略的。除了我們的VCS之外，谷歌版本控制策略的一個關鍵特徵就是我們所說的 "一個版本"。這擴充了我們前面提到的 "單資訊源 "的概念--確保開發者知道哪個分支和版本函式庫是他們的資訊源--到類似於 "對於我們版本庫中的每個依賴，必須只有一個版本的依賴可以選擇。 "對於第三方軟體套件，這意味著在穩定狀態下，該軟體包只能有一個版本被檢入我們的儲存庫。對於內部軟體套件，這意味著沒有重新打包/重新命名的分支：在技術上必須是安全的，無需特別努力就可以將原始和分支混合到同一個專案中。這對我們的生態系統來說是一個強大的功能：很少有包有類似 "如果你包括這個軟體套件（A），你就不能包括其他軟體套件（B）"的限制。
+單憑Piper令人難以置信的擴充能力，是無法實現我們所依賴的那種協作的。正如我們之前所說：版本控制也是關於策略的。除了我們的VCS之外，Google版本控制策略的一個關鍵特徵就是我們所說的 "一個版本"。這擴充了我們前面提到的 "單資訊源 "的概念--確保開發者知道哪個分支和版本函式庫是他們的資訊源--到類似於 "對於我們版本庫中的每個依賴，必須只有一個版本的依賴可以選擇。 "對於第三方軟體套件，這意味著在穩定狀態下，該軟體包只能有一個版本被檢入我們的儲存庫。對於內部軟體套件，這意味著沒有重新打包/重新命名的分支：在技術上必須是安全的，無需特別努力就可以將原始和分支混合到同一個專案中。這對我們的生態系統來說是一個強大的功能：很少有包有類似 "如果你包括這個軟體套件（A），你就不能包括其他軟體套件（B）"的限制。
 
 This notion of having a single copy on a single branch in a single repository as our Source of Truth is intuitive but also has some subtle depth in application. Let’s investigate a scenario in which we have a monorepo (and thus arguably have fulfilled the letter of the law on Single Source of Truth), but have allowed forks of our libraries to propagate on trunk.
 
@@ -386,7 +386,7 @@ Imagine this scenario: some infrastructure team is working on a new Widget, bett
 
 Interestingly, there is already evidence of this being important in the industry. In Accelerate and the most recent State of DevOps reports, DORA points out that there is a predictive relationship between trunk-based development and high-performing software organizations. Google is not the only organization to have discovered this— nor did we necessarily have expected outcomes in mind when these policies evolved —--—it just seemed like nothing else worked. DORA’s result certainly matches our experience.
 
-有趣的是，已經有證據表明這在行業中是很重要的。在《加速》和最近的《DevOps狀況》報告中，DORA指出，基於主幹的開發和高績效的軟體組織之間存在著可預測關係。谷歌並不是唯一發現這一點的組織--當這些策略演變時，我們也不一定有預期的結果——只是看起來沒有別的辦法了。DORA的結果當然與我們的經驗相符。
+有趣的是，已經有證據表明這在行業中是很重要的。在《加速》和最近的《DevOps狀況》報告中，DORA指出，基於主幹的開發和高績效的軟體組織之間存在著可預測關係。Google並不是唯一發現這一點的組織--當這些策略演變時，我們也不一定有預期的結果——只是看起來沒有別的辦法了。DORA的結果當然與我們的經驗相符。
 
 Our policies and tools for large-scale changes (LSCs; see [Chapter 22](#_bookmark1935)) put additional weight on the importance of trunk-based development: broad/shallow changes that are applied across the codebase are already a massive (often tedious) undertaking when modifying everything checked in to the trunk branch. Having an unbounded number of additional dev branches that might need to be refactored at the same time would be an awfully large tax on executing those types of changes, finding an ever- expanding set of hidden branches. In a DVCS model, it might not even be possible to identify all of those branches.
 
@@ -398,7 +398,7 @@ Of course, our experience is not universal. You might find yourself in unusual s
 
 Those scenarios should be rare, and should be understood to be expensive. Across the roughly 1,000 teams that work in the Google monorepo, there are only a couple that have such a dev branch.[^13] Usually these exist for a very specific (and very unusual) reason. Most of those reasons boil down to some variation of “We have an unusual requirement for compatibility over time.” Oftentimes this is a matter of ensuring compatibility for data at rest across versions: readers and writers of some file format need to agree on that format over time even if the reader or writer implementations are modified. Other times, long-lived dev branches might come from promising API compatibility over time—when One Version isn’t enough and we need to promise that an older version of a microservice client still works with a newer server (or vice versa). That can be a very challenging requirement, something that you should not promise lightly for an actively evolving API, and something you should treat carefully to ensure that period of time doesn’t accidentally begin to grow. Dependency across time in any form is far more costly and complicated than code that is time invariant. Internally, Google production services make relatively few promises of that form.[^14] We also benefit greatly from a cap on potential version skew imposed by our “build horizon”: every job in production needs to be rebuilt and redeployed every six months, maximum. (Usually it is far more frequent than that.)
 
-這些場景應該是罕見的，並且應該理解為代價高昂。在谷歌單版本庫的大約1000個團隊中，只有少數團隊有這樣一個開發分支。這些場景的存在通常有一個非常具體（非常不尋常）的原因。大多數原因歸結為“隨著時間的推移，我們對相容性有著苛刻的要求。”通常，這是一個確保跨版本的靜態資料的相容性的問題：某些檔案格式的讀寫器需要隨著時間的推移對該格式達成一致意見，即使讀寫器實現被修改。其他時候，長期的開發分支可能來自於對API相容性的承諾--當一個版本還不夠時，我們需要承諾舊版本的微服務客戶端仍能與新版本的伺服器相容（反之亦然）。這可能是一個非常具有挑戰性的要求，對於一個積極發展的API，你不應該輕易承諾，而且你應該謹慎對待，以確保這段時間不會意外地開始增長。任何形式的跨時間的依賴都比時間不變的程式碼要昂貴和複雜得多。在內部，谷歌生產服務相對來說很少做出這種形式的承諾。我們也從我們的 "建構範圍 "所施加的潛在版本偏差上限中獲益匪淺：生產中的每項工作最多每六個月就需要重建和重新部署。(通常要比這頻繁得多）。
+這些場景應該是罕見的，並且應該理解為代價高昂。在Google單版本庫的大約1000個團隊中，只有少數團隊有這樣一個開發分支。這些場景的存在通常有一個非常具體（非常不尋常）的原因。大多數原因歸結為“隨著時間的推移，我們對相容性有著苛刻的要求。”通常，這是一個確保跨版本的靜態資料的相容性的問題：某些檔案格式的讀寫器需要隨著時間的推移對該格式達成一致意見，即使讀寫器實現被修改。其他時候，長期的開發分支可能來自於對API相容性的承諾--當一個版本還不夠時，我們需要承諾舊版本的微服務客戶端仍能與新版本的伺服器相容（反之亦然）。這可能是一個非常具有挑戰性的要求，對於一個積極發展的API，你不應該輕易承諾，而且你應該謹慎對待，以確保這段時間不會意外地開始增長。任何形式的跨時間的依賴都比時間不變的程式碼要昂貴和複雜得多。在內部，Google生產服務相對來說很少做出這種形式的承諾。我們也從我們的 "建構範圍 "所施加的潛在版本偏差上限中獲益匪淺：生產中的每項工作最多每六個月就需要重建和重新部署。(通常要比這頻繁得多）。
 
 We’re sure there are other situations that might necessitate long-lived dev branches. Just make sure to keep them rare. If you adopt other tools and practices discussed in this book, many will tend to exert pressure against long-lived dev branches. Automation and tooling that works great at trunk and fails (or takes more effort) for a dev branch can help encourage developers to stay current.
 
@@ -417,7 +417,7 @@ We’re sure there are other situations that might necessitate long-lived dev br
 
 Many Google teams use release branches, with limited cherry picks. If you’re going to put out a monthly release and continue working toward the next release, it’s perfectly reasonable to make a release branch. Similarly, if you’re going to ship devices to customers, it’s valuable to know exactly what version is out “in the field.” Use caution and reason, keep cherry picks to a minimum, and don’t plan to remerge with trunk. Our various teams have all sorts of policies about release branches given that relatively few teams have arrived at the sort of rapid release cadence promised by CD (see Chapter 24) that obviates the need or desire for a release branch. Generally speaking,release branches don’t cause any widespread cost in our experience. Or, at least, no noticeable cost above and beyond the additional inherent cost to the VCS.
 
-許多谷歌團隊使用釋出分支，但選擇的版本有限。如果你打算每月釋出一個版本，並繼續為下一個版本工作，那麼建立一個釋出分支是完全合理的。同樣，如果你打算將裝置交付給客戶，準確地知道什麼版本“在當前”是很有價值的。謹慎和理智，儘量減少偷樑換柱的行為，並且不要計劃與主幹分支重新合併。鑑於很少有團隊達到CD承諾的快速釋出節奏，我們的各個團隊對釋出分支有各種各樣的策略（見第24章）這樣就不需要或不需要釋出分支。一般來說，根據我們的經驗，釋出分支不會導致任何廣泛的成本。或者說，至少在VCS的額外固有成本之外，沒有明顯的成本。
+許多Google團隊使用釋出分支，但選擇的版本有限。如果你打算每月釋出一個版本，並繼續為下一個版本工作，那麼建立一個釋出分支是完全合理的。同樣，如果你打算將裝置交付給客戶，準確地知道什麼版本“在當前”是很有價值的。謹慎和理智，儘量減少偷樑換柱的行為，並且不要計劃與主幹分支重新合併。鑑於很少有團隊達到CD承諾的快速釋出節奏，我們的各個團隊對釋出分支有各種各樣的策略（見第24章）這樣就不需要或不需要釋出分支。一般來說，根據我們的經驗，釋出分支不會導致任何廣泛的成本。或者說，至少在VCS的額外固有成本之外，沒有明顯的成本。
 
 ## Monorepos    單版本庫（單庫）
 
@@ -455,7 +455,7 @@ After all, your choice of filesystem format really doesn’t matter as much as w
 
 > [^15]: Rachel Potvin and Josh Levenberg, “Why Google stores billions of lines of code in a single repository,” Communications of the ACM, 59 No. 7 (2016): 78-87.
 >
-> 15 Rachel Potvin和Josh Levenberg，"為什麼谷歌將數十億行程式碼儲存在一個函式庫中，"《ACM通訊》，59 No.7（2016）：78-87。
+> 15 Rachel Potvin和Josh Levenberg，"為什麼Google將數十億行程式碼儲存在一個函式庫中，"《ACM通訊》，59 No.7（2016）：78-87。
 >
 > [^16]: We don’t think we’ve seen anything do this particularly smoothly, but the interrepository dependencies/virtual monorepo idea is clearly in the air.
 >
@@ -469,7 +469,7 @@ After all, your choice of filesystem format really doesn’t matter as much as w
 
 Google isn’t the only organization to publicly discuss the benefits of a monorepo approach. Microsoft, Facebook, Netflix, and Uber have also publicly mentioned their reliance on the approach. DORA has published about it extensively. It’s vaguely possible that all of these successful, long-lived companies are misguided, or at least that their situations are sufficiently different as to be inapplicable to the average smaller organization. Although it’s possible, we think it is unlikely.
 
-谷歌並不是唯一一個公開討論單版本庫方法的好處的組織。微軟、Facebook、Netflix和Uber也公開提到他們對這種方法的依賴。DORA已經廣泛地發表了關於它的文章。很可能所有這些成功的、長期存在的公司都被誤導了，或者至少他們的情況差異很大，不適用於一般較小的組織。雖然這是可能的，但我們認為不太可能。
+Google並不是唯一一個公開討論單版本庫方法的好處的組織。微軟、Facebook、Netflix和Uber也公開提到他們對這種方法的依賴。DORA已經廣泛地發表了關於它的文章。很可能所有這些成功的、長期存在的公司都被誤導了，或者至少他們的情況差異很大，不適用於一般較小的組織。雖然這是可能的，但我們認為不太可能。
 
 Most arguments against monorepos focus on the technical limitations of having a single large repository. If cloning a repository from upstream is quick and cheap, developers are more likely to keep changes small and isolated (and to avoid making mistakes with committing to the wrong work-in-progress branch). If cloning a repository (or doing some other common VCS operation) takes hours of wasted developer time, you can easily see why an organization would shy away from reliance on such a large repository/operation. We luckily avoided this pitfall by focusing on providing a VCS that scales massively.
 

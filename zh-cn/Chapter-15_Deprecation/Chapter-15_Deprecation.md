@@ -77,7 +77,7 @@ Another surprising reluctance to deprecate is emotional attachment to old system
 
 There’s an old joke within Google that there are two ways of doing things: the one that’s deprecated, and the one that’s not-yet-ready. This is usually the result of a new solution being “almost” done and is the unfortunate reality of working in a technological environment that is complex and fast-paced.Google engineers have become used to working in this environment, but it can still be disconcerting. Good documentation, plenty of signposts, and teams of experts helping with the deprecation and migration process all make it easier to know whether you should be using the old thing, with all its warts, or the new one, with all its uncertainties.
 
-谷歌內部有一個古老的笑話，說有兩種做事方式：一種已被“棄用”，另一種尚未準備就緒。這通常發生成新解決方案“幾乎”完成的時候，並且是在複雜且快節奏的技術環境中工作的不幸現實。谷歌工程師已經習慣了在這種環境中工作，但它仍然令人不安。良好的文件、大量的指引以及幫助“棄用”和遷移過程的專家團隊,都可以讓您更容易地判斷是使用舊的，有缺點，還是新的，有不確定性的。
+Google內部有一個古老的笑話，說有兩種做事方式：一種已被“棄用”，另一種尚未準備就緒。這通常發生成新解決方案“幾乎”完成的時候，並且是在複雜且快節奏的技術環境中工作的不幸現實。Google工程師已經習慣了在這種環境中工作，但它仍然令人不安。良好的文件、大量的指引以及幫助“棄用”和遷移過程的專家團隊,都可以讓您更容易地判斷是使用舊的，有缺點，還是新的，有不確定性的。
 
 -----
 
@@ -119,7 +119,7 @@ Many of these questions relate to how a system provides and consumes dependencie
 
 Finally, we should point out that the decision as to whether to support a project long term is made when an organization first decides to build the project. After a software system exists, the only remaining options are support it, carefully deprecate it, or let it stop functioning when some external event causes it to break. These are all valid options, and the trade-offs between them will be organization specific. A new startup with a single project will unceremoniously kill it when the company goes bankrupt, but a large company will need to think more closely about the impact across its portfolio and reputation as they consider removing old projects. As mentioned earlier, Google is still learning how best to make these trade-offs with our own internal and external products.
 
-最後，我們應該指出，是否長期支援專案的決定,是在組織最初決定建立專案時做出的。軟體系統存在後，剩下的唯一選擇是支援它，小心地“棄用”它，或者在某些外部事件導致它崩潰時讓它停止執行。這些都是有效的選項，它們之間的權衡將是特定於組織的。當公司破產時，一個只有一個專案的新創業公司會毫不客氣地殺死它，但一家大公司在考慮刪除舊專案時需要更仔細地考慮對其投資組合和聲譽的影響。如前所述，谷歌仍在學習如何最好地利用我們自己的內部和外部產品進行這些權衡。
+最後，我們應該指出，是否長期支援專案的決定,是在組織最初決定建立專案時做出的。軟體系統存在後，剩下的唯一選擇是支援它，小心地“棄用”它，或者在某些外部事件導致它崩潰時讓它停止執行。這些都是有效的選項，它們之間的權衡將是特定於組織的。當公司破產時，一個只有一個專案的新創業公司會毫不客氣地殺死它，但一家大公司在考慮刪除舊專案時需要更仔細地考慮對其投資組合和聲譽的影響。如前所述，Google仍在學習如何最好地利用我們自己的內部和外部產品進行這些權衡。
 
 In short, don’t start projects that your organization isn’t committed to support for the expected lifespan of the organization. Even if the organization chooses to deprecate and remove the project, there will still be costs, but they can be mitigated through planning and investments in tools and policy.
 
@@ -147,7 +147,7 @@ Advisory deprecations are a good tool for advertising the existence of a new sys
 
 One scenario we’ve seen at Google in which advisory deprecations have strong benefits is when the new system offers compelling benefits to its users. In these cases, simply notifying users of this new system and providing them self-service tools to migrate to it often encourages adoption. However, the benefits cannot be simply incremental: they must be transformative. Users will be hesitant to migrate on their own for marginal benefits, and even new systems with vast improvements will not gain full adoption using only advisory deprecation efforts.
 
-我們在谷歌看到的一種情況是，當新系統為其使用者提供令人信服的好處時，建議性“棄用”具有強大的好處。在這些情況下，簡單地通知使用者這個新系統併為他們提供自助服務工具以遷移到它,通常會鼓勵採用。然而，收益不能簡單地增量：它們必須具有變革性。否則使用者將不願為了這一點點邊際收益而自行遷移，不過對於“建議性“棄用””，即使具有巨大改進的新系統也通常不會被完全採納。
+我們在Google看到的一種情況是，當新系統為其使用者提供令人信服的好處時，建議性“棄用”具有強大的好處。在這些情況下，簡單地通知使用者這個新系統併為他們提供自助服務工具以遷移到它,通常會鼓勵採用。然而，收益不能簡單地增量：它們必須具有變革性。否則使用者將不願為了這一點點邊際收益而自行遷移，不過對於“建議性“棄用””，即使具有巨大改進的新系統也通常不會被完全採納。
 
 Advisory deprecation allows system authors to nudge users in the desired direction, but they should not be counted on to do the majority of migration work. It is often tempting to simply put a deprecation warning on an old system and walk away without any further effort. Our experience at Google has been that this can lead to (slightly) fewer new uses of an obsolete system, but it rarely leads to teams actively migrating away from it. Existing uses of the old system exert a sort of conceptual (or technical) pull toward it: comparatively many uses of the old system will tend to pick up a large share of new uses, no matter how much we say, “Please use the new system.” The old system will continue to require maintenance and other resources unless its users are more actively encouraged to migrate.
 
@@ -181,7 +181,7 @@ Google 的中心程式碼儲存庫和依賴關係圖讓我們深入瞭解系統�
 
 Frequently at Google, when a system is slated for deprecation and removal, the team will announce planned outages of increasing duration in the months and weeks prior to the turndown. Similar to Google’s Disaster Recovery Testing (DiRT) exercises, these events often discover unknown dependencies between running systems. This incremental approach allows those dependent teams to discover and then plan for the system’s eventual removal, or even work with the deprecating team to adjust their timeline. (The same principles also apply for static code dependencies, but the semantic information provided by static analysis tools is often sufficient to detect all the dependencies of the obsolete system.)
 
-在谷歌，當系統計劃“棄用”時，團隊經常會在關閉前的幾個月和幾周內宣佈計劃停服，持續時間會增加。與 Google 的災難恢復測試 (DiRT) 類似，這些事件通常會發現正在執行的系統之間的未知依賴關係。這種漸進式方法允許那些依賴的團隊發現依賴，然後為系統的最終移除做計劃，甚至與“棄用”團隊合作調整他們的時間表。（同樣的原則也適用於靜態程式碼依賴，但靜態分析工具提供的語義資訊通常足以檢測過時系統的所有依賴。）
+在Google，當系統計劃“棄用”時，團隊經常會在關閉前的幾個月和幾周內宣佈計劃停服，持續時間會增加。與 Google 的災難恢復測試 (DiRT) 類似，這些事件通常會發現正在執行的系統之間的未知依賴關係。這種漸進式方法允許那些依賴的團隊發現依賴，然後為系統的最終移除做計劃，甚至與“棄用”團隊合作調整他們的時間表。（同樣的原則也適用於靜態程式碼依賴，但靜態分析工具提供的語義資訊通常足以檢測過時系統的所有依賴。）
 
 ### Deprecation Warnings  棄用警告
 
@@ -223,7 +223,7 @@ We’ve learned at Google that without explicit owners, a deprecation process is
 
 Abandoned projects often present a problem when establishing ownership and aligning incentives. Every organization of reasonable size has projects that are still actively used but that nobody clearly owns or maintains, and Google is no exception. Projects sometimes enter this state because they are deprecated: the original owners have moved on to a successor project, leaving the obsolete one chugging along in the basement, still a dependency of a critical project, and hoping it just fades away eventually.
 
-棄用的專案通常會在確定歸屬權上存在扯皮的情形。每個小組都存在大量仍在使用卻無明確維護人的專案，谷歌也不例外。當一個專案存在這種情形時，通常說明它已被拋棄：即原維護人已參與到新專案開發維護中，老專案則被棄之不顧，但卻仍然被某些關鍵專案所依賴，只寄希望於它慢慢消失在眾人視線中。
+棄用的專案通常會在確定歸屬權上存在扯皮的情形。每個小組都存在大量仍在使用卻無明確維護人的專案，Google也不例外。當一個專案存在這種情形時，通常說明它已被拋棄：即原維護人已參與到新專案開發維護中，老專案則被棄之不顧，但卻仍然被某些關鍵專案所依賴，只寄希望於它慢慢消失在眾人視線中。
 
 Such projects are unlikely to fade away on their own. In spite of our best hopes, we’ve found that these projects still require deprecation experts to remove them and prevent their failure at inopportune times. These teams should have removal as their primary goal, not just a side project of some other work. In the case of competing priorities, deprecation work will almost always be perceived as having a lower priority and rarely receive the attention it needs. These sorts of important-not-urgent cleanup tasks are a great use of 20% time and provide engineers exposure to other parts of the codebase.
 
@@ -257,7 +257,7 @@ During the early stages of a deprecation process, and in fact during the entire 
 
 Within Google, we use tools like Code Search (see Chapter 17) and Kythe (see Chapter 23) to statically determine which customers use a given library, and often to sample existing usage to see what sorts of behaviors customers are unexpectedly depending on. Because runtime dependencies generally require some static library or thin client use, this technique yields much of the information needed to start and run a deprecation process. Logging and runtime sampling in production help discover issues with dynamic dependencies.
 
-在谷歌內部，我們使用程式碼搜尋（見第 17 章）和 Kythe（見第 23 章）等工具來靜態地確定哪些客戶使用給定的函式庫，並經常對現有使用情況進行抽樣，以瞭解客戶的使用方式。由於執行時依賴項通常需要使用一些靜態庫或瘦客戶端，因此該技術能提供大部分決策資訊。而生產中的日誌記錄和執行時取樣有助於發現動態依賴項的問題。
+在Google內部，我們使用程式碼搜尋（見第 17 章）和 Kythe（見第 23 章）等工具來靜態地確定哪些客戶使用給定的函式庫，並經常對現有使用情況進行抽樣，以瞭解客戶的使用方式。由於執行時依賴項通常需要使用一些靜態庫或瘦客戶端，因此該技術能提供大部分決策資訊。而生產中的日誌記錄和執行時取樣有助於發現動態依賴項的問題。
 
 Finally, we treat our global test suite as an oracle to determine whether all references to an old symbol have been removed. As discussed in Chapter 11, tests are a mechanism of preventing unwanted behavioral changes to a system as the ecosystem evolves. Deprecation is a large part of that evolution, and customers are responsible for having sufficient testing to ensure that the removal of an obsolete system will not harm them.
 
